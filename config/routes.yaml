@@ -1,0 +1,9 @@
+get_foo:
+  path: /foo/{fooId}
+  methods: GET
+  controller: App\UI\Controller\GetFooController
+
+post_foo:
+  path: /foo
+  methods: POST
+  controller: App\UI\Controller\PostFooController

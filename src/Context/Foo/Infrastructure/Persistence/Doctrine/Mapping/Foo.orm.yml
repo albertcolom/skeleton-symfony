@@ -1,0 +1,18 @@
+App\Context\Foo\Domain\Foo:
+  type: entity
+  repositoryClass: App\Context\Foo\Infrastructure\Persistence\Repository\DoctrineFooRepository
+  table: foo
+  id:
+    id:
+      type: foo.foo_id
+      generator:
+        strategy: NONE
+  fields:
+    name:
+      type: string
+
+  oneToMany:
+    bars:
+      targetEntity: App\Context\Bar\Domain\Bar
+      cascade: ['all']
+      mappedBy: fooId
