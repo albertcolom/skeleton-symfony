@@ -3,7 +3,7 @@ version: '3'
 services:
   php-fpm:
     build: ./resources/infrastructure/docker-ci/php-fpm
-    container_name: php-fpm_container_test
+    container_name: php-fpm_container
     environment:
       - TZ=Europe/Madrid
     volumes:

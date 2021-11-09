@@ -12,6 +12,9 @@ jobs:
       - name: Run docker-compose stack
         run: docker-compose -f docker-compose-ci.yml up -d --build
 
+      - name: Run docker-compose sttaus
+        run: docker-compose ps
+
       - name: Install dependencies
         run: docker-compose exec php-fpm env XDEBUG_MODE=off composer install
 
