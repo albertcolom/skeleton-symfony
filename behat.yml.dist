@@ -1,0 +1,15 @@
+default:
+    suites:
+        default:
+            paths:
+                - tests/Acceptance/Foo
+            contexts:
+                - App\Tests\Shared\Behat\Context\ApiContext
+                - App\Tests\Shared\Behat\Context\FixturesContext
+                - App\Tests\Shared\Behat\Context\MessengerContext
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: tests/bootstrap.php
+            kernel:
+                environment: test

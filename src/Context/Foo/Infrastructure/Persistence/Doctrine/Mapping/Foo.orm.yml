@@ -13,6 +13,6 @@ App\Context\Foo\Domain\Foo:
 
   oneToMany:
     bars:
-      targetEntity: App\Context\Bar\Domain\Bar
+      targetEntity: App\Context\Foo\Domain\Bar\Bar
       cascade: ['all']
-      mappedBy: fooId
+      mappedBy: foo

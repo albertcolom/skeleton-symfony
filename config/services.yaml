@@ -10,6 +10,8 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $openapiPath: "%kernel.project_dir%/%env(OPENAPI_PATH)%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -25,20 +27,26 @@ services:
     _instanceof:
         App\Shared\Domain\Bus\Command\CommandHandler:
             tags:
-                - { name: messenger.message_handler, bus: command.bus }
+                - { name: messenger.message_handler, bus: sync.command.bus }
         App\Shared\Domain\Bus\Query\QueryHandler:
             tags:
-                - { name: messenger.message_handler, bus: query.bus }
+                - { name: messenger.message_handler, bus: sync.query.bus }
+        App\Shared\Domain\Bus\Event\EventListener:
+            tags:
+                - { name: messenger.message_handler, bus: async.event.bus }
 
     App\Shared\Infrastructure\Bus\MessengerCommandBus:
         arguments:
-            - '@command.bus'
+            - '@sync.command.bus'
     App\Shared\Infrastructure\Bus\MessengerQueryBus:
         arguments:
-            - '@query.bus'
+            - '@sync.query.bus'
+    App\Shared\Infrastructure\Bus\MessengerCacheQueryBus:
+        arguments:
+            - '@sync.query.bus'
     App\Shared\Infrastructure\Bus\MessengerEventBus:
         arguments:
-            - '@event.bus'
-    App\Shared\Domain\Bus\Event\DomainEvent:
+            - '@async.event.bus'
+    App\Shared\Infrastructure\Listener\DoctrinePublishDomainEventsOnFlushListener:
         tags:
-            - { name: monolog.logger, channel: domain_event }
+            - { name: doctrine.event_listener, event: onFlush }

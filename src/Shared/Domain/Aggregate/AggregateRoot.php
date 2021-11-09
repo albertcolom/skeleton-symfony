@@ -15,6 +15,11 @@ abstract class AggregateRoot
         $this->domainEvents[] = $domainEvent;
     }
 
+    final public function domainEventsEmpty(): bool
+    {
+        return empty($this->domainEvents);
+    }
+
     final public function pullDomainEvents(): array
     {
         $recordedEvents = $this->domainEvents;

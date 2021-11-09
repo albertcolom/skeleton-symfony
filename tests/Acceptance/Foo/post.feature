@@ -1,0 +1,83 @@
+Feature:
+  In order to create a Foo
+  As an API user
+  I want to test that Foo can be created
+
+  Scenario: It can create a Foo
+    Given the queue associated to transport ampqp is empty
+    When A POST request is sent to "/foo" with JSON body:
+      """
+       {
+          "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
+          "name": "Some foo name"
+       }
+       """
+    Then the response header "Content-Type" should be equal to "application/json"
+    And the JSON response should be equal to:
+      """
+       {
+          "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
+          "name": "Some foo name",
+          "bar": []
+       }
+      """
+    And the response code should be 201
+    And the response should be a documented and validated with OpenApi schema POST "/foo"
+    And the transport ampqp producer has messages below:
+      """
+      [
+        {
+          "payload":
+            {
+              "foo_id":"9cc900eb-663a-4292-876d-5a77eeefade9",
+              "name":"Some foo name",
+              "occurred_on":"XXXX-XX-XX XX:XX:XX"
+            },
+          "metadata":
+            {
+              "id":"XXX",
+              "name":"app.context.foo.domain.foo_was_created"
+            }
+        }
+      ]
+      """
+
+  Scenario: It can't create a Foo when invalid request body
+    When A POST request is sent to "/foo" with JSON body:
+      """
+       {
+           "name": "Some foo name"
+       }
+       """
+    Then the response header "Content-Type" should be equal to "application/json"
+    And the JSON response should be equal to:
+        """
+        {
+            "code": 400,
+            "status": "Bad Request",
+            "message": "Keyword validation failed: Required property 'id' must be present in the object"
+        }
+        """
+    And the response code should be 400
+    And the response should be a documented and validated with OpenApi schema POST "/foo"
+
+  Scenario: It can't create a Foo when Foo already exists
+    Given I load fixtures for groups "foo"
+    When A POST request is sent to "/foo" with JSON body:
+      """
+       {
+           "id": "7f590fc8-1298-4fb7-927e-a38ae50bc705",
+           "name": "Some foo name"
+       }
+       """
+    Then the response header "Content-Type" should be equal to "application/json"
+    And the JSON response should be equal to:
+        """
+        {
+            "code": 409,
+            "status": "Conflict",
+            "message": "Foo with id 7f590fc8-1298-4fb7-927e-a38ae50bc705 already exists"
+        }
+        """
+    And the response code should be 409
+    And the response should be a documented and validated with OpenApi schema POST "/foo"

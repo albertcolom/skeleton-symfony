@@ -8,7 +8,7 @@ use Webmozart\Assert\Assert;
 
 abstract class TypedCollection extends Collection
 {
-    public function __construct(protected array $elements)
+    public function __construct(array $elements = [])
     {
         Assert::allIsInstanceOf($elements, $this->type());
 
@@ -17,10 +17,10 @@ abstract class TypedCollection extends Collection
 
     abstract protected function type(): string;
 
-    public function add(mixed $element): void
+    public function addTyped(mixed $element): void
     {
         Assert::isInstanceOf($element, $this->type());
 
-        $this->elements[] = $element;
+        $this->add($element);
     }
 }

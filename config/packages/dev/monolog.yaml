@@ -1,11 +1,11 @@
 monolog:
-    channels: ['event']
+    channels: ['event', 'message']
     handlers:
         main:
             type: stream
             path: "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-            channels: ["!event"]
+            level: info
+            #channels: ["!event"]
         domain_event:
             type: stream
             path: "%kernel.logs_dir%/domain_event_%kernel.environment%.log"

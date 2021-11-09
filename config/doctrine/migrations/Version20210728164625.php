@@ -19,7 +19,11 @@ final class Version20210728164625 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+
+        $this->addSql('DROP TABLE IF EXISTS bar');
         $this->addSql('DROP TABLE IF EXISTS foo');
+
         $this->addSql('CREATE TABLE foo(
             id BINARY(16) NOT NULL,
             name VARCHAR (255) NOT NULL,
@@ -28,7 +32,6 @@ final class Version20210728164625 extends AbstractMigration
         DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
         ENGINE = InnoDB');
 
-        $this->addSql('DROP TABLE IF EXISTS bar');
         $this->addSql('CREATE TABLE bar(
             id BINARY(16) NOT NULL,
             foo_id BINARY(16) NOT NULL,
@@ -42,7 +45,14 @@ final class Version20210728164625 extends AbstractMigration
 
     public function down(Schema $schema): void
     {
-        $this->addSql('DROP TABLE IF EXISTS foo');
+        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+
         $this->addSql('DROP TABLE IF EXISTS bar');
+        $this->addSql('DROP TABLE IF EXISTS foo');
+    }
+
+    public function isTransactional(): bool
+    {
+        return false;
     }
 }

@@ -1,0 +1,230 @@
+openapi: 3.0.0
+info:
+  title: Foo API
+  description: This is the documentation of the Foo API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/
+    description: Dev server
+components:
+  parameters:
+    fooId:
+      name: fooId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/id'
+    barId:
+      name: barId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/id'
+  schemas:
+    id:
+      type: string
+      format: uuid
+      example: "c935c64c-7bbf-4779-9c4f-c9cd97f3354c"
+    name:
+      type: string
+      minLength: 1
+      maxLength: 255
+    Foo:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          $ref: '#/components/schemas/name'
+        bar:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bar'
+      required:
+        - id
+        - name
+      example:
+        {
+        "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
+        "name": "Some foo name",
+        "bar": [
+            {
+              "id": "e9ed0451-5ea0-4ba8-90f5-f194e4244fa6",
+              "name": "Some bar name"
+            }
+          ]
+        }
+    Bar:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          $ref: '#/components/schemas/name'
+      required:
+        - id
+        - name
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: "Error code"
+        status:
+          type: string
+          description: "Error status"
+        message:
+          type: string
+          description: "Error description"
+  responses:
+    201:
+      description: The resource was created. Result with no content
+    204:
+      description: The resource was updated. Result with no content
+    400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            { "code": 400, "status": "Bad Request", "message": "The field X is required" }
+    404:
+      description: The resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            { "code": 404, "status": "Not Found", "message": "The resource with id X not found" }
+    409:
+      description: The resource already exists
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            { "code": 409, "status": "Conflict", "message": "The resource with id X already exists" }
+    500:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            { "code": 500, "status": "Internal server error", "message": "The Internal server error message" }
+paths:
+  /foo:
+    post:
+      summary: Creates a new Foo
+      description: Creates a new Foo
+      tags:
+        - Foo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  $ref: '#/components/schemas/id'
+                name:
+                  $ref: '#/components/schemas/name'
+              required:
+                - id
+                - name
+            example:
+              {
+                "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
+                "name": "Some foo name",
+              }
+      responses:
+        '201':
+          description: The resource was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foo'
+        '400':
+          $ref: '#/components/responses/400'
+        '409':
+          $ref: '#/components/responses/409'
+        '500':
+          $ref: '#/components/responses/500'
+  /foo/{fooId}:
+    get:
+      summary: Retrives an existing Foo
+      description: Retrives an existing Foo
+      tags:
+        - Foo
+      parameters:
+        - $ref: '#/components/parameters/fooId'
+      responses:
+        '200':
+          description: Retrives an existing Foo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foo'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'
+    put:
+      summary: Updates a Foo
+      description: Updates a Foo
+      tags:
+        - Foo
+      parameters:
+        - $ref: '#/components/parameters/fooId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  $ref: '#/components/schemas/name'
+              required:
+                - name
+            example:
+              {
+                "name": "New foo name",
+              }
+      responses:
+        '200':
+          description: The resource was updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foo'
+        '201':
+          description: The resource was created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foo'
+        '400':
+          $ref: '#/components/responses/400'
+        '500':
+          $ref: '#/components/responses/500'
+    delete:
+      summary: Deletes an existing Foo
+      description: Deletes an existing Foo
+      tags:
+        - Foo
+      parameters:
+        - $ref: '#/components/parameters/fooId'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+        '400':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+        '500':
+          $ref: '#/components/responses/500'

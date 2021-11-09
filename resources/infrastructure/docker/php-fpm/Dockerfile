@@ -16,11 +16,14 @@ RUN docker-php-ext-install \
         pdo_mysql \
         amqp
 
-RUN pecl install xdebug
+RUN pecl install \
+        xdebug \
+        redis
 
 RUN docker-php-ext-enable \
         opcache \
-        xdebug
+        xdebug \
+        redis
 
 COPY xdebug.ini /usr/local/etc/php/conf.d/
 

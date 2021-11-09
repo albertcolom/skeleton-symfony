@@ -1,0 +1,20 @@
+App\Context\Foo\Domain\Bar\Bar:
+  type: entity
+  repositoryClass: App\Context\Foo\Infrastructure\Persistence\Repository\DoctrineFooRepository
+  table: bar
+  id:
+    id:
+      type: foo.bar_id
+      generator:
+        strategy: NONE
+  fields:
+    name:
+      type: string
+
+  manyToOne:
+    foo:
+      targetEntity: App\Context\Foo\Domain\Foo
+      inversedBy: bars
+      joinColumn:
+        name: foo_id
+        referencedColumnName: id

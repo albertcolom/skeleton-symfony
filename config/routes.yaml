@@ -3,6 +3,16 @@ get_foo:
   methods: GET
   controller: App\UI\Controller\GetFooController
 
+put_foo:
+  path: /foo/{fooId}
+  methods: PUT
+  controller: App\UI\Controller\PutFooController
+
+delete_foo:
+  path: /foo/{fooId}
+  methods: DELETE
+  controller: App\UI\Controller\DeleteFooController
+
 post_foo:
   path: /foo
   methods: POST

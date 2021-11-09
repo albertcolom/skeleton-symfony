@@ -14,4 +14,6 @@ interface FooRepository
     public function findAll(): array;
 
     public function save(Foo $foo): void;
+
+    public function remove(FooId $fooId): void;
 }

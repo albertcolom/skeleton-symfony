@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# get bash colors and styles here: 
+# http://misc.flogisoft.com/bash/tip_colors_and_formatting
+C_RESET='\e[0m'
+C_RED='\e[31m'
+C_GREEN='\e[32m'
+C_YELLOW='\e[33m'
+
+SERVICE_NAME='php-fpm'
+
+function __run() #(step, name, cmd)
+{
+    local color output exitcode
+
+    printf "${C_YELLOW}[%s]${C_RESET} %-20s" "$1" "$2"
+
+    start=`date +%s`
+    output=$(eval "$3" 2>&1)
+    exit_code=$?
+    end=`date +%s`
+
+    if [[ 0 == $exit_code || 130 == $exit_code ]]; then
+        echo -e "🟢 $((end-start))s"
+    else
+        echo -e "🔴 \n\n $output"
+        exit 1
+    fi
+}
+
+MODIFIED="git diff --diff-filter=M --name-only --cached  | grep \".php$\""
+
+PHPCS="docker-compose exec -T ${SERVICE_NAME} env XDEBUG_MODE=off php vendor/bin/phpcs --report=code --colors --standard=PSR12"
+PHPUNIT="docker-compose exec ${SERVICE_NAME} env XDEBUG_MODE=off php vendor/bin/phpunit"
+PHPSTAN="docker-compose exec -T ${SERVICE_NAME} env XDEBUG_MODE=off php vendor/bin/phpstan analyse -c phpstan.neon"
+BEHAT="docker-compose exec -T ${SERVICE_NAME} env XDEBUG_MODE=off php vendor/bin/behat"
+
+__run "1/4" "PHPCodeSniffer" "${MODIFIED} | xargs -r ${PHPCS}"
+__run "2/4" "PHPStan" "${MODIFIED} | xargs -r ${PHPSTAN}"
+__run "3/4" "PHPUnit" "${PHPUNIT}"
+__run "4/4" "Behat" "${BEHAT}"

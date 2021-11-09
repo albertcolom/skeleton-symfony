@@ -42,13 +42,82 @@ services:
     networks:
       - docker-network
 
+  swagger_ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui_container
+    ports:
+      - "8001:8080"
+    volumes:
+      - ./resources/openapi:/usr/share/nginx/html/doc
+    environment:
+      API_URL: doc/api-doc.yaml
+
   rabbitmq:
     image: rabbitmq:3.8-management-alpine
     container_name: rabbitmq_container
-    restart: unless-stopped
     ports:
       - "5672:5672"
       - "15672:15672"
+    restart: unless-stopped
+    networks:
+      - docker-network
+
+  redis:
+    image: redis:6.2.5-alpine
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    networks:
+      - docker-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
+    container_name: elasticsearch_container
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./var/volume/elasticsearch:/usr/share/elasticsearch/data:cached
+    environment:
+      - xpack.monitoring.enabled=false
+      - cluster.name=docker-cluster
+      - node.name=es01
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - docker-network
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.1.1
+    container_name: logstash_container
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./resources/infrastructure/docker/logstash/pipeline:/usr/share/logstash/pipeline
+      - ./var/log:/usr/share/logs
+    environment:
+      - xpack.monitoring.enabled=false
+      - xpack.monitoring.elasticsearch.hosts="http://elasticsearch:9200"
+      - ES_JAVA_OPTS=-Xmx256m -Xms256m
+    depends_on:
+      - elasticsearch
+    networks:
+      - docker-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.1.1
+    container_name: kibana_container
+    ports:
+      - "5601:5601"
+    environment:
+      XPACK_MONITORING_UI_CONTAINER_ELASTICSEARCH_ENABLED: "false"
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+    depends_on:
+      - elasticsearch
     networks:
       - docker-network
 

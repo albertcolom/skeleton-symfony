@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpTestFrameworkSettings">
+    <test_tools>
+      <tool tool_name="Behat">
+        <settings>
+          <configurations>
+            <local_configuration executable_path="$PROJECT_DIR$/vendor/behat/behat/bin/behat" />
+          </configurations>
+        </settings>
+      </tool>
+    </test_tools>
+  </component>
+  <component name="PhpTestFrameworkVersionCache">
+    <tools_cache>
+      <tool tool_name="Behat">
+        <cache>
+          <versions>
+            <info id="interpreter-ecd58cac-a243-4738-8cdb-aff2ce2d11b9" version="3.8.1" />
+          </versions>
+        </cache>
+      </tool>
+      <tool tool_name="PHPUnit">
+        <cache>
+          <versions>
+            <info id="interpreter-63d5b417-a285-493e-8c0d-da9fc9491558" version="9.5.8" />
+            <info id="interpreter-ecd58cac-a243-4738-8cdb-aff2ce2d11b9" version="9.5.10" />
+          </versions>
+        </cache>
+      </tool>
+    </tools_cache>
+  </component>
+</project>

@@ -1,0 +1,15 @@
+framework:
+  messenger:
+    transports:
+      ampqp:
+        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+        options:
+          exchange:
+            name: 'messages_test'
+            type: direct
+          queues:
+            'test%env(default::TEST_TOKEN)%':
+              arguments:
+                x-expires: 300000 #5 min
+    serializer:
+      default_serializer: App\Tests\Shared\Behat\Serializer\TestingMessengerMessageSerializer

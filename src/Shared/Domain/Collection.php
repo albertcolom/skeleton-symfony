@@ -4,71 +4,23 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain;
 
-use ArrayIterator;
 use Closure;
-use Countable;
-use IteratorAggregate;
+use Doctrine\Common\Collections\ArrayCollection;
 
-class Collection implements Countable, IteratorAggregate
+class Collection extends ArrayCollection
 {
-    public function __construct(protected array $elements = [])
+    public static function create(array $elements): static
     {
+        return new static($elements);
     }
 
-    public function add(mixed $element): void
+    public static function createEmpty(): static
     {
-        $this->elements[] = $element;
+        return new static([]);
     }
 
-    public function remove(int $key): mixed
+    public function each(Closure $fn): void
     {
-        if (!array_key_exists($key, $this->elements)) {
-            return null;
-        }
-
-        $removed = $this->elements[$key];
-        unset($this->elements[$key]);
-
-        return $removed;
-    }
-
-    public function each(Closure $func): self
-    {
-        return new self(array_map($func, $this->elements));
-    }
-
-    public function filter(Closure $func): self
-    {
-        return new self(array_filter($this->elements, $func, ARRAY_FILTER_USE_BOTH));
-    }
-
-    public function element(int $index): mixed
-    {
-        return $this->elements[$index] ?? null;
-    }
-
-    public function elements(): array
-    {
-        return $this->elements;
-    }
-
-    public function clear(): void
-    {
-        $this->elements = [];
-    }
-
-    public function isEmpty(): bool
-    {
-        return empty($this->elements);
-    }
-
-    public function getIterator(): ArrayIterator
-    {
-        return new ArrayIterator($this->elements());
-    }
-
-    public function count(): int
-    {
-        return count($this->elements);
+        $this->forAll($fn);
     }
 }

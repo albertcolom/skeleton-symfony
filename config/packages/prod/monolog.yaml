@@ -9,8 +9,7 @@ monolog:
         domain_event:
             type: stream
             path: "%kernel.logs_dir%/domain_event_%kernel.environment%.log"
-            level: info
-            channels: ["!event", "!request", "!messenger"]
+            channels: ["event"]
         nested:
             type: stream
             path: php://stderr

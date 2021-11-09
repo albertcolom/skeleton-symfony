@@ -10,15 +10,26 @@ framework:
             # sync: 'sync://'
             ampqp:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                serializer: App\Shared\Infrastructure\Bus\Serializer\MessengerDomainEventJsonSerializer
+                #serializer: App\Shared\Infrastructure\Bus\Serializer\MessengerMessageSerializer
+                #serializer: messenger.transport.symfony_serializer
 
-        default_bus: command.bus
+        default_bus: sync.command.bus
         buses:
-            command.bus:
-            query.bus:
-            event.bus:
+            sync.command.bus:
+                middleware:
+                    - App\Shared\Infrastructure\Bus\Middleware\MessengerIdStampMiddleware
+                    - App\Shared\Infrastructure\Bus\Middleware\MessengerLoggerMiddleware
+                    - doctrine_transaction
+            sync.query.bus:
+                middleware:
+                    - App\Shared\Infrastructure\Bus\Middleware\MessengerIdStampMiddleware
+                    - App\Shared\Infrastructure\Bus\Middleware\MessengerLoggerMiddleware
+            async.event.bus:
                 default_middleware: allow_no_handlers
                 middleware:
-                    - App\Shared\Infrastructure\Bus\Middleware\MessengerDomainEventLogMiddleware
+                    - App\Shared\Infrastructure\Bus\Middleware\MessengerIdStampMiddleware
+                    - App\Shared\Infrastructure\Bus\Middleware\MessengerEventLogMiddleware
         routing:
             'App\Shared\Domain\Bus\Event\DomainEvent': ampqp
+        serializer:
+            default_serializer: App\Shared\Infrastructure\Bus\Serializer\MessengerMessageSerializer

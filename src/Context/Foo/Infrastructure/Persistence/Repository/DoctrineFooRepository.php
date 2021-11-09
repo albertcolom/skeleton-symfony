@@ -30,6 +30,12 @@ class DoctrineFooRepository extends ServiceEntityRepository implements FooReposi
     public function save(Foo $foo): void
     {
         $this->_em->persist($foo);
-        $this->_em->flush();
+    }
+
+    public function remove(FooId $fooId): void
+    {
+        $foo = $this->_em->getPartialReference(Foo::class, $fooId);
+
+        $this->_em->remove($foo);
     }
 }

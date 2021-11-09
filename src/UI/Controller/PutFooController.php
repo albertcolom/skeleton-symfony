@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\UI\Controller;
+
+use App\Context\Foo\Application\Command\Create\CreateFooCommand;
+use App\Context\Foo\Application\Command\Update\UpdateFooCommand;
+use App\Context\Foo\Application\Query\Find\FindFooQuery;
+use App\Context\Foo\Domain\Exception\FooNotFoundException;
+use App\Shared\Domain\Bus\Command\CommandBus;
+use App\Shared\Domain\Bus\Query\QueryBus;
+use App\Shared\Infrastructure\Request\RequestValidator;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class PutFooController
+{
+    public function __construct(
+        private CommandBus $commandBus,
+        private QueryBus $queryBus,
+        private RequestValidator $requestValidator
+    ) {
+    }
+
+    public function __invoke(Request $request): JsonResponse
+    {
+        $this->requestValidator->validate($request);
+        $content = $request->toArray();
+
+        try {
+            $this->commandBus->dispatch(new UpdateFooCommand($request->get('fooId'), $content['name']));
+            $httpStatus =  Response::HTTP_OK;
+        } catch (FooNotFoundException) {
+            $this->commandBus->dispatch(new CreateFooCommand($request->get('fooId'), $content['name']));
+            $httpStatus =  Response::HTTP_CREATED;
+        }
+
+        $response = $this->queryBus->ask(new FindFooQuery($request->get('fooId')));
+
+        return new JsonResponse($response->result(), $httpStatus);
+    }
+}

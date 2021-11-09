@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Domain;
 
+use App\Context\Foo\Domain\Bar\Bar;
+use App\Context\Foo\Domain\Bar\BarCollection;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class Foo extends AggregateRoot
@@ -14,17 +15,17 @@ class Foo extends AggregateRoot
     private Collection $bars;
 
     public function __construct(
-        private FooId $id,
+        private FooId  $id,
         private string $name
-    ) {
-        $this->bars = new ArrayCollection();
+    )
+    {
+        $this->bars = BarCollection::createEmpty();
     }
 
     public static function create(FooId $id, string $name): self
     {
         $foo = new self($id, $name);
-
-        $foo->recordEvent(FooWasCreated::create($foo->id, $foo->name));
+        $foo->recordEvent(FooWasCreated::create($foo->id->value(), $foo->name));
 
         return $foo;
     }
@@ -42,5 +43,35 @@ class Foo extends AggregateRoot
     public function bars(): Collection
     {
         return $this->bars;
+    }
+
+    public function addBar(Bar $bar): void
+    {
+        $this->bars->add($bar);
+
+        $this->recordEvent(BarWasAdded::create($this->fooId()->value(), $bar->barId()->value(), $bar->name()));
+    }
+
+    public function update(string $name): self
+    {
+        //$foo = unserialize(serialize($this));
+        //$foo->name = $name;
+
+        $this->name = $name;
+
+        $this->recordEvent(FooWasUpdated::create($this->fooId()->value(), $this->name()));
+
+        return $this;
+    }
+
+    public function remove(): void
+    {
+        $this->recordEvent(FooWasRemoved::create($this->fooId()->value()));
+    }
+
+    public function equals(self $other): bool
+    {
+        return $this->fooId()->equals($other->fooId())
+            && $this->name() === $other->name();
     }
 }

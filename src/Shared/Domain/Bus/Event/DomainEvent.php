@@ -4,42 +4,18 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\Bus\Event;
 
-use App\Shared\Domain\ValueObject\Uuid;
 use DateTimeImmutable;
 
 abstract class DomainEvent
 {
-    public function __construct(
-        private Uuid $aggregateId,
-        private ?Uuid $eventId = null,
-        private ?DateTimeImmutable $occurredOn = null
-    ) {
-        $this->eventId = $eventId ?: Uuid::random();
-        $this->occurredOn = $occurredOn ?: new DateTimeImmutable();
-    }
+    private const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    abstract public function toPrimitives(): array;
-
-    abstract public static function fromPrimitives(
-        string $aggregateId,
-        array $body,
-        string $eventId,
-        string $occurredOn
-    ): self;
-
-    abstract public static function version(): string;
-
-    public function aggregateId(): Uuid
+    public function __construct(private ?string $occurredOn = null)
     {
-        return $this->aggregateId;
+        $this->occurredOn = $occurredOn ?? (new DateTimeImmutable())->format(self::DATE_FORMAT);
     }
 
-    public function eventId(): Uuid
-    {
-        return $this->eventId;
-    }
-
-    public function occurredOn(): DateTimeImmutable
+    public function occurredOn(): string
     {
         return $this->occurredOn;
     }
