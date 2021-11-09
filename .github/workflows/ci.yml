@@ -1,0 +1,22 @@
+name: CI
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run docker-compose stack
+        run: docker-compose -f docker-compose.yml up -d
+
+      - name: Install dependencies
+        run: docker-compose exec php-fpm env XDEBUG_MODE=off composer install
+
+      - name: Unit test
+        run: docker-compose exec php-fpm env XDEBUG_MODE=off php vendor/bin/phpunit
+
+      - name: Acceptance test
+        run: docker-compose exec php-fpm env XDEBUG_MODE=off php vendor/bin/behat
