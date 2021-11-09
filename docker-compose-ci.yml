@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  php-fpm:
+    build: ./resources/infrastructure/docker-ci/php-fpm/Dockerfile
+    container_name: php-fpm_container_test
+    environment:
+      - TZ=Europe/Madrid
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    networks:
+      - docker-network
+
+networks:
+  docker-network:
+    driver: bridge
