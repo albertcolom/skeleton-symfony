@@ -5,7 +5,9 @@ namespace App\Shared\Infrastructure\Fixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
+use InvalidArgumentException;
 
 class DBALFooFixtures extends Fixture implements FixtureGroupInterface
 {
@@ -16,11 +18,15 @@ class DBALFooFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
+        if (!$manager instanceof EntityManager) {
+            throw new InvalidArgumentException('Invalid instance of ObjectManager');
+        }
+
         /* @var Connection $connection */
         $connection = $manager->getConnection();
 
         $query = <<<SQL
-INSERT INTO foo (id,name)
+INSERT INTO foo (id, name)
 VALUES
 	(UUID_TO_BIN('7f590fc8-1298-4fb7-927e-a38ae50bc705'), 'Some Foo name 1'),
 	(UUID_TO_BIN('1ca06159-6f66-45c6-aa80-1cf5141f66d6'), 'Some Foo name 2'),
