@@ -13,13 +13,13 @@ jobs:
         run: docker-compose -f docker-compose-ci.yml up -d --build
 
       - name: Run docker-compose status
-        run: docker-compose ps
+        run: docker-compose ps -a
 
       - name: Install dependencies
         run: docker-compose exec php-fpm composer install
 
       - name: Unit test
-        run: docker-compose exec php-fpm php vendor/bin/phpunit
+        run: docker-compose run php-fpm php vendor/bin/phpunit
 
       #- name: Acceptance test
       #  run: docker-compose exec php-fpm php vendor/bin/behat
