@@ -11,31 +11,16 @@ jobs:
         uses: actions/checkout@v2
 
       - name: 🐳 Build
-        run: docker-compose -f docker-compose-ci.yml up -d --build
-
-      - name: ⏰ Wait for services
-        run: |
-          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php-fpm)")"; do
-            case $status in
-              starting) sleep 1;;
-              healthy) exit 0;;
-              unhealthy)
-                docker-compose ps
-                docker-compose logs
-                exit 1
-              ;;
-            esac
-          done
-          exit 1
+        run: docker-compose -f docker-compose-ci.yml up --build --detach
 
       - name: 📦 Install dependencies
-        run: docker-compose exec php-fpm composer install
+        run: docker-compose run php-fpm composer install --prefer-dist --no-suggest --no-interaction
 
-      - name: 🥷 PHPUnit
-        run: docker-compose exec -T php-fpm php vendor/bin/phpunit
+      - name: ⛑️ PHPUnit
+        run: docker-compose run php-fpm php vendor/bin/phpunit
 
       - name: 🐽 CodeSniffer
-        run: docker-compose exec -T php-fpm php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
+        run: docker-compose run php-fpm php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
 
-      - name: 🕵🏼‍ PHPStan
-        run: docker-compose exec -T php-fpm php vendor/bin/phpstan analyse -c phpstan.neon
+      - name: 🔍 PHPStan
+        run: docker-compose run php-fpm php vendor/bin/phpstan analyse -c phpstan.neon
