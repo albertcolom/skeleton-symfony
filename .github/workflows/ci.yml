@@ -19,6 +19,9 @@ jobs:
       - name: ⛑️ PHPUnit
         run: docker-compose run php-fpm php vendor/bin/phpunit
 
+      - name: 🌍 Doctrine Schema Validator
+        run: docker-compose run php-fpm php bin/console doctrine:schema:validate --skip-sync
+
       - name: 🐽 CodeSniffer
         run: docker-compose run php-fpm php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
 
