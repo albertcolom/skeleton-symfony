@@ -9,17 +9,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run docker-compose stack
+      - name: Build
         run: docker-compose -f docker-compose-ci.yml up -d --build
-
-      - name: Run docker-compose status
-        run: docker-compose ps -a
 
       - name: Install dependencies
         run: docker-compose run php-fpm composer install
 
-      - name: Unit test
+      - name: PHPUnit
         run: docker-compose run php-fpm php vendor/bin/phpunit
 
-      #- name: Acceptance test
-      #  run: docker-compose exec php-fpm php vendor/bin/behat
+      - name: CodeSniffer
+        run: docker-compose run php-fpm php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
+
+      - name: PHPStan
+        run: docker-compose run php-fpm php vendor/bin/phpstan analyse -c phpstan.neon
