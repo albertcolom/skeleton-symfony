@@ -19,7 +19,7 @@ jobs:
         run: docker-compose run php-fpm composer install
 
       - name: Unit test
-        run: docker-compose exec php-fpm php vendor/bin/phpunit
+        run: docker-compose run php-fpm php vendor/bin/phpunit
 
       #- name: Acceptance test
       #  run: docker-compose exec php-fpm php vendor/bin/behat
