@@ -15,10 +15,9 @@ class Foo extends AggregateRoot
     private Collection $bars;
 
     public function __construct(
-        private FooId  $id,
+        private FooId $id,
         private string $name
-    )
-    {
+    ) {
         $this->bars = BarCollection::createEmpty();
     }
 

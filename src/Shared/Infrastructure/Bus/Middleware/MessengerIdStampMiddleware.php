@@ -11,7 +11,6 @@ use Symfony\Component\Messenger\Middleware\StackInterface;
 
 class MessengerIdStampMiddleware implements MiddlewareInterface
 {
-
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
         if (null === $envelope->last(MessengerIdStamp::class)) {

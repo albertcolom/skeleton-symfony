@@ -31,7 +31,7 @@ class MessengerEventLogMiddleware implements MiddlewareInterface
 
         $body = json_decode($message['body'], true, 512, JSON_THROW_ON_ERROR);
 
-        if (!$receive){
+        if (!$receive) {
             $this->eventLogger->info(
                 sprintf('An event has been published "%s"', $body['metadata']['name'] ?? ''),
                 $body
