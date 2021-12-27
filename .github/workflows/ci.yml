@@ -3,23 +3,39 @@ name: CI
 on: [ push, pull_request ]
 
 jobs:
-  build:
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
+      - name: 🚜 Checkout
+        uses: actions/checkout@v2
 
-      - name: Build
+      - name: 🐳 Build
         run: docker-compose -f docker-compose-ci.yml up -d --build
 
-      - name: Install dependencies
-        run: docker-compose run php-fpm composer install
+      - name: ⏰ Wait for services
+        run: |
+          while status="$(docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" "$(docker-compose ps -q php-fpm)")"; do
+            case $status in
+              starting) sleep 1;;
+              healthy) exit 0;;
+              unhealthy)
+                docker-compose ps
+                docker-compose logs
+                exit 1
+              ;;
+            esac
+          done
+          exit 1
 
-      - name: PHPUnit
-        run: docker-compose run php-fpm php vendor/bin/phpunit
+      - name: 📦 Install dependencies
+        run: docker-compose exec php-fpm composer install
 
-      - name: CodeSniffer
-        run: docker-compose run php-fpm php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
+      - name: 🥷 PHPUnit
+        run: docker-compose exec -T php-fpm php vendor/bin/phpunit
 
-      - name: PHPStan
-        run: docker-compose run php-fpm php vendor/bin/phpstan analyse -c phpstan.neon
+      - name: 🐽 CodeSniffer
+        run: docker-compose exec -T php-fpm php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
+
+      - name: 🕵🏼‍ PHPStan
+        run: docker-compose exec -T php-fpm php vendor/bin/phpstan analyse -c phpstan.neon
