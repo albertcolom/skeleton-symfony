@@ -4,7 +4,7 @@ info:
   description: This is the documentation of the Foo API
   version: 1.0.0
 servers:
-  - url: http://localhost:8000/
+  - url: http://localhost:8000
     description: Dev server
 components:
   parameters:
@@ -24,7 +24,7 @@ components:
     id:
       type: string
       format: uuid
-      example: "c935c64c-7bbf-4779-9c4f-c9cd97f3354c"
+      example: "7f590fc8-1298-4fb7-927e-a38ae50bc705"
     name:
       type: string
       minLength: 1
