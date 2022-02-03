@@ -2,59 +2,59 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Context\Foo\Application\Query\FindById;
+namespace App\Tests\Unit\Context\Foo\Application\Query\Find;
 
-use App\Context\Foo\Application\Query\Find\FindFooQuery;
-use App\Context\Foo\Application\Query\Find\FindFooQueryHandler;
 use App\Context\Foo\Application\Query\Find\FindFooQueryResponse;
+use App\Context\Foo\Application\Query\Find\FindFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdMother;
 use App\Tests\Shared\Context\Foo\Domain\Bar\BarMother;
 use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
 use App\Tests\Shared\Context\Foo\Domain\FooMother;
 use PHPUnit\Framework\TestCase;
 
-class FindByIdQueryHandlerTest extends TestCase
+class FindFooServiceTest extends TestCase
 {
     private FooViewRepository $fooViewRepository;
-    private FindFooQuery|null $query;
+    private FooId|null $fooId;
     private FindFooQueryResponse|null $response;
 
     protected function setUp(): void
     {
         $this->fooViewRepository = $this->createMock(FooViewRepository::class);
-        $this->query = null;
+        $this->fooId = null;
         $this->response = null;
     }
 
     public function testItShouldThrowExceptionWhenFooNotFound(): void
     {
-        $this->givenFindFooByIdQuery();
+        $this->givenDataToFindFoo();
         $this->givenNonExistingFoo();
         $this->thenThrowFooNotFoundExceptionException();
-        $this->whenTheCommandHandlerIsInvoked();
+        $this->whenExecuteTheService();
     }
 
     public function testItShouldGetExpectedResultWhenFooExists(): void
     {
-        $this->givenFindFooByIdQuery();
+        $this->givenDataToFindFoo();
         $this->givenExistingFoo();
-        $this->whenTheCommandHandlerIsInvoked();
+        $this->whenExecuteTheService();
         $this->thenGetExpectedResponseWithEmptyBarCollection();
     }
 
     public function testItShouldGetExpectedResultWithBarCollectionWhenFooExists(): void
     {
-        $this->givenFindFooByIdQuery();
+        $this->givenDataToFindFoo();
         $this->givenExistingFooWithBar();
-        $this->whenTheCommandHandlerIsInvoked();
+        $this->whenExecuteTheService();
         $this->thenGetExpectedResponseWithBarCollection();
     }
 
-    private function givenFindFooByIdQuery(): void
+    private function givenDataToFindFoo(): void
     {
-        $this->query = new FindFooQuery(FooIdMother::DEFAULT_FOO_ID);
+        $this->fooId = FooIdMother::default();
     }
 
     private function givenNonExistingFoo(): void
@@ -82,10 +82,10 @@ class FindByIdQueryHandlerTest extends TestCase
         $this->expectExceptionMessage(sprintf('Foo with id %s not found', FooIdMother::DEFAULT_FOO_ID));
     }
 
-    private function whenTheCommandHandlerIsInvoked(): void
+    private function whenExecuteTheService(): void
     {
-        $sut = new FindFooQueryHandler($this->fooViewRepository);
-        $this->response = $sut->__invoke($this->query);
+        $sut = new FindFooService($this->fooViewRepository);
+        $this->response = $sut->execute($this->fooId);
     }
 
     private function thenGetExpectedResponseWithEmptyBarCollection(): void

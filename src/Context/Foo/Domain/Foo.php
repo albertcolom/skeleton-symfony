@@ -53,9 +53,6 @@ class Foo extends AggregateRoot
 
     public function update(string $name): self
     {
-        //$foo = unserialize(serialize($this));
-        //$foo->name = $name;
-
         $this->name = $name;
 
         $this->recordEvent(FooWasUpdated::create($this->fooId()->value(), $this->name()));
