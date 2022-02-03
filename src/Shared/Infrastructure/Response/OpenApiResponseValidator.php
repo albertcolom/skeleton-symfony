@@ -14,7 +14,7 @@ class OpenApiResponseValidator implements ResponseValidator
 {
     private \League\OpenAPIValidation\PSR7\ResponseValidator $responseValidator;
 
-    public function __construct(private Psr17ResponseFactory $psr17ResponseFactory, string $openapiPath)
+    public function __construct(private ResponseAdapter $responseAdapter, string $openapiPath)
     {
         $this->responseValidator = (new ValidatorBuilder())
             ->fromYamlFile($openapiPath)
@@ -23,7 +23,7 @@ class OpenApiResponseValidator implements ResponseValidator
 
     public function validate(string $uri, string $method, Response $response): void
     {
-        $psr7Response = $this->psr17ResponseFactory->build($response);
+        $psr7Response = $this->responseAdapter->build($response);
 
         try {
             $this->responseValidator->validate(new OperationAddress($uri, strtolower($method)), $psr7Response);

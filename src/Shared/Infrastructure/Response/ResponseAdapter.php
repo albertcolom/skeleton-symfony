@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory;
 use Symfony\Component\HttpFoundation\Response;
 
-class Psr17ResponseFactory
+class ResponseAdapter
 {
     public function build(object $response): ResponseInterface
     {

@@ -14,7 +14,7 @@ class OpenApiRequestValidator implements RequestValidator
 {
     private ServerRequestValidator $requestValidator;
 
-    public function __construct(private Psr17RequestFactory $psr17RequestFactory, string $openapiPath)
+    public function __construct(private RequestAdapter $requestAdapter, string $openapiPath)
     {
         $this->requestValidator = (new ValidatorBuilder())
             ->fromYamlFile($openapiPath)
@@ -23,7 +23,7 @@ class OpenApiRequestValidator implements RequestValidator
 
     public function validate(Request $request): void
     {
-        $psr7Request = $this->psr17RequestFactory->build($request);
+        $psr7Request = $this->requestAdapter->build($request);
 
         try {
             $this->requestValidator->validate($psr7Request);
