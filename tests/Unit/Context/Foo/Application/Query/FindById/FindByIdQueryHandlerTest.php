@@ -8,22 +8,22 @@ use App\Context\Foo\Application\Query\Find\FindFooQuery;
 use App\Context\Foo\Application\Query\Find\FindFooQueryHandler;
 use App\Context\Foo\Application\Query\Find\FindFooQueryResponse;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Repository\FooRepository;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarMother;
+use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
 use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\Bar\BarMother;
 use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
+use App\Tests\Shared\Context\Foo\Domain\FooMother;
 use PHPUnit\Framework\TestCase;
 
 class FindByIdQueryHandlerTest extends TestCase
 {
-    private FooRepository $fooRepository;
+    private FooViewRepository $fooViewRepository;
     private FindFooQuery|null $query;
     private FindFooQueryResponse|null $response;
 
     protected function setUp(): void
     {
-        $this->fooRepository = $this->createMock(FooRepository::class);
+        $this->fooViewRepository = $this->createMock(FooViewRepository::class);
         $this->query = null;
         $this->response = null;
     }
@@ -59,12 +59,12 @@ class FindByIdQueryHandlerTest extends TestCase
 
     private function givenNonExistingFoo(): void
     {
-        $this->fooRepository->expects(self::once())->method('findById')->willReturn(null);
+        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn(null);
     }
 
     private function givenExistingFoo(): void
     {
-        $this->fooRepository->expects(self::once())->method('findById')->willReturn(FooMother::default());
+        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn(FooMother::default());
     }
 
     private function givenExistingFooWithBar(): void
@@ -73,7 +73,7 @@ class FindByIdQueryHandlerTest extends TestCase
         $foo->addBar(BarMother::default());
         $foo->addBar(BarMother::default());
 
-        $this->fooRepository->expects(self::once())->method('findById')->willReturn($foo);
+        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn($foo);
     }
 
     private function thenThrowFooNotFoundExceptionException(): void
@@ -84,7 +84,7 @@ class FindByIdQueryHandlerTest extends TestCase
 
     private function whenTheCommandHandlerIsInvoked(): void
     {
-        $sut = new FindFooQueryHandler($this->fooRepository);
+        $sut = new FindFooQueryHandler($this->fooViewRepository);
         $this->response = $sut->__invoke($this->query);
     }
 

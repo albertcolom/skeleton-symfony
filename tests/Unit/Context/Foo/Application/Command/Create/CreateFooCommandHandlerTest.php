@@ -7,9 +7,9 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Create;
 use App\Context\Foo\Application\Command\Create\CreateFooCommand;
 use App\Context\Foo\Application\Command\Create\CreateFooCommandHandler;
 use App\Context\Foo\Domain\Exception\FooAlreadyExistException;
-use App\Context\Foo\Domain\Repository\FooRepository;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
+use App\Tests\Shared\Context\Foo\Domain\FooMother;
 use PHPUnit\Framework\TestCase;
 
 class CreateFooCommandHandlerTest extends TestCase

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Context\Foo\Application\Command\Delete;
 
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Repository\FooRepository;
+use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 
@@ -18,7 +18,6 @@ class DeleteFooCommandHandler implements CommandHandler
     public function __invoke(DeleteFooCommand $command): void
     {
         $fooId = FooId::fromString($command->id());
-
         $foo = $this->fooRepository->findById($fooId);
 
         if (is_null($foo)) {

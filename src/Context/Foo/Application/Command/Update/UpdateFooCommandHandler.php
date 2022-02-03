@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Context\Foo\Application\Command\Update;
 
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Repository\FooRepository;
+use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 
