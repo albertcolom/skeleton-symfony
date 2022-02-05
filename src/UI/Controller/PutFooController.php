@@ -51,7 +51,7 @@ class PutFooController
     private function getResourceUrl(string $fooId): string
     {
         return $this->urlGenerator->generate(
-            'get_foo',
+            'get_v1_foo',
             [
                 'fooId' => $fooId,
             ],

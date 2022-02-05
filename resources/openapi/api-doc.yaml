@@ -139,7 +139,7 @@ components:
           example:
             { "code": 500, "status": "Internal server error", "message": "The Internal server error message" }
 paths:
-  /foo:
+  /v1/foo:
     get:
       summary: Retrives all Foo
       description: Retrives all Foo
@@ -191,7 +191,7 @@ paths:
           $ref: '#/components/responses/409'
         '500':
           $ref: '#/components/responses/500'
-  /foo/{fooId}:
+  /v1/foo/{fooId}:
     get:
       summary: Retrives an existing Foo
       description: Retrives an existing Foo

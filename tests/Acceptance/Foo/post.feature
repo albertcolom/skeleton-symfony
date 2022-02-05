@@ -5,7 +5,7 @@ Feature:
 
   Scenario: It can create a Foo
     Given the queue associated to transport ampqp is empty
-    When A POST request is sent to "/foo" with JSON body:
+    When A POST request is sent to "/v1/foo" with JSON body:
       """
        {
           "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
@@ -13,7 +13,7 @@ Feature:
        }
        """
     Then the response header "Content-Type" should be equal to "application/json"
-    And the response header "Location" should be equal to "http://localhost/foo/9cc900eb-663a-4292-876d-5a77eeefade9"
+    And the response header "Location" should be equal to "http://localhost/v1/foo/9cc900eb-663a-4292-876d-5a77eeefade9"
     And the JSON response should be equal to:
       """
        {
@@ -23,7 +23,7 @@ Feature:
        }
       """
     And the response code should be 201
-    And the response should be a documented and validated with OpenApi schema POST "/foo"
+    And the response should be a documented and validated with OpenApi schema POST "/v1/foo"
     And the transport ampqp producer has messages below:
       """
       [
@@ -44,7 +44,7 @@ Feature:
       """
 
   Scenario: It can't create a Foo when invalid request body
-    When A POST request is sent to "/foo" with JSON body:
+    When A POST request is sent to "/v1/foo" with JSON body:
       """
        {
            "name": "Some foo name"
@@ -60,11 +60,11 @@ Feature:
         }
         """
     And the response code should be 400
-    And the response should be a documented and validated with OpenApi schema POST "/foo"
+    And the response should be a documented and validated with OpenApi schema POST "/v1/foo"
 
   Scenario: It can't create a Foo when Foo already exists
     Given I load fixtures for groups "foo"
-    When A POST request is sent to "/foo" with JSON body:
+    When A POST request is sent to "/v1/foo" with JSON body:
       """
        {
            "id": "7f590fc8-1298-4fb7-927e-a38ae50bc705",
@@ -81,4 +81,4 @@ Feature:
         }
         """
     And the response code should be 409
-    And the response should be a documented and validated with OpenApi schema POST "/foo"
+    And the response should be a documented and validated with OpenApi schema POST "/v1/foo"

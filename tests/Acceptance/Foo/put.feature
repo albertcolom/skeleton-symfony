@@ -6,7 +6,7 @@ Feature:
   Scenario: It can update a Foo when Foo exists
     Given I load fixtures for groups "foo,bar"
     And the queue associated to transport ampqp is empty
-    When A PUT request is sent to "/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705" with JSON body:
+    When A PUT request is sent to "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705" with JSON body:
       """
        {
           "name": "New foo name"
@@ -31,7 +31,7 @@ Feature:
        }
       """
     And the response code should be 200
-    And the response should be a documented and validated with OpenApi schema PUT "/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
+    And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
     And the transport ampqp producer has messages below:
       """
       [
@@ -53,14 +53,14 @@ Feature:
 
   Scenario: It can create a Foo when Foo not exists
     Given the queue associated to transport ampqp is empty
-    When A PUT request is sent to "/foo/09042e35-592e-4057-9e03-597e234eea53" with JSON body:
+    When A PUT request is sent to "/v1/foo/09042e35-592e-4057-9e03-597e234eea53" with JSON body:
       """
        {
           "name": "New foo name"
        }
        """
     Then the response header "Content-Type" should be equal to "application/json"
-    And the response header "Location" should be equal to "http://localhost/foo/09042e35-592e-4057-9e03-597e234eea53"
+    And the response header "Location" should be equal to "http://localhost/v1/foo/09042e35-592e-4057-9e03-597e234eea53"
     And the JSON response should be equal to:
       """
        {
@@ -70,7 +70,7 @@ Feature:
        }
       """
     And the response code should be 201
-    And the response should be a documented and validated with OpenApi schema PUT "/foo/09042e35-592e-4057-9e03-597e234eea53"
+    And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/09042e35-592e-4057-9e03-597e234eea53"
     And the transport ampqp producer has messages below:
       """
       [
@@ -91,7 +91,7 @@ Feature:
       """
 
   Scenario: It can't update a Foo when invalid request body
-    When A PUT request is sent to "/foo/d9a15203-77a3-4a2c-8b1c-0d9074937a78" with JSON body:
+    When A PUT request is sent to "/v1/foo/d9a15203-77a3-4a2c-8b1c-0d9074937a78" with JSON body:
       """
        {
            "foo_name": "Some foo name"
@@ -107,4 +107,4 @@ Feature:
         }
         """
     And the response code should be 400
-    And the response should be a documented and validated with OpenApi schema PUT "/foo/d9a15203-77a3-4a2c-8b1c-0d9074937a78"
+    And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/d9a15203-77a3-4a2c-8b1c-0d9074937a78"

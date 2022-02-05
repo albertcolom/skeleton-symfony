@@ -1,24 +1,24 @@
-get_foo:
-  path: /foo/{fooId}
+get_v1_foo:
+  path: /v1/foo/{fooId}
   methods: GET
   controller: App\UI\Controller\GetFooController
 
-get_all_foo:
-  path: /foo
+get_v1_all_foo:
+  path: /v1/foo
   methods: GET
   controller: App\UI\Controller\GetAllFooController
 
-put_foo:
-  path: /foo/{fooId}
+put_v1_foo:
+  path: /v1/foo/{fooId}
   methods: PUT
   controller: App\UI\Controller\PutFooController
 
-delete_foo:
-  path: /foo/{fooId}
+delete_v1_foo:
+  path: /v1/foo/{fooId}
   methods: DELETE
   controller: App\UI\Controller\DeleteFooController
 
-post_foo:
-  path: /foo
+post_v1_foo:
+  path: /v1/foo
   methods: POST
   controller: App\UI\Controller\PostFooController

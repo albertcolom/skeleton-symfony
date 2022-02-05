@@ -5,7 +5,7 @@ Feature:
 
     Scenario: It can retrieve all Foo
         Given I load fixtures for groups "foo,bar"
-        When A GET request is sent to "/foo"
+        When A GET request is sent to "/v1/foo"
         Then the response header "Content-Type" should be equal to "application/json"
         And the JSON response should be equal to:
         """
@@ -57,14 +57,14 @@ Feature:
         ]
         """
         And the response code should be 200
-        And the response should be a documented and validated with OpenApi schema GET "/foo"
+        And the response should be a documented and validated with OpenApi schema GET "/v1/foo"
 
     Scenario: It retrieve a missing Foo
-        When A GET request is sent to "/foo"
+        When A GET request is sent to "/v1/foo"
         Then the response header "Content-Type" should be equal to "application/json"
         And the JSON response should be equal to:
         """
         []
         """
         And the response code should be 200
-        And the response should be a documented and validated with OpenApi schema GET "/foo"
+        And the response should be a documented and validated with OpenApi schema GET "/v1/foo"
