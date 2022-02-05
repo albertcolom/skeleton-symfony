@@ -60,6 +60,7 @@ Feature:
        }
        """
     Then the response header "Content-Type" should be equal to "application/json"
+    And the response header "Location" should be equal to "http://localhost/foo/09042e35-592e-4057-9e03-597e234eea53"
     And the JSON response should be equal to:
       """
        {

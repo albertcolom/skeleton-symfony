@@ -12,13 +12,15 @@ use App\Shared\Infrastructure\Request\RequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PostFooController
 {
     public function __construct(
         private CommandBus $commandBus,
         private QueryBus $queryBus,
-        private RequestValidator $requestValidator
+        private RequestValidator $requestValidator,
+        private UrlGeneratorInterface $urlGenerator
     ) {
     }
 
@@ -31,6 +33,23 @@ class PostFooController
 
         $response = $this->queryBus->ask(new FindFooQuery($content['id']));
 
-        return new JsonResponse($response->result(), Response::HTTP_CREATED);
+        return new JsonResponse(
+            $response->result(),
+            Response::HTTP_CREATED,
+            [
+                'Location' => $this->getResourceUrl($content['id'])
+            ]
+        );
+    }
+
+    private function getResourceUrl(string $fooId): string
+    {
+        return $this->urlGenerator->generate(
+            'get_foo',
+            [
+                'fooId' => $fooId,
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
     }
 }

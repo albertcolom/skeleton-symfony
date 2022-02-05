@@ -59,7 +59,7 @@ Feature:
         And the response code should be 200
         And the response should be a documented and validated with OpenApi schema GET "/foo"
 
-    Scenario: It can't retrieve a missing Foo
+    Scenario: It retrieve a missing Foo
         When A GET request is sent to "/foo"
         Then the response header "Content-Type" should be equal to "application/json"
         And the JSON response should be equal to:
