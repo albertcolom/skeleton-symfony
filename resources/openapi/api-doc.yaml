@@ -29,6 +29,31 @@ components:
       type: string
       minLength: 1
       maxLength: 255
+    Foos:
+      type: array
+      items:
+        $ref: '#/components/schemas/Foo'
+      example: [
+        {
+          "id": "1ca06159-6f66-45c6-aa80-1cf5141f66d6",
+          "name": "Some Foo name 1",
+          "bar": [
+            {
+              "id": "06b433af-5699-4cf2-8fb0-29cca9e694c3",
+              "name": "Some Bar name 1"
+            },
+            {
+              "id": "5fef1065-8fe3-4e29-8712-5eb89fdbc0a0",
+              "name": "Some Bar name 2"
+            }
+          ]
+        },
+        {
+          "id": "6b7dde86-52c3-45d2-a623-f6bc6f142e29",
+          "name": "Some Foo name 2",
+          "bar": [ ]
+        }
+      ]
     Foo:
       type: object
       properties:
@@ -115,6 +140,20 @@ components:
             { "code": 500, "status": "Internal server error", "message": "The Internal server error message" }
 paths:
   /foo:
+    get:
+      summary: Retrives all Foo
+      description: Retrives all Foo
+      tags:
+        - Foo
+      responses:
+        '200':
+          description: Retrives all Foo
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foos'
+        '500':
+          $ref: '#/components/responses/500'
     post:
       summary: Creates a new Foo
       description: Creates a new Foo

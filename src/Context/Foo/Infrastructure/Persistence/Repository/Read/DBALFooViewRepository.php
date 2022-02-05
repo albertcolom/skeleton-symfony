@@ -88,8 +88,8 @@ SQL;
             return $group;
         }, []);
 
-        return FooCollection::create(array_map(function (array $data) {
+        return FooCollection::create(array_values(array_map(function (array $data) {
             return $this->hydrate($data);
-        }, $groupByFoo));
+        }, $groupByFoo)));
     }
 }

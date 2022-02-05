@@ -64,7 +64,7 @@ class MessengerMessageSerializer implements SerializerInterface
         $id = $envelope->last(MessengerIdStamp::class);
 
         $data = $this->serializer->serialize([
-            'payload' => $message,
+            'payload' => !empty((array)$message) ? $message : [],
             'metadata' => [
                 'id' => $id?->value(),
                 'name' => $this->encodeMessageName($message::class),

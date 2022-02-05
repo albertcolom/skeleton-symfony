@@ -21,13 +21,7 @@ class MessengerCacheQueryBus implements CacheQueryBus
 
     public function ask(Query $query, int $ttl = self::TTL_HOUR): Response
     {
-        //dev-FindFooQuery-c7fa107554ebbe4dcca7bb45b1d188ef
-        //test_041121162529_23288-FindFooQuery-f970918085d8eaa15c03c39207077302
-        //dev-FindFooQuery-f3a102d81b436ea39327bfe9a8391daa
-
         $cacheItem = $this->cache->getItem(CacheKey::fromObject($query)->value());
-
-        $hola = $this->cache->getItem('dev*');
 
         if ($cacheItem->isHit()) {
             return $cacheItem->get();

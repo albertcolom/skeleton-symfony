@@ -3,6 +3,11 @@ get_foo:
   methods: GET
   controller: App\UI\Controller\GetFooController
 
+get_all_foo:
+  path: /foo
+  methods: GET
+  controller: App\UI\Controller\GetAllFooController
+
 put_foo:
   path: /foo/{fooId}
   methods: PUT
