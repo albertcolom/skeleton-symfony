@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Context\Foo\Application\Query\FindAll;
 
 use App\Shared\Domain\Bus\Query\QueryHandler;
+use App\Shared\Domain\QueryParams\QueryParams;
 
 class FindAllFooQueryHandler implements QueryHandler
 {
@@ -14,6 +15,6 @@ class FindAllFooQueryHandler implements QueryHandler
 
     public function __invoke(FindAllFooQuery $query): FindAllFooQueryResponse
     {
-        return $this->findAllFooService->execute();
+        return $this->findAllFooService->execute(QueryParams::fromArray($query->params()));
     }
 }

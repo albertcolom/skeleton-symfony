@@ -21,9 +21,9 @@ function __run() #(step, name, cmd)
     end=`date +%s`
 
     if [[ 0 == $exit_code || 130 == $exit_code ]]; then
-        echo -e "🟢 $((end-start))s"
+        echo "🟢 $((end-start))s"
     else
-        echo -e "🔴 \n\n $output"
+        echo "🔴 \n\n $output"
         exit 1
     fi
 }

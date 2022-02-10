@@ -59,6 +59,28 @@ Feature:
         And the response code should be 200
         And the response should be a documented and validated with OpenApi schema GET "/v1/foo"
 
+    Scenario: It can retrieve all Foo with pagination params
+        Given I load fixtures for groups "foo"
+        When A GET request is sent to "/v1/foo?limit=2&offset=1"
+        Then the response header "Content-Type" should be equal to "application/json"
+        And the JSON response should be equal to:
+        """
+        [
+            {
+                "id": "6b7dde86-52c3-45d2-a623-f6bc6f142e29",
+                "name": "Some Foo name 5",
+                "bar": []
+            },
+            {
+                "id": "782416f0-5d50-4478-821a-48e5d1f0391d",
+                "name": "Some Foo name 3",
+                "bar": []
+            }
+        ]
+        """
+        And the response code should be 200
+        And the response should be a documented and validated with OpenApi schema GET "/v1/foo?limit=2&offset=1"
+
     Scenario: It retrieve a missing Foo
         When A GET request is sent to "/v1/foo"
         Then the response header "Content-Type" should be equal to "application/json"

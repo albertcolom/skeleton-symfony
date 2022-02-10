@@ -6,6 +6,7 @@ namespace App\UI\Controller;
 
 use App\Context\Foo\Application\Query\FindAll\FindAllFooQuery;
 use App\Shared\Domain\Bus\Query\CacheQueryBus;
+use App\Shared\Domain\QueryParams\QueryParams;
 use App\Shared\Infrastructure\Request\RequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,9 @@ class GetAllFooController
     {
         $this->requestValidator->validate($request);
 
-        $response = $this->cachedQueryBus->ask(new FindAllFooQuery());
+        $queryParams = QueryParams::fromArray($request->query->all());
+
+        $response = $this->cachedQueryBus->ask(new FindAllFooQuery($queryParams->toArray()));
 
         return new JsonResponse($response->result(), Response::HTTP_OK);
     }

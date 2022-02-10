@@ -8,6 +8,18 @@ servers:
     description: Dev server
 components:
   parameters:
+    offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+      description: The number of items to skip before starting to collect the result set
+    limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+      description: The numbers of items to return
     fooId:
       name: fooId
       in: path
@@ -145,6 +157,9 @@ paths:
       description: Retrives all Foo
       tags:
         - Foo
+      parameters:
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
       responses:
         '200':
           description: Retrives all Foo

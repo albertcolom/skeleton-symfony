@@ -20,7 +20,7 @@ class FindAllFooQueryHandlerTest extends TestCase
     protected function setUp(): void
     {
         $this->findAllFooService = $this->createMock(FindAllFooService::class);
-        $this->query = new FindAllFooQuery();
+        $this->query = new FindAllFooQuery([]);
         $this->response = null;
     }
 

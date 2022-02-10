@@ -10,6 +10,7 @@ use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\FooCollection;
 use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Shared\Domain\QueryParams\QueryParams;
 use Doctrine\DBAL\Connection;
 
 class DBALFooViewRepository implements FooViewRepository
@@ -44,7 +45,7 @@ SQL;
         return $this->hydrate($resultSet);
     }
 
-    public function findAll(): FooCollection
+    public function findAll(QueryParams $queryParams): FooCollection
     {
         $query = <<<SQL
 SELECT
@@ -56,6 +57,10 @@ FROM
     foo AS f
     LEFT JOIN bar AS b ON b.foo_id = f.id
 SQL;
+
+        if ($queryParams->hasLimit()) {
+            $query .= sprintf(' LIMIT %s,%s', $queryParams->offset()->value(), $queryParams->limit()->value());
+        }
 
         $stmt = $this->connection->prepare($query);
         $resultSet = $stmt->executeQuery()->fetchAllAssociative();
