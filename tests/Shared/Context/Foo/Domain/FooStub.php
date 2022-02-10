@@ -7,7 +7,7 @@ namespace App\Tests\Shared\Context\Foo\Domain;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\ValueObject\FooId;
 
-class FooMother
+class FooStub
 {
     public const DEFAULT_FOO_NAME = 'Default Foo name';
 
@@ -18,6 +18,6 @@ class FooMother
 
     public static function default(): Foo
     {
-        return self::create(FooIdMother::default(), self::DEFAULT_FOO_NAME);
+        return self::create(FooIdStub::default(), self::DEFAULT_FOO_NAME);
     }
 }

@@ -8,10 +8,10 @@ use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryResponse;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooService;
 use App\Context\Foo\Domain\FooCollection;
 use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdMother;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarMother;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdStub;
+use App\Tests\Shared\Context\Foo\Domain\Bar\BarStub;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class FindAllFooServiceTest extends TestCase
@@ -41,13 +41,13 @@ class FindAllFooServiceTest extends TestCase
 
     private function givenFooCollection(): void
     {
-        $foo = FooMother::default();
-        $foo->addBar(BarMother::default());
+        $foo = FooStub::default();
+        $foo->addBar(BarStub::default());
 
         $this->fooViewRepository
             ->expects(self::once())
             ->method('findAll')
-            ->willReturn(new FooCollection([$foo, FooMother::default()]));
+            ->willReturn(new FooCollection([$foo, FooStub::default()]));
     }
 
     private function givenEmptyFooCollection(): void
@@ -62,18 +62,18 @@ class FindAllFooServiceTest extends TestCase
     {
         $expected = [
             [
-                'id' => FooIdMother::DEFAULT_FOO_ID,
-                'name' => FooMother::DEFAULT_FOO_NAME,
+                'id' => FooIdStub::DEFAULT_FOO_ID,
+                'name' => FooStub::DEFAULT_FOO_NAME,
                 'bar' => [
                     [
-                        'id' => BarIdMother::DEFAULT_BAR_ID,
-                        'name' => BarMother::DEFAULT_BAR_NAME,
+                        'id' => BarIdStub::DEFAULT_BAR_ID,
+                        'name' => BarStub::DEFAULT_BAR_NAME,
                     ]
                 ],
             ],
             [
-                'id' => FooIdMother::DEFAULT_FOO_ID,
-                'name' => FooMother::DEFAULT_FOO_NAME,
+                'id' => FooIdStub::DEFAULT_FOO_ID,
+                'name' => FooStub::DEFAULT_FOO_NAME,
                 'bar' => [],
             ],
         ];

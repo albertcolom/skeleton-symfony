@@ -7,9 +7,9 @@ namespace App\Tests\Shared\Context\Foo\Domain\Bar;
 use App\Context\Foo\Domain\Bar\Bar;
 use App\Context\Foo\Domain\Bar\ValueObject\BarId;
 use App\Context\Foo\Domain\Foo;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 
-class BarMother
+class BarStub
 {
     public const DEFAULT_BAR_NAME = 'Default bar name';
 
@@ -20,6 +20,6 @@ class BarMother
 
     public static function default(): Bar
     {
-        return self::create(FooMother::default(), BarIdMother::default(), self::DEFAULT_BAR_NAME);
+        return self::create(FooStub::default(), BarIdStub::default(), self::DEFAULT_BAR_NAME);
     }
 }

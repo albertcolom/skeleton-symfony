@@ -7,8 +7,8 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Update;
 use App\Context\Foo\Application\Command\Update\UpdateFooCommand;
 use App\Context\Foo\Application\Command\Update\UpdateFooCommandHandler;
 use App\Context\Foo\Application\Command\Update\UpdateFooService;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class UpdateFooCommandHandlerTest extends TestCase
@@ -31,7 +31,7 @@ class UpdateFooCommandHandlerTest extends TestCase
 
     private function givenUpdateFooCommand(): void
     {
-        $this->command = new UpdateFooCommand(FooIdMother::DEFAULT_FOO_ID, FooMother::DEFAULT_FOO_NAME);
+        $this->command = new UpdateFooCommand(FooIdStub::DEFAULT_FOO_ID, FooStub::DEFAULT_FOO_NAME);
     }
 
     private function thenFooIsUpdated(): void
@@ -39,7 +39,7 @@ class UpdateFooCommandHandlerTest extends TestCase
         $this->updateFooService
             ->expects(self::once())
             ->method('execute')
-            ->with(FooIdMother::default());
+            ->with(FooIdStub::default());
     }
 
     private function whenTheCommandHandlerIsInvoked(): void

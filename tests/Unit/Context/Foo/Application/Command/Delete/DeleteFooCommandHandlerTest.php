@@ -7,7 +7,7 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Delete;
 use App\Context\Foo\Application\Command\Delete\DeleteFooCommand;
 use App\Context\Foo\Application\Command\Delete\DeleteFooCommandHandler;
 use App\Context\Foo\Application\Command\Delete\DeleteFooService;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
 use PHPUnit\Framework\TestCase;
 
 class DeleteFooCommandHandlerTest extends TestCase
@@ -30,7 +30,7 @@ class DeleteFooCommandHandlerTest extends TestCase
 
     private function givenDeleteFooCommand(): void
     {
-        $this->command = new DeleteFooCommand(FooIdMother::DEFAULT_FOO_ID);
+        $this->command = new DeleteFooCommand(FooIdStub::DEFAULT_FOO_ID);
     }
 
     private function thenFooIsDeleted(): void
@@ -38,7 +38,7 @@ class DeleteFooCommandHandlerTest extends TestCase
         $this->deleteFooService
             ->expects(self::once())
             ->method('execute')
-            ->with(FooIdMother::default());
+            ->with(FooIdStub::default());
     }
 
     private function whenTheCommandHandlerIsInvoked(): void

@@ -8,8 +8,8 @@ use App\Context\Foo\Application\Command\Update\UpdateFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class UpdateFooServiceTest extends TestCase
@@ -44,8 +44,8 @@ class UpdateFooServiceTest extends TestCase
 
     private function givenDataToUpdateFoo():  void
     {
-        $this->fooId = FooIdMother::default();
-        $this->name = FooMother::DEFAULT_FOO_NAME;
+        $this->fooId = FooIdStub::default();
+        $this->name = FooStub::DEFAULT_FOO_NAME;
     }
 
     private function givenNonExistingFoo(): void
@@ -55,13 +55,13 @@ class UpdateFooServiceTest extends TestCase
 
     private function givenExistingFoo(): void
     {
-        $this->fooRepository->expects(self::once())->method('findById')->willReturn(FooMother::default());
+        $this->fooRepository->expects(self::once())->method('findById')->willReturn(FooStub::default());
     }
 
     private function thenThrowFooNotFoundExceptionException(): void
     {
         $this->expectException(FooNotFoundException::class);
-        $this->expectExceptionMessage(sprintf('Foo with id %s not found', FooIdMother::DEFAULT_FOO_ID));
+        $this->expectExceptionMessage(sprintf('Foo with id %s not found', FooIdStub::DEFAULT_FOO_ID));
     }
 
     private function thenFooIsNotUpdated(): void
@@ -74,7 +74,7 @@ class UpdateFooServiceTest extends TestCase
         $this->fooRepository
             ->expects(self::once())
             ->method('save')
-            ->with(FooMother::default()->update(FooMother::DEFAULT_FOO_NAME));
+            ->with(FooStub::default()->update(FooStub::DEFAULT_FOO_NAME));
     }
 
     private function whenExecuteTheService(): void

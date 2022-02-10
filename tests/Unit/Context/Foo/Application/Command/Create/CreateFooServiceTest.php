@@ -8,8 +8,8 @@ use App\Context\Foo\Application\Command\Create\CreateFooService;
 use App\Context\Foo\Domain\Exception\FooAlreadyExistException;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class CreateFooServiceTest extends TestCase
@@ -44,13 +44,13 @@ class CreateFooServiceTest extends TestCase
 
     private function givenDataToCreateFoo():  void
     {
-        $this->fooId = FooIdMother::default();
-        $this->name = FooMother::DEFAULT_FOO_NAME;
+        $this->fooId = FooIdStub::default();
+        $this->name = FooStub::DEFAULT_FOO_NAME;
     }
 
     private function givenExistingFoo(): void
     {
-        $this->fooRepository->expects(self::once())->method('findById')->willReturn(FooMother::default());
+        $this->fooRepository->expects(self::once())->method('findById')->willReturn(FooStub::default());
     }
 
     private function givenNonExistingFoo(): void
@@ -61,7 +61,7 @@ class CreateFooServiceTest extends TestCase
     private function thenThrowFooAlreadyExistException(): void
     {
         $this->expectException(FooAlreadyExistException::class);
-        $this->expectExceptionMessage(sprintf('Foo with id %s already exists', FooIdMother::DEFAULT_FOO_ID));
+        $this->expectExceptionMessage(sprintf('Foo with id %s already exists', FooIdStub::DEFAULT_FOO_ID));
     }
 
     private function thenFooIsNotCreated(): void
@@ -71,7 +71,7 @@ class CreateFooServiceTest extends TestCase
 
     private function thenFooIsCreated(): void
     {
-        $this->fooRepository->expects(self::once())->method('save')->with(FooMother::default());
+        $this->fooRepository->expects(self::once())->method('save')->with(FooStub::default());
     }
 
     private function whenExecuteTheService(): void

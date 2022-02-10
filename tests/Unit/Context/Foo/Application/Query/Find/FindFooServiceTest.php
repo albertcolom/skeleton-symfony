@@ -9,10 +9,10 @@ use App\Context\Foo\Application\Query\Find\FindFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdMother;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarMother;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdStub;
+use App\Tests\Shared\Context\Foo\Domain\Bar\BarStub;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class FindFooServiceTest extends TestCase
@@ -54,7 +54,7 @@ class FindFooServiceTest extends TestCase
 
     private function givenDataToFindFoo(): void
     {
-        $this->fooId = FooIdMother::default();
+        $this->fooId = FooIdStub::default();
     }
 
     private function givenNonExistingFoo(): void
@@ -64,14 +64,14 @@ class FindFooServiceTest extends TestCase
 
     private function givenExistingFoo(): void
     {
-        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn(FooMother::default());
+        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn(FooStub::default());
     }
 
     private function givenExistingFooWithBar(): void
     {
-        $foo = FooMother::default();
-        $foo->addBar(BarMother::default());
-        $foo->addBar(BarMother::default());
+        $foo = FooStub::default();
+        $foo->addBar(BarStub::default());
+        $foo->addBar(BarStub::default());
 
         $this->fooViewRepository->expects(self::once())->method('findById')->willReturn($foo);
     }
@@ -79,7 +79,7 @@ class FindFooServiceTest extends TestCase
     private function thenThrowFooNotFoundExceptionException(): void
     {
         $this->expectException(FooNotFoundException::class);
-        $this->expectExceptionMessage(sprintf('Foo with id %s not found', FooIdMother::DEFAULT_FOO_ID));
+        $this->expectExceptionMessage(sprintf('Foo with id %s not found', FooIdStub::DEFAULT_FOO_ID));
     }
 
     private function whenExecuteTheService(): void
@@ -91,8 +91,8 @@ class FindFooServiceTest extends TestCase
     private function thenGetExpectedResponseWithEmptyBarCollection(): void
     {
         $expected = [
-            'id' => FooIdMother::DEFAULT_FOO_ID,
-            'name' => FooMother::DEFAULT_FOO_NAME,
+            'id' => FooIdStub::DEFAULT_FOO_ID,
+            'name' => FooStub::DEFAULT_FOO_NAME,
             'bar' => [],
         ];
 
@@ -102,16 +102,16 @@ class FindFooServiceTest extends TestCase
     private function thenGetExpectedResponseWithBarCollection(): void
     {
         $expected = [
-            'id' => FooIdMother::DEFAULT_FOO_ID,
-            'name' => FooMother::DEFAULT_FOO_NAME,
+            'id' => FooIdStub::DEFAULT_FOO_ID,
+            'name' => FooStub::DEFAULT_FOO_NAME,
             'bar' => [
                 [
-                    'id' => BarIdMother::DEFAULT_BAR_ID,
-                    'name' => BarMother::DEFAULT_BAR_NAME,
+                    'id' => BarIdStub::DEFAULT_BAR_ID,
+                    'name' => BarStub::DEFAULT_BAR_NAME,
                 ],
                 [
-                    'id' => BarIdMother::DEFAULT_BAR_ID,
-                    'name' => BarMother::DEFAULT_BAR_NAME,
+                    'id' => BarIdStub::DEFAULT_BAR_ID,
+                    'name' => BarStub::DEFAULT_BAR_NAME,
                 ],
             ],
         ];

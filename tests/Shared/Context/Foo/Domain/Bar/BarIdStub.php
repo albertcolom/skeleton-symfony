@@ -6,7 +6,7 @@ namespace App\Tests\Shared\Context\Foo\Domain\Bar;
 
 use App\Context\Foo\Domain\Bar\ValueObject\BarId;
 
-class BarIdMother
+class BarIdStub
 {
     public const DEFAULT_BAR_ID = '35e018f2-ca48-4694-b385-bbb39278482e';
 

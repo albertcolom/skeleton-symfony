@@ -8,8 +8,8 @@ use App\Context\Foo\Application\Command\Delete\DeleteFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class DeleteFooServiceTest extends TestCase
@@ -42,7 +42,7 @@ class DeleteFooServiceTest extends TestCase
 
     private function givenDataToDeleteFoo():  void
     {
-        $this->fooId = FooIdMother::default();
+        $this->fooId = FooIdStub::default();
     }
 
     private function givenNonExistingFoo(): void
@@ -52,13 +52,13 @@ class DeleteFooServiceTest extends TestCase
 
     private function givenExistingFoo(): void
     {
-        $this->fooRepository->expects(self::once())->method('findById')->willReturn(FooMother::default());
+        $this->fooRepository->expects(self::once())->method('findById')->willReturn(FooStub::default());
     }
 
     private function thenThrowFooNotFoundExceptionException(): void
     {
         $this->expectException(FooNotFoundException::class);
-        $this->expectExceptionMessage(sprintf('Foo with id %s not found', FooIdMother::DEFAULT_FOO_ID));
+        $this->expectExceptionMessage(sprintf('Foo with id %s not found', FooIdStub::DEFAULT_FOO_ID));
     }
 
     private function thenFooIsNotDeleted(): void
@@ -68,7 +68,7 @@ class DeleteFooServiceTest extends TestCase
 
     private function thenFooIsDeleted(): void
     {
-        $this->fooRepository->expects(self::once())->method('remove')->with(FooIdMother::default());
+        $this->fooRepository->expects(self::once())->method('remove')->with(FooIdStub::default());
     }
 
     private function whenExecuteTheService(): void

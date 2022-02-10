@@ -7,8 +7,8 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Create;
 use App\Context\Foo\Application\Command\Create\CreateFooCommand;
 use App\Context\Foo\Application\Command\Create\CreateFooCommandHandler;
 use App\Context\Foo\Application\Command\Create\CreateFooService;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class CreateFooCommandHandlerTest extends TestCase
@@ -31,7 +31,7 @@ class CreateFooCommandHandlerTest extends TestCase
 
     private function givenCreateFooCommand(): void
     {
-        $this->command = new CreateFooCommand(FooIdMother::DEFAULT_FOO_ID, FooMother::DEFAULT_FOO_NAME);
+        $this->command = new CreateFooCommand(FooIdStub::DEFAULT_FOO_ID, FooStub::DEFAULT_FOO_NAME);
     }
 
     private function thenFooIsCreated(): void
@@ -39,7 +39,7 @@ class CreateFooCommandHandlerTest extends TestCase
         $this->createFooService
             ->expects(self::once())
             ->method('execute')
-            ->with(FooIdMother::default(), FooMother::DEFAULT_FOO_NAME);
+            ->with(FooIdStub::default(), FooStub::DEFAULT_FOO_NAME);
     }
 
     private function whenTheCommandHandlerIsInvoked(): void

@@ -8,8 +8,8 @@ use App\Context\Foo\Application\Query\Find\FindFooQuery;
 use App\Context\Foo\Application\Query\Find\FindFooQueryHandler;
 use App\Context\Foo\Application\Query\Find\FindFooQueryResponse;
 use App\Context\Foo\Application\Query\Find\FindFooService;
-use App\Tests\Shared\Context\Foo\Domain\FooIdMother;
-use App\Tests\Shared\Context\Foo\Domain\FooMother;
+use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
+use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;
 
 class FindFooQueryHandlerTest extends TestCase
@@ -35,7 +35,7 @@ class FindFooQueryHandlerTest extends TestCase
 
     private function givenFindFooByIdQuery(): void
     {
-        $this->query = new FindFooQuery(FooIdMother::DEFAULT_FOO_ID);
+        $this->query = new FindFooQuery(FooIdStub::DEFAULT_FOO_ID);
     }
 
     private function givenAnExistingFoo(): void
@@ -43,8 +43,8 @@ class FindFooQueryHandlerTest extends TestCase
         $this->findFooService
             ->expects(self::once())
             ->method('execute')
-            ->with(FooIdMother::default())
-            ->willReturn(FindFooQueryResponse::fromFoo(FooMother::default()));
+            ->with(FooIdStub::default())
+            ->willReturn(FindFooQueryResponse::fromFoo(FooStub::default()));
     }
 
     private function whenTheCommandHandlerIsInvoked(): void
@@ -56,8 +56,8 @@ class FindFooQueryHandlerTest extends TestCase
     private function thenGetExpectedResponseWithBarCollection(): void
     {
         $expected = [
-            'id' => FooIdMother::DEFAULT_FOO_ID,
-            'name' => FooMother::DEFAULT_FOO_NAME,
+            'id' => FooIdStub::DEFAULT_FOO_ID,
+            'name' => FooStub::DEFAULT_FOO_NAME,
             'bar' => [],
         ];
 
