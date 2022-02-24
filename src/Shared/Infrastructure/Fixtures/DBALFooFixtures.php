@@ -26,13 +26,13 @@ class DBALFooFixtures extends Fixture implements FixtureGroupInterface
         $connection = $manager->getConnection();
 
         $query = <<<SQL
-INSERT INTO foo (id, name)
+INSERT INTO foo (id, name, created_at)
 VALUES
-	(UUID_TO_BIN('7f590fc8-1298-4fb7-927e-a38ae50bc705'), 'Some Foo name 1'),
-	(UUID_TO_BIN('1ca06159-6f66-45c6-aa80-1cf5141f66d6'), 'Some Foo name 2'),
-	(UUID_TO_BIN('782416f0-5d50-4478-821a-48e5d1f0391d'), 'Some Foo name 3'),
-	(UUID_TO_BIN('a557c2ab-b48b-4a02-acda-570d3de4b154'), 'Some Foo name 4'),
-	(UUID_TO_BIN('6b7dde86-52c3-45d2-a623-f6bc6f142e29'), 'Some Foo name 5')
+	(UUID_TO_BIN('7f590fc8-1298-4fb7-927e-a38ae50bc705'), 'Some Foo name 1', '2018-01-18 11:11:11'),
+	(UUID_TO_BIN('1ca06159-6f66-45c6-aa80-1cf5141f66d6'), 'Some Foo name 2', '2019-01-19 11:11:11'),
+	(UUID_TO_BIN('782416f0-5d50-4478-821a-48e5d1f0391d'), 'Some Foo name 3', '2020-01-20 11:11:11'),
+	(UUID_TO_BIN('a557c2ab-b48b-4a02-acda-570d3de4b154'), 'Some Foo name 4', '2021-01-21 11:11:11'),
+	(UUID_TO_BIN('6b7dde86-52c3-45d2-a623-f6bc6f142e29'), 'Some Foo name 5', '2022-01-22 11:11:11')
 SQL;
 
         $stmt = $connection->prepare($query);

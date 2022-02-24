@@ -12,6 +12,8 @@ use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpTransport;
 
 final class MessengerContext extends KernelTestCase implements Context
 {
+    private const WILDCARDS = ['DATETIME', 'UUID'];
+
     /**
      * @When the queue associated to transport :name is empty
      */
@@ -27,21 +29,12 @@ final class MessengerContext extends KernelTestCase implements Context
      */
     public function theTransportProducerHasMessagesBelow(string $name, PyStringNode $body): void
     {
-        self::assertEquals(
+        [$expected, $response] = $this->replaceWildcards(
             $this->getJsonFromString($body->getRaw()),
-            $this->getMessagesFromTransport($name)
+            $this->getJsonFromString($this->getMessagesFromTransport($name))
         );
-    }
 
-    /**
-     * @Then :count messages should have been sent to the transport :name with JSON message:
-     */
-    public function messageHaveBeenSentToTheTransport2(int $count, string $name, PyStringNode $body): void
-    {
-        self::assertEquals(
-            $this->getJsonFromString($body->getRaw()),
-            $this->getMessagesFromTransport($name)
-        );
+        Assert::assertEquals($expected, $response);
     }
 
     private function getMessagesFromTransport(string $name): string
@@ -88,5 +81,23 @@ final class MessengerContext extends KernelTestCase implements Context
             json_decode($content, true, 512, JSON_THROW_ON_ERROR),
             JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
         );
+    }
+
+    private function replaceWildcards(string $expected, string $response): array
+    {
+        $expected = json_decode($expected, true, 512, JSON_THROW_ON_ERROR);
+        $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+
+        foreach (self::WILDCARDS as $wildcard) {
+            foreach ($expected as $key => $values) {
+                foreach ($values as $valueKey => $value) {
+                    foreach (array_keys($value, $wildcard) as $found) {
+                        $response[$key][$valueKey][$found] = $wildcard;
+                    }
+                }
+            }
+        }
+
+        return [json_encode($expected), json_encode($response)];
     }
 }

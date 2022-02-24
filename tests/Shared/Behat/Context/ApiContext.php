@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 final class ApiContext implements Context
 {
+    private const WILDCARDS = ['DATETIME', 'UUID'];
     private Response $response;
 
     public function __construct(private KernelInterface $kernel, private ResponseValidator $responseValidator)
@@ -76,10 +77,12 @@ final class ApiContext implements Context
      */
     public function theJsonShouldBeEqualTo(PyStringNode $content): void
     {
-        Assert::assertEquals(
+        [$expected, $response] = $this->replaceWildcards(
             $this->getJsonFromString($content->getRaw()),
             $this->getJsonFromString($this->response->getContent())
         );
+
+        Assert::assertEquals($expected, $response);
     }
 
     /**
@@ -104,5 +107,19 @@ final class ApiContext implements Context
             json_decode($content, true, 512, JSON_THROW_ON_ERROR),
             JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
         );
+    }
+
+    private function replaceWildcards(string $expected, string $response): array
+    {
+        $expected = json_decode($expected, true, 512, JSON_THROW_ON_ERROR);
+        $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
+
+        foreach (self::WILDCARDS as $wildcard) {
+            foreach (array_keys($expected, $wildcard) as $found) {
+                $response[$found] = $wildcard;
+            }
+        }
+
+        return [json_encode($expected), json_encode($response)];
     }
 }

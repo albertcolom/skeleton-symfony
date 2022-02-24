@@ -18,6 +18,7 @@ Feature:
        {
           "id": "7f590fc8-1298-4fb7-927e-a38ae50bc705",
           "name": "New foo name",
+          "created_at":"2018-01-18 11:11:11",
           "bar": [
             {
               "id":"d7b651e9-3bc9-4062-a60b-9882fca29b7f",
@@ -40,11 +41,11 @@ Feature:
             {
               "foo_id":"7f590fc8-1298-4fb7-927e-a38ae50bc705",
               "name":"New foo name",
-              "occurred_on":"XXXX-XX-XX XX:XX:XX"
+              "occurred_on":"DATETIME"
             },
           "metadata":
             {
-              "id":"XXX",
+              "id":"UUID",
               "name":"app.context.foo.domain.foo_was_updated"
             }
         }
@@ -66,6 +67,7 @@ Feature:
        {
           "id": "09042e35-592e-4057-9e03-597e234eea53",
           "name": "New foo name",
+          "created_at": "DATETIME",
           "bar": []
        }
       """
@@ -79,11 +81,12 @@ Feature:
             {
               "foo_id":"09042e35-592e-4057-9e03-597e234eea53",
               "name":"New foo name",
-              "occurred_on":"XXXX-XX-XX XX:XX:XX"
+              "created_at": "DATETIME",
+              "occurred_on":"DATETIME"
             },
           "metadata":
             {
-              "id":"XXX",
+              "id":"UUID",
               "name":"app.context.foo.domain.foo_was_created"
             }
         }

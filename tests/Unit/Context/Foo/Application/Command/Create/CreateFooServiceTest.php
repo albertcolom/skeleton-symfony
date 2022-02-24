@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Create;
 
 use App\Context\Foo\Application\Command\Create\CreateFooService;
 use App\Context\Foo\Domain\Exception\FooAlreadyExistException;
+use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
@@ -71,7 +72,18 @@ class CreateFooServiceTest extends TestCase
 
     private function thenFooIsCreated(): void
     {
-        $this->fooRepository->expects(self::once())->method('save')->with(FooStub::default());
+        $this->fooRepository
+            ->expects(self::once())
+            ->method('save')
+            ->with($this->callback(
+                function (Foo $foo): bool {
+                    $expected = FooStub::default();
+                    self::assertEquals($expected->fooId(), $foo->fooId());
+                    self::assertEquals($expected->name(), $foo->name());
+                    self::assertEquals($expected->bars(), $foo->bars());
+                    return true;
+                })
+            );
     }
 
     private function whenExecuteTheService(): void

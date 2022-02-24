@@ -93,6 +93,7 @@ class FindFooServiceTest extends TestCase
         $expected = [
             'id' => FooIdStub::DEFAULT_FOO_ID,
             'name' => FooStub::DEFAULT_FOO_NAME,
+            'created_at' => FooStub::DEFAULT_CREATED_AT,
             'bar' => [],
         ];
 
@@ -104,6 +105,7 @@ class FindFooServiceTest extends TestCase
         $expected = [
             'id' => FooIdStub::DEFAULT_FOO_ID,
             'name' => FooStub::DEFAULT_FOO_NAME,
+            'created_at' => FooStub::DEFAULT_CREATED_AT,
             'bar' => [
                 [
                     'id' => BarIdStub::DEFAULT_BAR_ID,

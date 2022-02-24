@@ -41,6 +41,10 @@ components:
       type: string
       minLength: 1
       maxLength: 255
+    date-time:
+      type: string
+      pattern: '^[0-9]{4}-([1-9]|0[1-9]|1[0-2])-([1-9]|0[1-9]|[1-2][0-9]|3[0-1])\s(0|[0-1][0-9]|2[0-4]):(0|[0-5][0-9]):(0|[0-5][0-9])$'
+      example: "2022-01-19 12:01:39"
     Foos:
       type: array
       items:
@@ -49,6 +53,7 @@ components:
         {
           "id": "1ca06159-6f66-45c6-aa80-1cf5141f66d6",
           "name": "Some Foo name 1",
+          "created_at": "2022-01-19 11:04:45",
           "bar": [
             {
               "id": "06b433af-5699-4cf2-8fb0-29cca9e694c3",
@@ -63,6 +68,7 @@ components:
         {
           "id": "6b7dde86-52c3-45d2-a623-f6bc6f142e29",
           "name": "Some Foo name 2",
+          "created_at": "2021-03-15 15:23:01",
           "bar": [ ]
         }
       ]
@@ -73,6 +79,8 @@ components:
           $ref: '#/components/schemas/id'
         name:
           $ref: '#/components/schemas/name'
+        created_at:
+          $ref: '#/components/schemas/date-time'
         bar:
           type: array
           items:
@@ -80,10 +88,13 @@ components:
       required:
         - id
         - name
+        - created_at
+        - bar
       example:
         {
         "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
         "name": "Some foo name",
+        "created_at": "2022-01-19 11:04:45",
         "bar": [
             {
               "id": "e9ed0451-5ea0-4ba8-90f5-f194e4244fa6",

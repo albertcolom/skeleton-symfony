@@ -8,6 +8,7 @@ use App\Context\Foo\Domain\Exception\FooAlreadyExistException;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
+use DateTimeImmutable;
 
 class CreateFooService
 {
@@ -19,7 +20,7 @@ class CreateFooService
     {
         $this->assertFooDoesNotExist($fooId);
 
-        $foo = Foo::create($fooId, $name);
+        $foo = Foo::create($fooId, $name, new DateTimeImmutable());
         $this->fooRepository->save($foo);
     }
 

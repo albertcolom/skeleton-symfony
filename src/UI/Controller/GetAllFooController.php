@@ -24,7 +24,7 @@ class GetAllFooController
 
         $queryParams = QueryParams::fromArray($request->query->all());
 
-        $response = $this->cachedQueryBus->ask(new FindAllFooQuery($queryParams->toArray()));
+        $response = $this->cachedQueryBus->ask(new FindAllFooQuery($queryParams->toArray()), 1);
 
         return new JsonResponse($response->result(), Response::HTTP_OK);
     }

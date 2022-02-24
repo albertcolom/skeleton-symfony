@@ -11,6 +11,7 @@ use App\Context\Foo\Domain\FooCollection;
 use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\QueryParams\QueryParams;
+use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 
 class DBALFooViewRepository implements FooViewRepository
@@ -25,6 +26,7 @@ class DBALFooViewRepository implements FooViewRepository
 SELECT
     f.id AS foo_id ,
     f.name AS foo_name,
+    f.created_at AS foo_created_at,
     b.id AS bar_id,
     b.name AS bar_name
 FROM
@@ -51,6 +53,7 @@ SQL;
 SELECT
     f.id AS foo_id ,
     f.name AS foo_name,
+    f.created_at AS foo_created_at,
     b.id AS bar_id,
     b.name AS bar_name
 FROM
@@ -75,7 +78,11 @@ SQL;
     private function hydrate(array $data): Foo
     {
         $firstElement = reset($data);
-        $foo = new Foo(FooId::fromBinary($firstElement['foo_id']), $firstElement['foo_name']);
+        $foo = new Foo(
+            FooId::fromBinary($firstElement['foo_id']),
+            $firstElement['foo_name'],
+            new DateTimeImmutable($firstElement['foo_created_at'])
+        );
 
         array_walk($data, static function (array $items) use ($foo) {
             if (!is_null($items['bar_id'])) {

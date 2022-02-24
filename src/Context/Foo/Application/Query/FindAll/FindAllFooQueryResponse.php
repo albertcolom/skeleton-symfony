@@ -22,6 +22,7 @@ class FindAllFooQueryResponse implements Response
                 return [
                     'id' => $foo->fooId()->value(),
                     'name' => $foo->name(),
+                    'created_at' => $foo->createdAt()->format('Y-m-d H:i:s'),
                     'bar' => array_map(
                         static function (Bar $bar) {
                             return [

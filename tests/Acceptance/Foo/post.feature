@@ -19,6 +19,7 @@ Feature:
        {
           "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
           "name": "Some foo name",
+          "created_at": "DATETIME",
           "bar": []
        }
       """
@@ -32,11 +33,12 @@ Feature:
             {
               "foo_id":"9cc900eb-663a-4292-876d-5a77eeefade9",
               "name":"Some foo name",
-              "occurred_on":"XXXX-XX-XX XX:XX:XX"
+              "created_at": "DATETIME",
+              "occurred_on":"DATETIME"
             },
           "metadata":
             {
-              "id":"XXX",
+              "id":"UUID",
               "name":"app.context.foo.domain.foo_was_created"
             }
         }
