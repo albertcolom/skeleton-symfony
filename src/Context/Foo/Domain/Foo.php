@@ -8,6 +8,7 @@ use App\Context\Foo\Domain\Bar\Bar;
 use App\Context\Foo\Domain\Bar\BarCollection;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Aggregate\AggregateRoot;
+use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;
 
@@ -21,16 +22,14 @@ class Foo extends AggregateRoot
         private DateTimeImmutable $createdAt
     ) {
         $this->bars = BarCollection::createEmpty();
+        $this->recordEvent(
+            FooWasCreated::create($id->value(), $name, $createdAt->format('Y-m-d H:i:s'))
+        );
     }
 
     public static function create(FooId $id, string $name, DateTimeImmutable $createdAt): self
     {
-        $foo = new self($id, $name, $createdAt);
-        $foo->recordEvent(
-            FooWasCreated::create($foo->id->value(), $foo->name, $foo->createdAt->format('Y-m-d H:i:s'))
-        );
-
-        return $foo;
+        return new self($id, $name, $createdAt);
     }
 
     public function fooId(): FooId
@@ -77,6 +76,7 @@ class Foo extends AggregateRoot
     public function equals(self $other): bool
     {
         return $this->fooId()->equals($other->fooId())
-            && $this->name() === $other->name();
+            && $this->name() === $other->name()
+            && $this->createdAt()->format(DateTime::ATOM) === $other->createdAt()->format(DateTime::ATOM);
     }
 }
