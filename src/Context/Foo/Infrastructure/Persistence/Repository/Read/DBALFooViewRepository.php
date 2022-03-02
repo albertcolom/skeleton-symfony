@@ -152,7 +152,8 @@ SQL;
                     $data['foo_name'],
                     new DateTimeImmutable($data['foo_created_at'])
                 );
-            }, $fooData));
+            }, $fooData)
+        );
     }
 
     private function hydrateFooCollectionWithBar(FooCollection $fooCollection, array $barData): FooCollection

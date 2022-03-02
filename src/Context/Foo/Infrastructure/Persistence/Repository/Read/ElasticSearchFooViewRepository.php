@@ -15,7 +15,7 @@ use DateTimeImmutable;
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
-class ElasticSearchFooViewRepository  implements FooViewRepository
+class ElasticSearchFooViewRepository implements FooViewRepository
 {
     private const INDEX = 'foo';
 
@@ -27,7 +27,7 @@ class ElasticSearchFooViewRepository  implements FooViewRepository
     {
         $params = [
             'index' => self::INDEX,
-            'id'    => $fooId->value(),
+            'id' => $fooId->value(),
         ];
 
         try {
@@ -67,7 +67,7 @@ class ElasticSearchFooViewRepository  implements FooViewRepository
         );
 
         array_walk($data['_source']['bar'], static function (array $bar) use ($foo) {
-                $foo->addBar(new Bar($foo, BarId::fromString($bar['id']), $bar['name']));
+            $foo->addBar(new Bar($foo, BarId::fromString($bar['id']), $bar['name']));
         });
 
         return $foo;
@@ -78,6 +78,7 @@ class ElasticSearchFooViewRepository  implements FooViewRepository
         return FooCollection::create(
             array_map(function (array $data): Foo {
                 return $this->hydrate($data);
-            }, $data['hits']['hits']));
+            }, $data['hits']['hits'])
+        );
     }
 }
