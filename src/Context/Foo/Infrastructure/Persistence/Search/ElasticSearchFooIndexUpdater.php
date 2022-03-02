@@ -14,9 +14,7 @@ use Elasticsearch\Client;
 
 class ElasticSearchFooIndexUpdater implements FooIndexUpdater
 {
-    private const INDEX = 'foo';
-
-    public function __construct(private FooRepository $fooRepository, private Client $client)
+    public function __construct(private FooRepository $fooRepository, private Client $client, private string $fooIndex)
     {
     }
 
@@ -34,7 +32,7 @@ class ElasticSearchFooIndexUpdater implements FooIndexUpdater
     private function prepareParams(Foo $foo): array
     {
         return [
-            'index' => self::INDEX,
+            'index' => $this->fooIndex,
             'id' => $foo->fooId()->value(),
             'body' => [
                 'name' => $foo->name(),

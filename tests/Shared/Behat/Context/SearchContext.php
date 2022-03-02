@@ -14,11 +14,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 final class SearchContext implements Context
 {
-    const FOO_INDEX = 'foo';
     private Application $application;
     private BufferedOutput $output;
 
-    public function __construct(KernelInterface $kernel, private Client $client)
+    public function __construct(KernelInterface $kernel, private Client $client, private string $fooIndex)
     {
         $this->application = new Application($kernel);
         $this->output = new BufferedOutput();
@@ -49,7 +48,7 @@ final class SearchContext implements Context
      */
     public function iWaitToIndexTotalFoo(int $total): void
     {
-        while ($total > $this->client->count(['index' => self::FOO_INDEX])['count']){
+        while ($total > $this->client->count(['index' => $this->fooIndex])['count']){
             $this->iWaitToIndexTotalFoo($total);
         }
     }
@@ -57,26 +56,9 @@ final class SearchContext implements Context
     private function removeFooIndex(): void
     {
         try {
-            $this->client->indices()->delete(['index' => self::FOO_INDEX]);
+            $this->client->indices()->delete(['index' => $this->fooIndex]);
         } catch (Missing404Exception) {
             return;
         }
-    }
-
-    private function ensureIndexCreated(): void
-    {
-        //dump($this->client->indices()->exists(['index' => self::FOO_INDEX]));
-
-        if (!$this->client->indices()->exists(['index' => self::FOO_INDEX])) {
-            dump('not exist');
-            $this->ensureIndexCreated();
-        }
-
-        //dump($this->client->indices()->exists(['index' => self::FOO_INDEX]));
-        dump($this->client->count(['index' => self::FOO_INDEX]));
-
-        //if ($this->client->indices()->exists(['index' => 'test'])) {
-        //    $this->ensureIndexCreated();
-        //}
     }
 }

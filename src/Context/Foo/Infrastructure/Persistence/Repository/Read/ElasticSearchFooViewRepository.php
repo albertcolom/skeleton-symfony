@@ -17,16 +17,14 @@ use Elasticsearch\Common\Exceptions\Missing404Exception;
 
 class ElasticSearchFooViewRepository implements FooViewRepository
 {
-    private const INDEX = 'foo';
-
-    public function __construct(private Client $client)
+    public function __construct(private Client $client, private string $fooIndex)
     {
     }
 
     public function findById(FooId $fooId): ?Foo
     {
         $params = [
-            'index' => self::INDEX,
+            'index' => $this->fooIndex,
             'id' => $fooId->value(),
         ];
 
@@ -42,7 +40,7 @@ class ElasticSearchFooViewRepository implements FooViewRepository
     public function findAll(QueryParams $queryParams): FooCollection
     {
         $params = [
-            'index' => self::INDEX,
+            'index' => $this->fooIndex,
             'size' => $queryParams->limit()->value(),
             'from' => $queryParams->offset()->value()
         ];

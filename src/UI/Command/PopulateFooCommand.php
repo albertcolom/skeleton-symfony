@@ -15,13 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PopulateFooCommand extends Command
 {
-    private const INDEX = 'foo';
     protected static $defaultName = 'foo:search:full-import-data';
 
     public function __construct(
         private FooRepository $fooRepository,
         private Client $client,
-        private FooIndexUpdater $fooIndexUpdater
+        private FooIndexUpdater $fooIndexUpdater,
+        private string $fooIndex
     ) {
         parent::__construct();
     }
@@ -36,7 +36,7 @@ class PopulateFooCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('force')) {
-            $this->client->indices()->delete(['index' => self::INDEX]);
+            $this->client->indices()->delete(['index' => $this->fooIndex]);
         }
 
         $this->fooRepository->findAll()->each(function (int $key, Foo $foo) use ($output) {
