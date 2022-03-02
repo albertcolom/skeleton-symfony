@@ -18,6 +18,7 @@ class DoctrineFooRepository extends ServiceEntityRepository implements FooReposi
         parent::__construct($registry, Foo::class);
     }
 
+    /** @phpstan-ignore-next-line */
     public function findAll(): FooCollection
     {
         $foos = $this->findBy([]);
