@@ -9,7 +9,7 @@ use Psr\Cache\CacheItemPoolInterface;
 
 final class CacheContext implements Context
 {
-    public function __construct(private CacheItemPoolInterface $cache)
+    public function __construct(private CacheItemPoolInterface $cache, private string $cachePrefix)
     {
     }
 
@@ -18,7 +18,6 @@ final class CacheContext implements Context
      */
     public function clearCache(): void
     {
-        $prefix = sprintf('%s%s', $_ENV['APP_ENV'] ?? 'undefined', $_ENV['TEST_TOKEN'] ?? '');
-        $this->cache->clear($prefix);
+        $this->cache->clear($this->cachePrefix);
     }
 }

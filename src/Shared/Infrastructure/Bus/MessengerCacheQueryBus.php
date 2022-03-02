@@ -8,6 +8,7 @@ use App\Shared\Domain\Bus\Query\CacheQueryBus;
 use App\Shared\Domain\Bus\Query\Query;
 use App\Shared\Domain\Bus\Query\Response;
 use App\Shared\Domain\ValueObject\CacheKey;
+use App\Shared\Infrastructure\Service\CacheKeyCreator;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -15,13 +16,16 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class MessengerCacheQueryBus implements CacheQueryBus
 {
-    public function __construct(private MessageBusInterface $messageBus, private CacheItemPoolInterface $cache)
-    {
+    public function __construct(
+        private MessageBusInterface $messageBus,
+        private CacheItemPoolInterface $cache,
+        private CacheKeyCreator $cacheKeyCreator
+    ) {
     }
 
     public function ask(Query $query, int $ttl = self::TTL_HOUR): Response
     {
-        $cacheItem = $this->cache->getItem(CacheKey::fromObject($query)->value());
+        $cacheItem = $this->cache->getItem($this->cacheKeyCreator->execute($query));
 
         if ($cacheItem->isHit()) {
             return $cacheItem->get();

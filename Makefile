@@ -69,7 +69,7 @@ domain-events: ## Consume domain events from rabbitmq
 
 .PHONY: phpstan
 phpstan: ## Run phpstan level 5
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php vendor/bin/phpstan analyse -c phpstan.neon
+	@docker-compose exec php-fpm env XDEBUG_MODE=off php -d memory_limit=4G vendor/bin/phpstan analyse -c phpstan.neon
 
 .PHONY: phpcs
 phpcs: ## Run phpcs PSR12

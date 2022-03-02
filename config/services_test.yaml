@@ -4,6 +4,7 @@ services:
         autoconfigure: true
         bind:
             $fooIndex: "%env(APP_ENV)%_%env(FOO_INDEX)%%env(default::TEST_TOKEN)%"
+            $cachePrefix: "%env(APP_ENV)%%env(default::TEST_TOKEN)%"
 
     App\Tests\Shared\:
         resource: '../tests/Shared/*'
