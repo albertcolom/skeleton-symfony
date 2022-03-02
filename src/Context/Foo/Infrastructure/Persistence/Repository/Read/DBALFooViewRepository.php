@@ -15,7 +15,7 @@ use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 
-class DBALFooViewRepository implements FooViewRepository
+class DBALFooViewRepository
 {
     public function __construct(private Connection $connection)
     {

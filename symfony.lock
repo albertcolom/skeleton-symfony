@@ -14,9 +14,6 @@
     "cebe/php-openapi": {
         "version": "1.5.2"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.2"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -111,6 +108,15 @@
     },
     "doctrine/sql-formatter": {
         "version": "1.1.1"
+    },
+    "elasticsearch/elasticsearch": {
+        "version": "v7.17.0"
+    },
+    "ezimuel/guzzlestreams": {
+        "version": "3.0.1"
+    },
+    "ezimuel/ringphp": {
+        "version": "1.2.0"
     },
     "friends-of-behat/symfony-extension": {
         "version": "2.0",
@@ -260,6 +266,9 @@
     },
     "ramsey/uuid": {
         "version": "4.1.1"
+    },
+    "react/promise": {
+        "version": "v2.9.0"
     },
     "respect/stringifier": {
         "version": "0.2.0"
@@ -502,9 +511,6 @@
     },
     "symfony/serializer": {
         "version": "v5.3.2"
-    },
-    "symfony/serializer-pack": {
-        "version": "v1.0.4"
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"

@@ -35,6 +35,11 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: async.event.bus }
 
+    Elasticsearch\Client:
+        factory: [ 'Elasticsearch\ClientBuilder', fromConfig ]
+        arguments:
+            - hosts: [ '%env(ELASTICSEARCH)%' ]
+
     App\Shared\Infrastructure\Bus\MessengerCommandBus:
         arguments:
             - '@sync.command.bus'

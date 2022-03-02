@@ -23,6 +23,6 @@ class DeleteFooController
 
         $this->commandBus->dispatch(new DeleteFooCommand($request->get('fooId')));
 
-        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
+        return new JsonResponse(null, Response::HTTP_ACCEPTED);
     }
 }

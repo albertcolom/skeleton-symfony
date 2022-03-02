@@ -34,10 +34,8 @@ class PutFooController
 
         try {
             $this->commandBus->dispatch(new UpdateFooCommand($request->get('fooId'), $content['name']));
-            $httpStatus =  Response::HTTP_OK;
         } catch (FooNotFoundException) {
             $this->commandBus->dispatch(new CreateFooCommand($request->get('fooId'), $content['name']));
-            $httpStatus = Response::HTTP_CREATED;
             $headers = [
                 'Location' => $this->getResourceUrl($request->get('fooId'))
             ];
@@ -45,7 +43,7 @@ class PutFooController
 
         $response = $this->queryBus->ask(new FindFooQuery($request->get('fooId')));
 
-        return new JsonResponse($response->result(), $httpStatus, $headers);
+        return new JsonResponse($response->result(), Response::HTTP_ACCEPTED, $headers);
     }
 
     private function getResourceUrl(string $fooId): string

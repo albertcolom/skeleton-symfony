@@ -12,6 +12,7 @@
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.9",
+        "elasticsearch/elasticsearch": "^7.17",
         "league/openapi-psr7-validator": "^0.16.3",
         "nelmio/cors-bundle": "^2.1",
         "nyholm/psr7": "^1.4",
