@@ -127,6 +127,8 @@ components:
   responses:
     201:
       description: The resource was created. Result with no content
+    202:
+      description: Accepted request. Result with no content
     204:
       description: The resource was updated. Result with no content
     400:
@@ -205,12 +207,8 @@ paths:
                 "name": "Some foo name",
               }
       responses:
-        '201':
-          description: The resource was created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Foo'
+        '202':
+          $ref: '#/components/responses/202'
         '400':
           $ref: '#/components/responses/400'
         '409':
@@ -261,18 +259,8 @@ paths:
                 "name": "New foo name",
               }
       responses:
-        '200':
-          description: The resource was updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Foo'
-        '201':
-          description: The resource was created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Foo'
+        '202':
+          $ref: '#/components/responses/202'
         '400':
           $ref: '#/components/responses/400'
         '500':
@@ -285,8 +273,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/fooId'
       responses:
-        '204':
-          $ref: '#/components/responses/204'
+        '202':
+          $ref: '#/components/responses/202'
         '400':
           $ref: '#/components/responses/400'
         '404':

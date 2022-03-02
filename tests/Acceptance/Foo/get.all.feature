@@ -5,6 +5,8 @@ Feature:
 
     Scenario: It can retrieve all Foo
         Given I load fixtures for groups "foo,bar"
+        And I index foo search
+        And I wait to index 5 foo data
         When A GET request is sent to "/v1/foo"
         Then the response header "Content-Type" should be equal to "application/json"
         And the JSON response should be equal to:
@@ -66,6 +68,8 @@ Feature:
 
     Scenario: It can retrieve all Foo with pagination params
         Given I load fixtures for groups "foo"
+        And I index foo search
+        And I wait to index 5 foo data
         When A GET request is sent to "/v1/foo?limit=2&offset=1"
         Then the response header "Content-Type" should be equal to "application/json"
         And the JSON response should be equal to:
@@ -87,7 +91,6 @@ Feature:
         """
         And the response code should be 200
         And the response should be a documented and validated with OpenApi schema GET "/v1/foo?limit=2&offset=1"
-
     Scenario: It retrieve a missing Foo
         When A GET request is sent to "/v1/foo"
         Then the response header "Content-Type" should be equal to "application/json"

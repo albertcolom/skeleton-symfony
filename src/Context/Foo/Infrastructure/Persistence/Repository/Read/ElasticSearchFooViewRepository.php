@@ -43,6 +43,8 @@ class ElasticSearchFooViewRepository implements FooViewRepository
     {
         $params = [
             'index' => self::INDEX,
+            'size' => $queryParams->limit()->value(),
+            'from' => $queryParams->offset()->value()
         ];
 
         try {

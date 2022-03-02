@@ -6,6 +6,8 @@ namespace App\Shared\Domain\QueryParams;
 
 class QueryParams
 {
+    private const DEFAULT_LIMIT = -1;
+    private const DEFAULT_OFFSET = 0;
     private Offset $offset;
     private Limit $limit;
 
@@ -23,8 +25,8 @@ class QueryParams
     public static function fromArray(array $params): self
     {
         return self::create()
-            ->setOffset(isset($params['offset']) ? (int)$params['offset'] : 0)
-            ->setLimit(isset($params['limit']) ? (int)$params['limit'] : -1);
+            ->setOffset(isset($params['offset']) ? (int)$params['offset'] : self::DEFAULT_OFFSET)
+            ->setLimit(isset($params['limit']) ? (int)$params['limit'] : self::DEFAULT_LIMIT);
     }
 
     public function offset(): Offset
@@ -39,12 +41,12 @@ class QueryParams
 
     public function hasOffset(): bool
     {
-        return 0 !== $this->offset()->value();
+        return self::DEFAULT_OFFSET !== $this->offset()->value();
     }
 
     public function hasLimit(): bool
     {
-        return -1 !== $this->limit()->value();
+        return self::DEFAULT_LIMIT !== $this->limit()->value();
     }
 
     public function setOffset(int $limit): self

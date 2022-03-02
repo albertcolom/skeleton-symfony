@@ -14,16 +14,8 @@ Feature:
        """
     Then the response header "Content-Type" should be equal to "application/json"
     And the response header "Location" should be equal to "http://localhost/v1/foo/9cc900eb-663a-4292-876d-5a77eeefade9"
-    And the JSON response should be equal to:
-      """
-       {
-          "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
-          "name": "Some foo name",
-          "created_at": "DATETIME",
-          "bar": []
-       }
-      """
-    And the response code should be 201
+    And the response should be empty
+    And the response code should be 202
     And the response should be a documented and validated with OpenApi schema POST "/v1/foo"
     And the transport ampqp producer has messages below:
       """

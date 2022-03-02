@@ -8,7 +8,7 @@ Feature:
     And the queue associated to transport ampqp is empty
     When A DELETE request is sent to "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
     Then the response should be empty
-    And the response code should be 204
+    And the response code should be 202
     And the response should be a documented and validated with OpenApi schema DELETE "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
     And the transport ampqp producer has messages below:
       """

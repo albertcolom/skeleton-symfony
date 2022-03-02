@@ -6,10 +6,8 @@ namespace App\UI\Controller;
 
 use App\Context\Foo\Application\Command\Create\CreateFooCommand;
 use App\Context\Foo\Application\Command\Update\UpdateFooCommand;
-use App\Context\Foo\Application\Query\Find\FindFooQuery;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Shared\Domain\Bus\Command\CommandBus;
-use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Infrastructure\Request\RequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +18,6 @@ class PutFooController
 {
     public function __construct(
         private CommandBus $commandBus,
-        private QueryBus $queryBus,
         private RequestValidator $requestValidator,
         private UrlGeneratorInterface $urlGenerator
     ) {
@@ -41,9 +38,7 @@ class PutFooController
             ];
         }
 
-        $response = $this->queryBus->ask(new FindFooQuery($request->get('fooId')));
-
-        return new JsonResponse($response->result(), Response::HTTP_ACCEPTED, $headers);
+        return new JsonResponse(null, Response::HTTP_ACCEPTED, $headers);
     }
 
     private function getResourceUrl(string $fooId): string

@@ -8,6 +8,7 @@ default:
                 - App\Tests\Shared\Behat\Context\FixturesContext
                 - App\Tests\Shared\Behat\Context\MessengerContext
                 - App\Tests\Shared\Behat\Context\CacheContext
+                - App\Tests\Shared\Behat\Context\SearchContext
 
     extensions:
         FriendsOfBehat\SymfonyExtension:

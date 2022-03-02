@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Tests\Shared\Behat\Context;
+
+use Behat\Behat\Context\Context;
+use Elasticsearch\Client;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpKernel\KernelInterface;
+
+final class SearchContext implements Context
+{
+    const FOO_INDEX = 'foo';
+    private Application $application;
+    private BufferedOutput $output;
+
+    public function __construct(KernelInterface $kernel, private Client $client)
+    {
+        $this->application = new Application($kernel);
+        $this->output = new BufferedOutput();
+    }
+
+    /**
+     * @BeforeScenario
+     */
+    public function removeIndex(): void
+    {
+        $this->removeFooIndex();
+    }
+
+    /**
+     * @Given I index foo search
+     */
+    public function iIndexFooSearch(): void
+    {
+        $input = new ArrayInput([
+            'command' => 'foo:search:full-import-data',
+        ]);
+        $input->setInteractive(false);
+        $this->application->doRun($input, $this->output);
+    }
+
+    /**
+     * @Then I wait to index :total foo data
+     */
+    public function iWaitToIndexTotalFoo(int $total): void
+    {
+        while ($total > $this->client->count(['index' => self::FOO_INDEX])['count']){
+            $this->iWaitToIndexTotalFoo($total);
+        }
+    }
+
+    private function removeFooIndex(): void
+    {
+        try {
+            $this->client->indices()->delete(['index' => self::FOO_INDEX]);
+        } catch (Missing404Exception) {
+            return;
+        }
+    }
+
+    private function ensureIndexCreated(): void
+    {
+        //dump($this->client->indices()->exists(['index' => self::FOO_INDEX]));
+
+        if (!$this->client->indices()->exists(['index' => self::FOO_INDEX])) {
+            dump('not exist');
+            $this->ensureIndexCreated();
+        }
+
+        //dump($this->client->indices()->exists(['index' => self::FOO_INDEX]));
+        dump($this->client->count(['index' => self::FOO_INDEX]));
+
+        //if ($this->client->indices()->exists(['index' => 'test'])) {
+        //    $this->ensureIndexCreated();
+        //}
+    }
+}

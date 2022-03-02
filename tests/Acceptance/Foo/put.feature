@@ -13,25 +13,8 @@ Feature:
        }
        """
     Then the response header "Content-Type" should be equal to "application/json"
-    And the JSON response should be equal to:
-      """
-       {
-          "id": "7f590fc8-1298-4fb7-927e-a38ae50bc705",
-          "name": "New foo name",
-          "created_at":"2018-01-18 11:11:11",
-          "bar": [
-            {
-              "id":"d7b651e9-3bc9-4062-a60b-9882fca29b7f",
-              "name":"Some Bar name 2"
-            },
-            {
-              "id":"e4b8fdc9-ded0-4c2f-8c3c-f047e3636655",
-              "name":"Some Bar name 1"
-             }
-           ]
-       }
-      """
-    And the response code should be 200
+    And the response should be empty
+    And the response code should be 202
     And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
     And the transport ampqp producer has messages below:
       """
@@ -62,16 +45,8 @@ Feature:
        """
     Then the response header "Content-Type" should be equal to "application/json"
     And the response header "Location" should be equal to "http://localhost/v1/foo/09042e35-592e-4057-9e03-597e234eea53"
-    And the JSON response should be equal to:
-      """
-       {
-          "id": "09042e35-592e-4057-9e03-597e234eea53",
-          "name": "New foo name",
-          "created_at": "DATETIME",
-          "bar": []
-       }
-      """
-    And the response code should be 201
+    And the response should be empty
+    And the response code should be 202
     And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/09042e35-592e-4057-9e03-597e234eea53"
     And the transport ampqp producer has messages below:
       """

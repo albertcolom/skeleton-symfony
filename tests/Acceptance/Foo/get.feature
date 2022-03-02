@@ -5,6 +5,8 @@ Feature:
 
     Scenario: It can retrieve a Foo
         Given I load fixtures for groups "foo,bar"
+        And I index foo search
+        And I wait to index 5 foo data
         When A GET request is sent to "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
         Then the response header "Content-Type" should be equal to "application/json"
         And the JSON response should be equal to:

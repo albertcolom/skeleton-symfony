@@ -53,7 +53,7 @@ final class ApiContext implements Context
      */
     public function theResponseShouldBeEmpty(): void
     {
-        Assert::assertEmpty($this->response->getContent());
+        Assert::assertEmpty(json_decode($this->response->getContent(), true));
     }
 
     /**
