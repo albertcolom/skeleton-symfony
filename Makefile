@@ -63,8 +63,8 @@ purge-queues: ## Purge rabbitmq queues
 redis-flush: ## Flush redis
 	@docker-compose exec redis redis-cli FLUSHALL
 
-.PHONY: domain-events
-domain-events: ## Consume domain events from rabbitmq
+.PHONY: consume-domain-events
+consume-domain-events: ## Consume domain events from rabbitmq
 	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console messenger:consume ampqp
 
 .PHONY: phpstan

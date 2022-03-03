@@ -24,7 +24,7 @@ class MessengerEventLogMiddleware implements MiddlewareInterface
         $envelope = $stack->next()->handle($envelope, $stack);
         $receive = $envelope->last(ReceivedStamp::class);
 
-        if (!$receive){
+        if (!$receive) {
             $message = $this->messengerMessageSerializer->encode($envelope);
             $body = json_decode($message['body'], true, 512, JSON_THROW_ON_ERROR);
             $this->eventLogger->info(
