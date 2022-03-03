@@ -6,6 +6,10 @@ namespace App\Context\Foo\Domain;
 
 use App\Context\Foo\Domain\Bar\Bar;
 use App\Context\Foo\Domain\Bar\BarCollection;
+use App\Context\Foo\Domain\Event\BarWasAdded;
+use App\Context\Foo\Domain\Event\FooWasCreated;
+use App\Context\Foo\Domain\Event\FooWasRemoved;
+use App\Context\Foo\Domain\Event\FooWasUpdated;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use DateTime;

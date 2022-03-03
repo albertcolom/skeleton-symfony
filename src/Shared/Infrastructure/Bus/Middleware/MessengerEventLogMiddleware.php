@@ -10,7 +10,6 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Messenger\Stamp\ReceivedStamp;
-use Symfony\Component\Messenger\Stamp\SentStamp;
 
 class MessengerEventLogMiddleware implements MiddlewareInterface
 {
@@ -23,15 +22,11 @@ class MessengerEventLogMiddleware implements MiddlewareInterface
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
         $envelope = $stack->next()->handle($envelope, $stack);
-
-        $message = $this->messengerMessageSerializer->encode($envelope);
-
         $receive = $envelope->last(ReceivedStamp::class);
-        $sent = $envelope->last(SentStamp::class);
 
-        $body = json_decode($message['body'], true, 512, JSON_THROW_ON_ERROR);
-
-        if (!$receive) {
+        if (!$receive){
+            $message = $this->messengerMessageSerializer->encode($envelope);
+            $body = json_decode($message['body'], true, 512, JSON_THROW_ON_ERROR);
             $this->eventLogger->info(
                 sprintf('An event has been published "%s"', $body['metadata']['name'] ?? ''),
                 $body

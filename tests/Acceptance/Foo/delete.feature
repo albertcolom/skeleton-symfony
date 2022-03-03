@@ -22,7 +22,7 @@ Feature:
           "metadata":
             {
               "id":"UUID",
-              "name":"app.context.foo.domain.foo_was_removed"
+              "name":"app.context.foo.domain.event.foo_was_removed"
             }
         }
       ]

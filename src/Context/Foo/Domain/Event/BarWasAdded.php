@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Foo\Domain;
+namespace App\Context\Foo\Domain\Event;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 
-class FooWasCreated extends DomainEvent
+class BarWasAdded extends DomainEvent
 {
     public function __construct(
         private string $fooId,
+        private string $barId,
         private string $name,
-        private string $createdAt,
         ?string $occurredOn = null
     ) {
         parent::__construct($occurredOn);
     }
 
-    public static function create(string $fooId, string $name, string $createdAt): self
+    public static function create(string $fooId, string $barId, string $name): self
     {
-        return new self($fooId, $name, $createdAt);
+        return new self($fooId, $barId, $name);
     }
 
     public function fooId(): string
@@ -27,13 +27,13 @@ class FooWasCreated extends DomainEvent
         return $this->fooId;
     }
 
+    public function barId(): string
+    {
+        return $this->barId;
+    }
+
     public function name(): string
     {
         return $this->name;
-    }
-
-    public function createdAt(): string
-    {
-        return $this->createdAt;
     }
 }
