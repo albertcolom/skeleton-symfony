@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Foo\Infrastructure\Persistence\Search;
+namespace App\Context\Foo\Infrastructure\Service\Search;
 
 use App\Context\Foo\Application\Service\FooIndexUpdater;
 use App\Context\Foo\Domain\Bar\Bar;
