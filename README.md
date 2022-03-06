@@ -38,7 +38,7 @@ consume-events       Consume events from rabbitmq
 event-log            Tail event log. Optional parameter "env", default "dev". Example: make event-log env=prod
 help                 Show help
 phpcs                Run phpcs PSR12
-phpstan              Run phpstan level 5
+phpstan              Run phpstan level 6
 purge-queues         Purge rabbitmq queues
 rebuild-container    Rebuild containers
 rebuild-db           Rebuild Mysql. Optional parameter "env", default "dev". Example: make rebuild-db env=test
@@ -129,7 +129,7 @@ $ make test-acceptance
 ```
 
 ## Static Analysis Tool
-PHPStan `level 5`
+PHPStan `level 6`
 ```sh
 $ make phpstan
 ```

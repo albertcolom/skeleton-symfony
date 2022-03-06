@@ -68,7 +68,7 @@ consume-events: ## Consume events from rabbitmq
 	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console messenger:consume ampqp
 
 .PHONY: phpstan
-phpstan: ## Run phpstan level 5
+phpstan: ## Run phpstan level 6
 	@docker-compose exec php-fpm env XDEBUG_MODE=off php -d memory_limit=4G vendor/bin/phpstan analyse -c phpstan.neon
 
 .PHONY: phpcs
