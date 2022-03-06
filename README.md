@@ -69,6 +69,10 @@ Command to consume `RabbidMQ` messages from `ampqp` transport
 ```sh
 $ make consume-events
 ```
+We can find 3 listeners listening in charge of clearing the cache and updating the projection in the reading model:
+- `OnFooWasCreated`
+- `OnFooWasUpdated`
+- `OnFooWasRemoved`
 
 ## Testing
 Unit testing `PHPUnit`
@@ -89,3 +93,16 @@ PHP Code Sniffer `PSR 12`
 ```sh
 $ make phpcs
 ```
+
+## Screenshots
+**Api Documentation:**
+![API Documentation](https://i.imgur.com/CjABGJi.jpeg)
+
+**Domain events log**
+![Domain events log](https://i.imgur.com/CKiSkSm.jpg)
+
+**ElasticSearch**
+![ElasticSearch](https://i.imgur.com/iM8sbjy.png)
+
+**RabbitdMQ**
+![RabbitMQ](https://i.imgur.com/m8teRa4.png)
