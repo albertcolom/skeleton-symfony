@@ -25,6 +25,33 @@
 ## Workflow
 ![Workflow](https://i.imgur.com/xxKP36u.jpeg)
 
+
+### Available make commands:
+You can view this info by running `make` or `make help`
+```sh
+build                Build/Rebuild project
+cc                   Clear the cache. Optional parameter "env", default "dev". Example: make cc env=prod
+composer-install     Composer install
+composer-update      Composer update
+console              Symfony console, Optional parameter "command". Example: make console command=debug:autowiring
+consume-events       Consume events from rabbitmq
+event-log            Tail event log. Optional parameter "env", default "dev". Example: make event-log env=prod
+help                 Show help
+phpcs                Run phpcs PSR12
+phpstan              Run phpstan level 5
+purge-queues         Purge rabbitmq queues
+rebuild-container    Rebuild containers
+rebuild-db           Rebuild Mysql. Optional parameter "env", default "dev". Example: make rebuild-db env=test
+rebuild-es           Rebuild ElasticSearch data. Optional parameter "env", default "dev". Example: make rebuild-db env=test
+redis-flush          Flush redis
+shell                Interactive shell inside docker
+status               Show containers status
+stop                 Stop containers
+test-acceptance      Run unit testing
+test-unit            Run unit testing
+up                   Start containers
+```
+
 ## Installation:
 Clone this repository
 ```sh
@@ -73,6 +100,23 @@ We can find 3 listeners listening in charge of clearing the cache and updating t
 - `OnFooWasCreated`
 - `OnFooWasUpdated`
 - `OnFooWasRemoved`
+
+## Domain event:
+Example of a serialized domain event when a Foo was created
+```json
+{
+  "payload": {
+    "foo_id": "7cc900eb-663a-4292-876d-5a77eeefade1",
+    "name": "Some foo name",
+    "created_at": "2022-03-06 17:03:25",
+    "occurred_on": "2022-03-06 17:03:25"
+  },
+  "metadata": {
+    "id": "53a4fabbb9ca462a872321814eee61ce",
+    "name": "app.context.foo.domain.event.foo_was_created"
+  }
+}
+```
 
 ## Testing
 Unit testing `PHPUnit`
