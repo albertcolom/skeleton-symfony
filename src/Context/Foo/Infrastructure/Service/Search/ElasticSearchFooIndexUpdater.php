@@ -10,6 +10,8 @@ use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Elasticsearch\Client;
 
 class ElasticSearchFooIndexUpdater implements FooIndexUpdater
@@ -45,7 +47,8 @@ class ElasticSearchFooIndexUpdater implements FooIndexUpdater
                         ];
                     },
                     $foo->bars()->toArray()
-                )
+                ),
+                '@timestamp' => (new DateTimeImmutable())->format(DateTimeInterface::ISO8601)
             ]
         ];
     }
