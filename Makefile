@@ -13,7 +13,7 @@ help: Makefile ## Show help
 	@echo ""
 
 .PHONY: build
-build: stop rebuild-container composer-install rebuild-db purge-queues redis-flush  ## Build/Rebuild project
+build: stop rebuild-container composer-install rebuild-db purge-queues redis-flush rebuild-es  ## Build/Rebuild project
 
 .PHONY: up
 up: ## Start containers
