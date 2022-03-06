@@ -117,6 +117,19 @@ Example of a serialized domain event when a Foo was created
   }
 }
 ```
+### Domain event logs
+**Monolog**  
+
+We have a middleware to log domain events.  
+You can access the logs at the following path: `/var/log/domain_event_{env}.log`
+```sh
+$ make event-log
+```
+
+**Logstash**  
+
+We use the `logstash` to parse the logs and publish them to `elasticsearch` with the index `domain-event-%{env}-%{+YYYY.MM.dd}`  
+You can view the logs using `kibana` http://localhost:5601
 
 ## Testing
 Unit testing `PHPUnit`
