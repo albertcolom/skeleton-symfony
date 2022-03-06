@@ -27,14 +27,14 @@ class PopulateFooCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Sync foo with elasticsearch')
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force re-create index');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('force')) {
             $this->deleteIndex();
