@@ -1,8 +1,8 @@
-### Requirements:
+## Requirements:
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-### Docker compose:
+## Docker compose:
 - php:8.0.8-fpm-alpine
 - nginx:1.20-alpine
 - mysql:8.0
@@ -13,7 +13,7 @@
 - docker.elastic.co/logstash/logstash:7.1.1
 - docker.elastic.co/kibana/kibana:7.1.1
 
-### The Environment:
+## The Environment:
 - **API:** http://localhost:8000
 - **API Documentation:** http://localhost:8001
 - **ElasticSearch:** http://localhost:9200
@@ -21,6 +21,9 @@
 - **RabbidMQ:** http://localhost:15672 user: `guest` password: `guest`
 - **MySQL:** host: `localhost` port: `3306` user: `root` password: `root`
 - **Redis:** host: `localhost` port: `6379`
+
+## Workflow
+![Workflow](https://i.imgur.com/xxKP36u.jpeg)
 
 ## Installation:
 Clone this repository
@@ -38,6 +41,9 @@ $ make up
 
 ## Routes:
 ```sh
+$ bin/console debug:router
+```
+```sh
  ---------------- -------- -------- ------ --------------------------
   Name             Method   Scheme   Host   Path
  ---------------- -------- -------- ------ --------------------------
@@ -49,8 +55,22 @@ $ make up
  ---------------- -------- -------- ------ --------------------------
 ```
 
-## Testing
+## Buses:
+We have 4 different types of bus implemented with `Symfony Messenger`
+- Synchronous
+  - CommandBus: `public function dispatch(Command $command): void`
+  - QueryBus: `public function ask(Query $query): Response`
+  - CacheQueryBus: `public function ask(Query $query, int $ttl = self::TTL_HOUR): Response`
+- Asynchronous
+  - EventBus: `public function publish(DomainEvent ...$domainEvents): void`
 
+## Process async events:
+Command to consume `RabbidMQ` messages from `ampqp` transport
+```sh
+$ make consume-events
+```
+
+## Testing
 Unit testing `PHPUnit`
 ```sh
 $ make test-unit
@@ -60,8 +80,7 @@ Acceptance test `Behat`
 $ make test-acceptance
 ```
 
-### Static Analysis Tool
-
+## Static Analysis Tool
 PHPStan `level 5`
 ```sh
 $ make phpstan
