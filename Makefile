@@ -93,3 +93,7 @@ rebuild-db: ## Rebuild Mysql. Optional parameter "env", default "dev". Example: 
 	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:database:create
 	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:migrations:migrate -n
 	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:fixtures:load -n
+
+.PHONY: rebuild-es
+rebuild-es: ## Rebuild ElasticSearch data. Optional parameter "env", default "dev". Example: make rebuild-db env=test
+	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" foo:search:full-import-data --force

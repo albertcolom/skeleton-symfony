@@ -8,6 +8,7 @@ use App\Context\Foo\Application\Service\FooIndexUpdater;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use Elasticsearch\Client;
+use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -36,7 +37,7 @@ class PopulateFooCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if ($input->getOption('force')) {
-            $this->client->indices()->delete(['index' => $this->fooIndex]);
+            $this->deleteIndex();
         }
 
         $this->fooRepository->findAll()->each(function (int $key, Foo $foo) use ($output) {
@@ -46,5 +47,14 @@ class PopulateFooCommand extends Command
         });
 
         return Command::SUCCESS;
+    }
+
+    private function deleteIndex(): void
+    {
+        try {
+            $this->client->indices()->delete(['index' => $this->fooIndex]);
+        } catch (Missing404Exception) {
+            return;
+        }
     }
 }
