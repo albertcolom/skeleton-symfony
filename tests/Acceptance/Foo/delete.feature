@@ -43,7 +43,7 @@ Feature:
     And the response should be a documented and validated with OpenApi schema DELETE "/v1/foo/111111"
 
   Scenario: It can't delete a missing Foo
-    When A GET request is sent to "/v1/foo/0b14e425-5f80-4c29-a3ab-49f5f15ca57d"
+    When A DELETE request is sent to "/v1/foo/0b14e425-5f80-4c29-a3ab-49f5f15ca57d"
     Then the response header "Content-Type" should be equal to "application/json"
     And the JSON response should be equal to:
         """
