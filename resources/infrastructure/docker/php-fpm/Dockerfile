@@ -1,4 +1,4 @@
-FROM php:8.0.8-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 ENV PHP_IDE_CONFIG 'serverName=DockerApp'
 
