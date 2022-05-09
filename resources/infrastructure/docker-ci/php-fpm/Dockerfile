@@ -1,4 +1,4 @@
-FROM php:8.0.8-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 RUN apk --update upgrade \
     && apk add --no-cache autoconf automake make gcc g++ tzdata vim rabbitmq-c-dev
