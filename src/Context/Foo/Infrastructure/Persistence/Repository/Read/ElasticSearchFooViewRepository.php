@@ -41,9 +41,12 @@ class ElasticSearchFooViewRepository implements FooViewRepository
     {
         $params = [
             'index' => $this->fooIndex,
-            'size' => $queryParams->limit()->value(),
             'from' => $queryParams->offset()->value()
         ];
+
+        if ($queryParams->hasLimit()) {
+            $params = array_merge($params, ['size' => $queryParams->limit()->value()]);
+        }
 
         try {
             $resultSet = $this->client->search($params);

@@ -1,20 +1,18 @@
-FROM php:8.1-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 RUN apk --update upgrade \
     && apk add --no-cache autoconf automake make gcc g++ tzdata vim rabbitmq-c-dev
-
-RUN mkdir -p /usr/src/php/ext/amqp && \
-    curl -fsSL https://pecl.php.net/get/amqp | tar xvz -C "/usr/src/php/ext/amqp" --strip 1
 
 RUN docker-php-ext-install \
         bcmath \
         opcache \
         mysqli \
         pdo \
-        pdo_mysql \
-        amqp
+        pdo_mysql
 
-RUN pecl install redis
+RUN pecl install \
+        amqp \
+        redis
 
 RUN docker-php-ext-enable \
         opcache \

@@ -3,15 +3,15 @@
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Docker compose:
-- php:8.0.8-fpm-alpine
-- nginx:1.20-alpine
+- php:8.2-fpm-alpine
+- nginx:alpine3.17-slim
 - mysql:8.0
-- rabbitmq:3.8-management-alpine
-- redis:6.2.5-alpine
-- swaggerapi/swagger-ui
-- docker.elastic.co/elasticsearch/elasticsearch:7.1.1
-- docker.elastic.co/logstash/logstash:7.1.1
-- docker.elastic.co/kibana/kibana:7.1.1
+- rabbitmq:3.11-management-alpine
+- redis:7.0-alpine
+- swaggerapi/swagger-ui:v4.0.0-rc.1
+- docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+- docker.elastic.co/logstash/logstash:8.8.0
+- docker.elastic.co/kibana/kibana:8.8.0
 
 ## The Environment:
 - **API:** http://localhost:8000
