@@ -12,7 +12,7 @@ use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use DateTimeImmutable;
 use DateTimeInterface;
-use Elasticsearch\Client;
+use Elastic\Elasticsearch\Client;
 
 class ElasticSearchFooIndexUpdater implements FooIndexUpdater
 {

@@ -11,9 +11,6 @@
     "brick/math": {
         "version": "0.9.2"
     },
-    "cebe/php-openapi": {
-        "version": "1.5.2"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -112,12 +109,6 @@
     "elasticsearch/elasticsearch": {
         "version": "v7.17.0"
     },
-    "ezimuel/guzzlestreams": {
-        "version": "3.0.1"
-    },
-    "ezimuel/ringphp": {
-        "version": "1.2.0"
-    },
     "friends-of-behat/symfony-extension": {
         "version": "2.0",
         "recipe": {
@@ -189,6 +180,18 @@
     },
     "phar-io/version": {
         "version": "3.1.0"
+    },
+    "php-http/discovery": {
+        "version": "1.18",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.18",
+            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
+        },
+        "files": [
+            "config/packages/http_discovery.yaml"
+        ]
     },
     "php-http/message-factory": {
         "version": "v1.0.2"
@@ -267,9 +270,6 @@
     "ramsey/uuid": {
         "version": "4.1.1"
     },
-    "react/promise": {
-        "version": "v2.9.0"
-    },
     "respect/stringifier": {
         "version": "0.2.0"
     },
@@ -339,9 +339,6 @@
             "ref": "1019e5c08d4821cb9b77f4891f8e9c31ff20ac6f"
         }
     },
-    "symfony/amqp-messenger": {
-        "version": "v5.3.2"
-    },
     "symfony/cache": {
         "version": "v5.3.3"
     },
@@ -371,9 +368,6 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.3.4"
-    },
-    "symfony/doctrine-messenger": {
-        "version": "v5.3.2"
     },
     "symfony/dotenv": {
         "version": "v5.3.0"
@@ -489,9 +483,6 @@
     },
     "symfony/psr-http-message-bridge": {
         "version": "v2.1.1"
-    },
-    "symfony/redis-messenger": {
-        "version": "v5.3.2"
     },
     "symfony/routing": {
         "version": "5.3",

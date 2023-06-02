@@ -12,8 +12,8 @@ use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\QueryParams\QueryParams;
 use DateTimeImmutable;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
 
 class ElasticSearchFooViewRepository implements FooViewRepository
 {
@@ -30,11 +30,14 @@ class ElasticSearchFooViewRepository implements FooViewRepository
 
         try {
             $resultSet = $this->client->get($params);
-        } catch (Missing404Exception) {
+        } catch (ClientResponseException $e) {
+            if ($e->getCode() !== 404) {
+                throw $e;
+            }
             return null;
         }
 
-        return $this->hydrate($resultSet);
+        return $this->hydrate($resultSet->asArray());
     }
 
     public function findAll(QueryParams $queryParams): FooCollection
@@ -50,7 +53,11 @@ class ElasticSearchFooViewRepository implements FooViewRepository
 
         try {
             $resultSet = $this->client->search($params);
-        } catch (Missing404Exception) {
+
+        } catch (ClientResponseException $e) {
+            if ($e->getCode() !== 404) {
+                throw $e;
+            }
             return FooCollection::createEmpty();
         }
 
@@ -58,7 +65,7 @@ class ElasticSearchFooViewRepository implements FooViewRepository
             return FooCollection::createEmpty();
         }
 
-        return $this->hydrateAll($resultSet);
+        return $this->hydrateAll($resultSet->asArray());
     }
 
     private function hydrate(array $data): Foo

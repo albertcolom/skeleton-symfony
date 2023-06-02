@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Shared\Behat\Context;
 
 use Behat\Behat\Context\Context;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -57,8 +57,10 @@ final class SearchContext implements Context
     {
         try {
             $this->client->indices()->delete(['index' => $this->fooIndex]);
-        } catch (Missing404Exception) {
-            return;
+        } catch (ClientResponseException $e) {
+            if ($e->getCode() !== 404) {
+                throw $e;
+            }
         }
     }
 }

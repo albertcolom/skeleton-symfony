@@ -7,8 +7,8 @@ namespace App\UI\Command;
 use App\Context\Foo\Application\Service\FooIndexUpdater;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\Repository\Write\FooRepository;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -53,8 +53,10 @@ class PopulateFooCommand extends Command
     {
         try {
             $this->client->indices()->delete(['index' => $this->fooIndex]);
-        } catch (Missing404Exception) {
-            return;
+        } catch (ClientResponseException $e) {
+            if ($e->getCode() !== 404) {
+                throw $e;
+            }
         }
     }
 }

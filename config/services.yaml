@@ -37,8 +37,8 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: async.event.bus }
 
-    Elasticsearch\Client:
-        factory: [ 'Elasticsearch\ClientBuilder', fromConfig ]
+    Elastic\Elasticsearch\Client:
+        factory: [ 'Elastic\Elasticsearch\ClientBuilder', fromConfig ]
         arguments:
             - hosts: [ '%env(ELASTICSEARCH)%' ]
 

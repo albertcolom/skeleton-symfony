@@ -6,8 +6,8 @@ namespace App\Context\Foo\Infrastructure\Service\Search;
 
 use App\Context\Foo\Application\Service\FooIndexRemover;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
 
 class ElasticSearchFooIndexRemover implements FooIndexRemover
 {
@@ -24,8 +24,10 @@ class ElasticSearchFooIndexRemover implements FooIndexRemover
 
         try {
             $this->client->delete($params);
-        } catch (Missing404Exception) {
-            return;
+        } catch (ClientResponseException $e) {
+            if ($e->getCode() !== 404) {
+                throw $e;
+            }
         }
     }
 }
