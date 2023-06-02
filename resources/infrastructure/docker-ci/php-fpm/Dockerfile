@@ -16,6 +16,7 @@ RUN pecl install \
 
 RUN docker-php-ext-enable \
         opcache \
-        redis
+        redis \
+        amqp
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
