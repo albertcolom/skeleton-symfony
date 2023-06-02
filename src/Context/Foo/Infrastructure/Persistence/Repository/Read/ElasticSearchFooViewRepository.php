@@ -53,7 +53,6 @@ class ElasticSearchFooViewRepository implements FooViewRepository
 
         try {
             $resultSet = $this->client->search($params);
-
         } catch (ClientResponseException $e) {
             if ($e->getCode() !== 404) {
                 throw $e;
