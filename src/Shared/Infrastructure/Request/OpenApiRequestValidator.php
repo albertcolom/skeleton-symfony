@@ -10,11 +10,11 @@ use League\OpenAPIValidation\PSR7\ServerRequestValidator;
 use League\OpenAPIValidation\PSR7\ValidatorBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
-class OpenApiRequestValidator implements RequestValidator
+final class OpenApiRequestValidator implements RequestValidator
 {
     private ServerRequestValidator $requestValidator;
 
-    public function __construct(private RequestAdapter $requestAdapter, string $openapiPath)
+    public function __construct(private readonly RequestAdapter $requestAdapter, string $openapiPath)
     {
         $this->requestValidator = (new ValidatorBuilder())
             ->fromYamlFile($openapiPath)

@@ -78,7 +78,7 @@ class CreateFooServiceTest extends TestCase
             ->with($this->callback(
                 function (Foo $foo): bool {
                     $expected = FooStub::default();
-                    self::assertEquals($expected->fooId(), $foo->fooId());
+                    self::assertEquals($expected->id, $foo->id);
                     self::assertEquals($expected->name(), $foo->name());
                     self::assertEquals($expected->bars(), $foo->bars());
                     return true;

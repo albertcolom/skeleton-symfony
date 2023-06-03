@@ -12,7 +12,7 @@ use DateTimeImmutable;
 
 class CreateFooService
 {
-    public function __construct(private FooRepository $fooRepository)
+    public function __construct(private readonly FooRepository $fooRepository)
     {
     }
 
@@ -29,7 +29,7 @@ class CreateFooService
         $foo = $this->fooRepository->findById($fooId);
 
         if (null !== $foo) {
-            throw FooAlreadyExistException::fromFooId($fooId->value());
+            throw FooAlreadyExistException::fromFooId($fooId->value);
         }
     }
 }

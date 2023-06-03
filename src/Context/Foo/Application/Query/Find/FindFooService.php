@@ -10,7 +10,7 @@ use App\Context\Foo\Domain\ValueObject\FooId;
 
 class FindFooService
 {
-    public function __construct(private FooViewRepository $fooViewRepository)
+    public function __construct(private readonly FooViewRepository $fooViewRepository)
     {
     }
 
@@ -19,7 +19,7 @@ class FindFooService
         $foo = $this->fooViewRepository->findById($fooId);
 
         if (null === $foo) {
-            throw FooNotFoundException::fromFooId($fooId->value());
+            throw FooNotFoundException::fromFooId($fooId->value);
         }
 
         return FindFooQueryResponse::fromFoo($foo);

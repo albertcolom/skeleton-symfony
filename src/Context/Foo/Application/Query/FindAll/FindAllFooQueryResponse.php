@@ -9,9 +9,9 @@ use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\FooCollection;
 use App\Shared\Domain\Bus\Query\Response;
 
-class FindAllFooQueryResponse implements Response
+final class FindAllFooQueryResponse implements Response
 {
-    public function __construct(private array $foos)
+    public function __construct(private readonly array $foos)
     {
     }
 
@@ -20,14 +20,14 @@ class FindAllFooQueryResponse implements Response
         return new self(array_map(
             static function (Foo $foo) {
                 return [
-                    'id' => $foo->fooId()->value(),
+                    'id' => $foo->id->value,
                     'name' => $foo->name(),
                     'created_at' => $foo->createdAt()->format('Y-m-d H:i:s'),
                     'bar' => array_map(
                         static function (Bar $bar) {
                             return [
-                                'id' => $bar->barId()->value(),
-                                'name' => $bar->name()
+                                'id' => $bar->id->value,
+                                'name' => $bar->name
                             ];
                         },
                         $foo->bars()->toArray()

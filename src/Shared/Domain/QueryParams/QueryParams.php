@@ -41,12 +41,12 @@ class QueryParams
 
     public function hasOffset(): bool
     {
-        return self::DEFAULT_OFFSET !== $this->offset()->value();
+        return self::DEFAULT_OFFSET !== $this->offset()->value;
     }
 
     public function hasLimit(): bool
     {
-        return self::DEFAULT_LIMIT !== $this->limit()->value();
+        return self::DEFAULT_LIMIT !== $this->limit()->value;
     }
 
     public function setOffset(int $limit): self
@@ -64,8 +64,8 @@ class QueryParams
     public function toArray(): array
     {
         return [
-            'offset' => $this->offset->value(),
-            'limit' => $this->limit->value(),
+            'offset' => $this->offset->value,
+            'limit' => $this->limit->value,
         ];
     }
 }

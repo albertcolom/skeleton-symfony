@@ -8,9 +8,9 @@ use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\Shared\Domain\Bus\Event\EventBus;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
-class DoctrinePublishDomainEventsOnFlushListener
+final class DoctrinePublishDomainEventsOnFlushListener
 {
-    public function __construct(private EventBus $eventBus)
+    public function __construct(private readonly EventBus $eventBus)
     {
     }
 

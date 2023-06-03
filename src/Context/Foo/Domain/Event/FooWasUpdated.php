@@ -6,11 +6,11 @@ namespace App\Context\Foo\Domain\Event;
 
 use App\Shared\Domain\Bus\Event\DomainEvent;
 
-class FooWasUpdated extends DomainEvent
+final class FooWasUpdated extends DomainEvent
 {
     public function __construct(
-        private string $fooId,
-        private string $name,
+        public readonly string $fooId,
+        public readonly string $name,
         ?string $occurredOn = null
     ) {
         parent::__construct($occurredOn);
@@ -19,15 +19,5 @@ class FooWasUpdated extends DomainEvent
     public static function create(string $fooId, string $name): self
     {
         return new self($fooId, $name);
-    }
-
-    public function fooId(): string
-    {
-        return $this->fooId;
-    }
-
-    public function name(): string
-    {
-        return $this->name;
     }
 }

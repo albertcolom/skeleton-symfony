@@ -7,14 +7,14 @@ namespace App\Context\Foo\Application\Query\FindAll;
 use App\Shared\Domain\Bus\Query\QueryHandler;
 use App\Shared\Domain\QueryParams\QueryParams;
 
-class FindAllFooQueryHandler implements QueryHandler
+final class FindAllFooQueryHandler implements QueryHandler
 {
-    public function __construct(private FindAllFooService $findAllFooService)
+    public function __construct(private readonly FindAllFooService $findAllFooService)
     {
     }
 
     public function __invoke(FindAllFooQuery $query): FindAllFooQueryResponse
     {
-        return $this->findAllFooService->execute(QueryParams::fromArray($query->params()));
+        return $this->findAllFooService->execute(QueryParams::fromArray($query->params));
     }
 }

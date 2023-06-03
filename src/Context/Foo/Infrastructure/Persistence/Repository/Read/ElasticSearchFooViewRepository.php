@@ -15,9 +15,9 @@ use DateTimeImmutable;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 
-class ElasticSearchFooViewRepository implements FooViewRepository
+final class ElasticSearchFooViewRepository implements FooViewRepository
 {
-    public function __construct(private Client $client, private string $fooIndex)
+    public function __construct(private readonly Client $client, private readonly string $fooIndex)
     {
     }
 
@@ -25,7 +25,7 @@ class ElasticSearchFooViewRepository implements FooViewRepository
     {
         $params = [
             'index' => $this->fooIndex,
-            'id' => $fooId->value(),
+            'id' => $fooId->value,
         ];
 
         try {
@@ -44,11 +44,11 @@ class ElasticSearchFooViewRepository implements FooViewRepository
     {
         $params = [
             'index' => $this->fooIndex,
-            'from' => $queryParams->offset()->value()
+            'from' => $queryParams->offset()->value
         ];
 
         if ($queryParams->hasLimit()) {
-            $params = array_merge($params, ['size' => $queryParams->limit()->value()]);
+            $params = array_merge($params, ['size' => $queryParams->limit()->value]);
         }
 
         try {

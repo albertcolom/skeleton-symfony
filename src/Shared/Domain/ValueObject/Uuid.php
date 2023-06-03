@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 
 class Uuid implements Stringable
 {
-    public function __construct(private string $value)
+    public function __construct(public readonly string $value)
     {
         Assert::uuid($value);
     }
@@ -25,11 +25,6 @@ class Uuid implements Stringable
         return new static(RamseyUuid::uuid4()->toString());
     }
 
-    public function value(): string
-    {
-        return $this->value;
-    }
-
     public function optimizedId(): string
     {
         return RamseyUuid::fromString($this->value)->getBytes();
@@ -42,7 +37,7 @@ class Uuid implements Stringable
 
     public function equals(self $other): bool
     {
-        return $this->value() === $other->value();
+        return $this->value === $other->value;
     }
 
     public function __toString()

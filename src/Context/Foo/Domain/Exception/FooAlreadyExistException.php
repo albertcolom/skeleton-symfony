@@ -7,7 +7,7 @@ namespace App\Context\Foo\Domain\Exception;
 use DomainException;
 use Symfony\Component\HttpFoundation\Response;
 
-class FooAlreadyExistException extends DomainException
+final class FooAlreadyExistException extends DomainException
 {
     public static function fromFooId(string $fooId): self
     {

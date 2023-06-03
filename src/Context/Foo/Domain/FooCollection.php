@@ -6,7 +6,7 @@ namespace App\Context\Foo\Domain;
 
 use App\Shared\Domain\TypedCollection;
 
-class FooCollection extends TypedCollection
+final class FooCollection extends TypedCollection
 {
     protected function type(): string
     {

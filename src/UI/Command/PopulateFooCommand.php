@@ -14,15 +14,15 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PopulateFooCommand extends Command
+final class PopulateFooCommand extends Command
 {
     protected static $defaultName = 'foo:search:full-import-data';
 
     public function __construct(
-        private FooRepository $fooRepository,
-        private Client $client,
-        private FooIndexUpdater $fooIndexUpdater,
-        private string $fooIndex
+        private readonly FooRepository $fooRepository,
+        private readonly Client $client,
+        private readonly FooIndexUpdater $fooIndexUpdater,
+        private readonly string $fooIndex
     ) {
         parent::__construct();
     }
@@ -41,8 +41,8 @@ class PopulateFooCommand extends Command
         }
 
         $this->fooRepository->findAll()->each(function (int $key, Foo $foo) use ($output) {
-            $output->writeln(sprintf('<info>Indexing: %s</info>', $foo->fooId()->value()));
-            $this->fooIndexUpdater->execute($foo->fooId());
+            $output->writeln(sprintf('<info>Indexing: %s</info>', $foo->id->value));
+            $this->fooIndexUpdater->execute($foo->id);
             return $foo;
         });
 

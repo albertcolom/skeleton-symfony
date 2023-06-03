@@ -11,7 +11,7 @@ use App\Context\Foo\Domain\ValueObject\FooId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-class DoctrineFooRepository extends ServiceEntityRepository implements FooRepository
+final class DoctrineFooRepository extends ServiceEntityRepository implements FooRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

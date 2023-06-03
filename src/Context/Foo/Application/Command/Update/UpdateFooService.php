@@ -10,7 +10,7 @@ use App\Context\Foo\Domain\ValueObject\FooId;
 
 class UpdateFooService
 {
-    public function __construct(private FooRepository $fooRepository)
+    public function __construct(private readonly FooRepository $fooRepository)
     {
     }
 
@@ -19,7 +19,7 @@ class UpdateFooService
         $foo = $this->fooRepository->findById($fooId);
 
         if (is_null($foo)) {
-            throw FooNotFoundException::fromFooId($fooId->value());
+            throw FooNotFoundException::fromFooId($fooId->value);
         }
 
         $this->fooRepository->save($foo->update($name));

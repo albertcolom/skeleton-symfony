@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
 
-class DBALFooFixtures extends Fixture implements FixtureGroupInterface
+final class DBALFooFixtures extends Fixture implements FixtureGroupInterface
 {
     public static function getGroups(): array
     {

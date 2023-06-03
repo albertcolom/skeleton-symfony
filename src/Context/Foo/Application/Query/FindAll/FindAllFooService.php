@@ -9,7 +9,7 @@ use App\Shared\Domain\QueryParams\QueryParams;
 
 class FindAllFooService
 {
-    public function __construct(private FooViewRepository $fooViewRepository)
+    public function __construct(private readonly FooViewRepository $fooViewRepository)
     {
     }
 

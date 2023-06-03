@@ -9,9 +9,9 @@ use App\Context\Foo\Domain\ValueObject\FooId;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 
-class ElasticSearchFooIndexRemover implements FooIndexRemover
+final class ElasticSearchFooIndexRemover implements FooIndexRemover
 {
-    public function __construct(private Client $client, private string $fooIndex)
+    public function __construct(private readonly Client $client, private readonly string $fooIndex)
     {
     }
 
@@ -19,7 +19,7 @@ class ElasticSearchFooIndexRemover implements FooIndexRemover
     {
         $params = [
             'index' => $this->fooIndex,
-            'id' => $fooId->value()
+            'id' => $fooId->value
         ];
 
         try {

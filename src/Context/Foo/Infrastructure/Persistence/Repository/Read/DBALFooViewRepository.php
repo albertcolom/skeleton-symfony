@@ -8,16 +8,15 @@ use App\Context\Foo\Domain\Bar\Bar;
 use App\Context\Foo\Domain\Bar\ValueObject\BarId;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\FooCollection;
-use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\QueryParams\QueryParams;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 
-class DBALFooViewRepository
+final class DBALFooViewRepository
 {
-    public function __construct(private Connection $connection)
+    public function __construct(private readonly Connection $connection)
     {
     }
 
@@ -73,8 +72,8 @@ SQL;
         $stmt = $this->connection->prepare($query);
 
         if ($queryParams->hasLimit()) {
-            $stmt->bindValue('offset', $queryParams->offset()->value(), ParameterType::INTEGER);
-            $stmt->bindValue('limit', $queryParams->limit()->value(), ParameterType::INTEGER);
+            $stmt->bindValue('offset', $queryParams->offset()->value, ParameterType::INTEGER);
+            $stmt->bindValue('limit', $queryParams->limit()->value, ParameterType::INTEGER);
         }
 
         $resultSet = $stmt->executeQuery()->fetchAllAssociative();
@@ -94,7 +93,7 @@ SQL;
 
         $binValues = [];
         $fooCollection->each(static function (int $key, Foo $foo) use (&$binValues) {
-            $binValues[sprintf(':foo_id_%s', $key)] = $foo->fooId()->optimizedId();
+            $binValues[sprintf(':foo_id_%s', $key)] = $foo->id->optimizedId();
             return $foo;
         });
 
@@ -163,13 +162,13 @@ SQL;
         }
 
         $groupBarByFooId = array_reduce($barData, static function (array $group, array $item) {
-            $group[FooId::fromBinary($item['foo_id'])->value()][] = $item;
+            $group[FooId::fromBinary($item['foo_id'])->value][] = $item;
             return $group;
         }, []);
 
         $fooCollection->each(static function (int $key, Foo $foo) use ($groupBarByFooId) {
-            if (array_key_exists($foo->fooId()->value(), $groupBarByFooId)) {
-                array_walk($groupBarByFooId[$foo->fooId()->value()], static function (array $bar) use ($foo) {
+            if (array_key_exists($foo->id->value, $groupBarByFooId)) {
+                array_walk($groupBarByFooId[$foo->id->value], static function (array $bar) use ($foo) {
                     $foo->addBar(Bar::create($foo, BarId::fromBinary($bar['bar_id']), $bar['bar_name']));
                 });
             }

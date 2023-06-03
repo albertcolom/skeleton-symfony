@@ -2,9 +2,9 @@
 
 namespace App\Shared\Infrastructure\Service;
 
-class CacheKeyCreator
+final class CacheKeyCreator
 {
-    public function __construct(private string $cachePrefix)
+    public function __construct(private readonly string $cachePrefix)
     {
     }
 

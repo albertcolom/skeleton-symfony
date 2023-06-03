@@ -9,12 +9,12 @@ use App\Shared\Infrastructure\Service\CacheKeyCreator;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
-class RedisCacheFooRemover implements CacheFooRemover
+final class RedisCacheFooRemover implements CacheFooRemover
 {
     public function __construct(
-        private CacheItemPoolInterface $cache,
-        private CacheKeyCreator $cacheKeyCreator,
-        private string $cachePrefix
+        private readonly CacheItemPoolInterface $cache,
+        private readonly CacheKeyCreator $cacheKeyCreator,
+        private readonly string $cachePrefix
     ) {
     }
 

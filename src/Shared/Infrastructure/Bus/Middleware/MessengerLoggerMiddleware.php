@@ -12,11 +12,11 @@ use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Throwable;
 
-class MessengerLoggerMiddleware implements MiddlewareInterface
+final class MessengerLoggerMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private LoggerInterface $messageLogger,
-        private MessengerMessageSerializer $messengerMessageSerializer
+        private readonly LoggerInterface $messageLogger,
+        private readonly MessengerMessageSerializer $messengerMessageSerializer
     ) {
     }
 

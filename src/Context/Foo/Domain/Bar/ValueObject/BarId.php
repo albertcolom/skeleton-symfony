@@ -6,6 +6,6 @@ namespace App\Context\Foo\Domain\Bar\ValueObject;
 
 use App\Shared\Domain\ValueObject\Uuid;
 
-class BarId extends Uuid
+final class BarId extends Uuid
 {
 }

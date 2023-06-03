@@ -7,14 +7,14 @@ namespace App\Context\Foo\Application\Command\Delete;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 
-class DeleteFooCommandHandler implements CommandHandler
+final class DeleteFooCommandHandler implements CommandHandler
 {
-    public function __construct(private DeleteFooService $deleteFooService)
+    public function __construct(private readonly DeleteFooService $deleteFooService)
     {
     }
 
     public function __invoke(DeleteFooCommand $command): void
     {
-        $this->deleteFooService->execute(FooId::fromString($command->id()));
+        $this->deleteFooService->execute(FooId::fromString($command->id));
     }
 }

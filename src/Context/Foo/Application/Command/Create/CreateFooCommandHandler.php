@@ -7,14 +7,14 @@ namespace App\Context\Foo\Application\Command\Create;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 
-class CreateFooCommandHandler implements CommandHandler
+final class CreateFooCommandHandler implements CommandHandler
 {
-    public function __construct(private CreateFooService $createFooService)
+    public function __construct(private readonly CreateFooService $createFooService)
     {
     }
 
     public function __invoke(CreateFooCommand $command): void
     {
-        $this->createFooService->execute(FooId::fromString($command->id()), $command->name());
+        $this->createFooService->execute(FooId::fromString($command->id), $command->name);
     }
 }

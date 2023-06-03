@@ -6,11 +6,11 @@ namespace App\Shared\Domain\QueryParams;
 
 use Webmozart\Assert\Assert;
 
-class Limit
+final class Limit
 {
     private const DEFAULT_VALUE = -1;
 
-    public function __construct(private int $limit = self::DEFAULT_VALUE)
+    public function __construct(public readonly int $value = self::DEFAULT_VALUE)
     {
         $this->guard();
     }
@@ -20,17 +20,12 @@ class Limit
         return new self($limit);
     }
 
-    public function value(): int
-    {
-        return $this->limit;
-    }
-
     private function guard(): void
     {
-        if (self::DEFAULT_VALUE === $this->limit) {
+        if (self::DEFAULT_VALUE === $this->value) {
             return;
         }
 
-        Assert::greaterThan($this->limit, 0);
+        Assert::greaterThan($this->value, 0);
     }
 }

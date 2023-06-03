@@ -10,19 +10,21 @@ use App\Context\Foo\Domain\Event\FooWasCreated;
 use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Shared\Domain\Bus\Event\EventListener;
 
-class OnFooWasCreated implements EventListener
+final class OnFooWasCreated implements EventListener
 {
-    public function __construct(private FooIndexUpdater $fooIndexUpdater, private CacheFooRemover $cacheFooRemover)
-    {
+    public function __construct(
+        private readonly FooIndexUpdater $fooIndexUpdater,
+        private readonly CacheFooRemover $cacheFooRemover
+    ) {
     }
 
     public function __invoke(FooWasCreated $event): void
     {
-        $fooId = FooId::fromString($event->fooId());
+        $fooId = FooId::fromString($event->fooId);
 
         $this->fooIndexUpdater->execute($fooId);
         $this->cacheFooRemover->execute($fooId);
 
-        echo 'OnFooWasCreated foo: ' . $event->fooId() . "\n";
+        echo 'OnFooWasCreated foo: ' . $event->fooId . "\n";
     }
 }

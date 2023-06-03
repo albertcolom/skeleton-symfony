@@ -6,14 +6,9 @@ namespace App\Context\Foo\Application\Query\Find;
 
 use App\Shared\Domain\Bus\Query\Query;
 
-class FindFooQuery implements Query
+final class FindFooQuery implements Query
 {
-    public function __construct(private string $id)
+    public function __construct(public readonly string $id)
     {
-    }
-
-    public function id(): string
-    {
-        return $this->id;
     }
 }

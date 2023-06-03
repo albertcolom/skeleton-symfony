@@ -8,7 +8,7 @@ use App\Context\Foo\Domain\Bar\ValueObject\BarId;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
-class BarIdType extends Type
+final class BarIdType extends Type
 {
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
