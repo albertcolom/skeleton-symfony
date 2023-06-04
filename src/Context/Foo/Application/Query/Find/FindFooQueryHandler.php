@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Context\Foo\Application\Query\Find;
 
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Shared\Domain\Bus\Query\QueryHandler;
+use App\Shared\Application\Bus\Query\QueryHandler;
 
 final class FindFooQueryHandler implements QueryHandler
 {

@@ -7,7 +7,7 @@ namespace App\Context\Foo\Domain\Repository\Read;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\FooCollection;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Shared\Domain\QueryParams\QueryParams;
+use App\Shared\Domain\Read\QueryParams\QueryParams;
 
 interface FooViewRepository
 {

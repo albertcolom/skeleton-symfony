@@ -7,7 +7,7 @@ namespace App\Context\Foo\Application\Query\FindAll;
 use App\Context\Foo\Domain\Bar\Bar;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\FooCollection;
-use App\Shared\Domain\Bus\Query\Response;
+use App\Shared\Application\Bus\Query\Response;
 
 final class FindAllFooQueryResponse implements Response
 {

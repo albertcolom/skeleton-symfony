@@ -11,7 +11,7 @@ use App\Context\Foo\Domain\Event\FooWasCreated;
 use App\Context\Foo\Domain\Event\FooWasRemoved;
 use App\Context\Foo\Domain\Event\FooWasUpdated;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Shared\Domain\Aggregate\AggregateRoot;
+use App\Shared\Domain\Write\Aggregate\AggregateRoot;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\Collection;

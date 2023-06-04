@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus;
 
-use App\Shared\Domain\Bus\Query\CacheQueryBus;
-use App\Shared\Domain\Bus\Query\Query;
-use App\Shared\Domain\Bus\Query\Response;
+use App\Shared\Application\Bus\Query\CacheQueryBus;
+use App\Shared\Application\Bus\Query\Query;
+use App\Shared\Application\Bus\Query\Response;
 use App\Shared\Infrastructure\Service\CacheKeyCreator;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;

@@ -7,7 +7,7 @@ namespace App\UI\Controller;
 use App\Context\Foo\Application\Command\Create\CreateFooCommand;
 use App\Context\Foo\Application\Command\Update\UpdateFooCommand;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Shared\Domain\Bus\Command\CommandBus;
+use App\Shared\Application\Bus\Command\CommandBus;
 use App\Shared\Infrastructure\Request\RequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

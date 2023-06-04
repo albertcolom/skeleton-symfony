@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain\Aggregate;
+namespace App\Shared\Domain\Write\Aggregate;
 
-use App\Shared\Domain\Bus\Event\DomainEvent;
+use App\Shared\Domain\Write\Event\DomainEvent;
 
 abstract class AggregateRoot
 {

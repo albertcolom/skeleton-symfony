@@ -6,7 +6,7 @@ namespace App\Context\Foo\Application\Query\Find;
 
 use App\Context\Foo\Domain\Bar\Bar;
 use App\Context\Foo\Domain\Foo;
-use App\Shared\Domain\Bus\Query\Response;
+use App\Shared\Application\Bus\Query\Response;
 
 final class FindFooQueryResponse implements Response
 {

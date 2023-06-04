@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain\QueryParams;
+namespace App\Shared\Domain\Read\QueryParams;
 
 use Webmozart\Assert\Assert;
 

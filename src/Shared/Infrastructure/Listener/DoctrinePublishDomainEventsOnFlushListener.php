@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Listener;
 
-use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\Shared\Domain\Bus\Event\EventBus;
+use App\Shared\Application\Bus\Event\EventBus;
+use App\Shared\Domain\Write\Aggregate\AggregateRoot;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
 final class DoctrinePublishDomainEventsOnFlushListener

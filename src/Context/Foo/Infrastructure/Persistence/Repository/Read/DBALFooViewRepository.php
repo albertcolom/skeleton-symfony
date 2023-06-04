@@ -9,7 +9,7 @@ use App\Context\Foo\Domain\Bar\ValueObject\BarId;
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\FooCollection;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Shared\Domain\QueryParams\QueryParams;
+use App\Shared\Domain\Read\QueryParams\QueryParams;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;

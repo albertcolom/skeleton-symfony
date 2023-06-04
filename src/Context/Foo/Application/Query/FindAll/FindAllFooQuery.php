@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Application\Query\FindAll;
 
-use App\Shared\Domain\Bus\Query\Query;
+use App\Shared\Application\Bus\Query\Query;
 
 final class FindAllFooQuery implements Query
 {

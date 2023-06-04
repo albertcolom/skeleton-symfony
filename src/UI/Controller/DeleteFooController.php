@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Controller;
 
 use App\Context\Foo\Application\Command\Delete\DeleteFooCommand;
-use App\Shared\Domain\Bus\Command\CommandBus;
+use App\Shared\Application\Bus\Command\CommandBus;
 use App\Shared\Infrastructure\Request\RequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

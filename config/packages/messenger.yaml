@@ -30,6 +30,6 @@ framework:
                     - App\Shared\Infrastructure\Bus\Middleware\MessengerIdStampMiddleware
                     - App\Shared\Infrastructure\Bus\Middleware\MessengerEventLogMiddleware
         routing:
-            'App\Shared\Domain\Bus\Event\DomainEvent': ampqp
+            'App\Shared\Domain\Write\Event\DomainEvent': ampqp
         serializer:
             default_serializer: App\Shared\Infrastructure\Bus\Serializer\MessengerMessageSerializer

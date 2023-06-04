@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Application\Query\FindAll;
 
-use App\Shared\Domain\Bus\Query\QueryHandler;
-use App\Shared\Domain\QueryParams\QueryParams;
+use App\Shared\Application\Bus\Query\QueryHandler;
+use App\Shared\Domain\Read\QueryParams\QueryParams;
 
 final class FindAllFooQueryHandler implements QueryHandler
 {

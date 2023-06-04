@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\UI\Controller;
 
 use App\Context\Foo\Application\Query\FindAll\FindAllFooQuery;
-use App\Shared\Domain\Bus\Query\CacheQueryBus;
-use App\Shared\Domain\QueryParams\QueryParams;
+use App\Shared\Application\Bus\Query\CacheQueryBus;
+use App\Shared\Domain\Read\QueryParams\QueryParams;
 use App\Shared\Infrastructure\Request\RequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

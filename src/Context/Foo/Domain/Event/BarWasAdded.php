@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Domain\Event;
 
-use App\Shared\Domain\Bus\Event\DomainEvent;
+use App\Shared\Domain\Write\Event\DomainEvent;
 
 final class BarWasAdded extends DomainEvent
 {

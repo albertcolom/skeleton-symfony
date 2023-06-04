@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Application\Command\Delete;
 
-use App\Shared\Domain\Bus\Command\Command;
+use App\Shared\Application\Bus\Command\Command;
 
 class DeleteFooCommand implements Command
 {

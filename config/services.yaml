@@ -27,13 +27,13 @@ services:
     # please note that last definitions always *replace* previous ones
 
     _instanceof:
-        App\Shared\Domain\Bus\Command\CommandHandler:
+        App\Shared\Application\Bus\Command\CommandHandler:
             tags:
                 - { name: messenger.message_handler, bus: sync.command.bus }
-        App\Shared\Domain\Bus\Query\QueryHandler:
+        App\Shared\Application\Bus\Query\QueryHandler:
             tags:
                 - { name: messenger.message_handler, bus: sync.query.bus }
-        App\Shared\Domain\Bus\Event\EventListener:
+        App\Shared\Application\Bus\Event\EventListener:
             tags:
                 - { name: messenger.message_handler, bus: async.event.bus }
 

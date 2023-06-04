@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Application\Command\Update;
 
-use App\Shared\Domain\Bus\Command\Command;
+use App\Shared\Application\Bus\Command\Command;
 
 final class UpdateFooCommand implements Command
 {

@@ -8,7 +8,7 @@ use App\Context\Foo\Application\Service\CacheFooRemover;
 use App\Context\Foo\Application\Service\FooIndexRemover;
 use App\Context\Foo\Domain\Event\FooWasRemoved;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Shared\Domain\Bus\Event\EventListener;
+use App\Shared\Application\Bus\Event\EventListener;
 
 final class OnFooWasRemoved implements EventListener
 {
