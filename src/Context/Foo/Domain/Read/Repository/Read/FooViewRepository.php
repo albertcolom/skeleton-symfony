@@ -11,7 +11,7 @@ use App\Shared\Domain\Read\QueryParams\QueryParams;
 
 interface FooViewRepository
 {
-    public function findById(FooId $fooId): ?FooView;
+    public function findById(FooId $fooId): FooView;
 
     public function findAll(QueryParams $queryParams): FooViewCollection;
 }

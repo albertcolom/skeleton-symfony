@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Infrastructure\Persistence\Repository\Read;
 
+use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\BarView\BarView;
 use App\Context\Foo\Domain\Read\View\BarView\BarViewCollection;
@@ -20,7 +21,7 @@ final class ElasticSearchFooViewRepository implements FooViewRepository
     {
     }
 
-    public function findById(FooId $fooId): ?FooView
+    public function findById(FooId $fooId): FooView
     {
         $params = [
             'index' => $this->fooIndex,
@@ -33,7 +34,7 @@ final class ElasticSearchFooViewRepository implements FooViewRepository
             if ($e->getCode() !== 404) {
                 throw $e;
             }
-            return null;
+            return throw FooNotFoundException::fromFooId($fooId->value);
         }
 
         return $this->hydrate($resultSet->asArray());

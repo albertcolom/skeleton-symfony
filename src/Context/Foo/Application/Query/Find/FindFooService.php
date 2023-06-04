@@ -18,10 +18,6 @@ class FindFooService
     {
         $foo = $this->fooViewRepository->findById($fooId);
 
-        if (null === $foo) {
-            throw FooNotFoundException::fromFooId($fooId->value);
-        }
-
         return FindFooQueryResponse::fromFooView($foo);
     }
 }

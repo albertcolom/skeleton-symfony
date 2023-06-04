@@ -63,7 +63,10 @@ class FindFooServiceTest extends TestCase
 
     private function givenNonExistingFoo(): void
     {
-        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn(null);
+        $this->fooViewRepository
+            ->expects(self::once())
+            ->method('findById')
+            ->willThrowException(FooNotFoundException::fromFooId($this->fooId->value));
     }
 
     private function givenExistingFooView(FooView $fooView): void
