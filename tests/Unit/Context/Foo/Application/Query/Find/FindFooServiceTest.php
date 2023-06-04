@@ -6,7 +6,7 @@ namespace App\Tests\Unit\Context\Foo\Application\Query\Find;
 
 use App\Context\Foo\Application\Query\Find\FindFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\Repository\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\FooView;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;

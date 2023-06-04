@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Context\Foo\Infrastructure\Persistence\Repository\Read;
 
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\Repository\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\BarView\BarView;
 use App\Context\Foo\Domain\Read\View\BarView\BarViewCollection;
 use App\Context\Foo\Domain\Read\View\FooView;

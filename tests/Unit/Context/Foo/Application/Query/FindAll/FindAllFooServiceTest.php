@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Context\Foo\Application\Query\FindAll;
 
 use App\Context\Foo\Application\Query\FindAll\FindAllFooService;
-use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\Repository\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\FooViewCollection;
 use App\Tests\Shared\Stubs\Foo\Read\FooViewCollectionMother;
 use PHPUnit\Framework\MockObject\MockObject;
