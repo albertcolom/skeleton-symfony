@@ -15,11 +15,6 @@ final class Limit
         $this->guard();
     }
 
-    public static function create(int $limit = self::DEFAULT_VALUE): self
-    {
-        return new self($limit);
-    }
-
     private function guard(): void
     {
         if (self::DEFAULT_VALUE === $this->value) {

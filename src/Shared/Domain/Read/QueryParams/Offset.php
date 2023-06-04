@@ -14,9 +14,4 @@ final class Offset
     {
         Assert::greaterThanEq($value, self::DEFAULT_VALUE);
     }
-
-    public static function create(int $offset = self::DEFAULT_VALUE): self
-    {
-        return new self($offset);
-    }
 }

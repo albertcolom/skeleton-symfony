@@ -16,15 +16,8 @@ final class Bar
     ) {
     }
 
-    public static function create(Foo $foo, BarId $barId, string $name): self
-    {
-        return new self($foo, $barId, $name);
-    }
-
     public function equals(self $other): bool
     {
-        return $this->foo->equals($other->foo)
-            && $this->id->equals($other->id)
-            && $this->name === $other->name;
+        return $this->foo->equals($other->foo) && $this->id->equals($other->id) && $this->name === $other->name;
     }
 }

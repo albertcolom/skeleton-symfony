@@ -16,9 +16,4 @@ final class BarWasAdded extends DomainEvent
     ) {
         parent::__construct($occurredOn);
     }
-
-    public static function create(string $fooId, string $barId, string $name): self
-    {
-        return new self($fooId, $barId, $name);
-    }
 }

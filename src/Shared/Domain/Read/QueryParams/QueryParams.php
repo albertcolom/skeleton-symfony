@@ -13,18 +13,13 @@ class QueryParams
 
     public function __construct()
     {
-        $this->offset = Offset::create();
-        $this->limit = Limit::create();
-    }
-
-    public static function create(): self
-    {
-        return new self();
+        $this->offset = new Offset();
+        $this->limit = new Limit();
     }
 
     public static function fromArray(array $params): self
     {
-        return self::create()
+        return (new self())
             ->setOffset(isset($params['offset']) ? (int)$params['offset'] : self::DEFAULT_OFFSET)
             ->setLimit(isset($params['limit']) ? (int)$params['limit'] : self::DEFAULT_LIMIT);
     }
@@ -51,13 +46,13 @@ class QueryParams
 
     public function setOffset(int $limit): self
     {
-        $this->offset = Offset::create($limit);
+        $this->offset = new Offset($limit);
         return $this;
     }
 
     public function setLimit(int $limit): self
     {
-        $this->limit = Limit::create($limit);
+        $this->limit = new Limit($limit);
         return $this;
     }
 

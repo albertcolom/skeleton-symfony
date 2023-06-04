@@ -15,7 +15,7 @@ class BarStub
 
     public static function create(Foo $foo, BarId $barId, string $name): Bar
     {
-        return Bar::create($foo, $barId, $name);
+        return new Bar($foo, $barId, $name);
     }
 
     public static function default(): Bar

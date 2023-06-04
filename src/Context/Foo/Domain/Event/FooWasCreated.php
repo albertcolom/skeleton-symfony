@@ -16,9 +16,4 @@ final class FooWasCreated extends DomainEvent
     ) {
         parent::__construct($occurredOn);
     }
-
-    public static function create(string $fooId, string $name, string $createdAt): self
-    {
-        return new self($fooId, $name, $createdAt);
-    }
 }

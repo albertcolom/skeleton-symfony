@@ -15,7 +15,7 @@ class FooStub
 
     public static function create(FooId $id, string $name, DateTimeImmutable $createdAt): Foo
     {
-        return Foo::create($id, $name, $createdAt);
+        return new Foo($id, $name, $createdAt);
     }
 
     public static function default(): Foo

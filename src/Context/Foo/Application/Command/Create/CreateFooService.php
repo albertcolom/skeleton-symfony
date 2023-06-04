@@ -20,7 +20,7 @@ class CreateFooService
     {
         $this->assertFooDoesNotExist($fooId);
 
-        $foo = Foo::create($fooId, $name, new DateTimeImmutable());
+        $foo = new Foo($fooId, $name, new DateTimeImmutable());
         $this->fooRepository->save($foo);
     }
 

@@ -10,11 +10,6 @@ class ViewCollection
     {
     }
 
-    public static function create(array $items): static
-    {
-        return new static($items);
-    }
-
     public static function createEmpty(): static
     {
         return new static([]);
@@ -22,7 +17,7 @@ class ViewCollection
 
     public static function fromMap(array $items, callable $fn): static
     {
-        return self::create(array_map($fn, $items));
+        return new static(array_map($fn, $items));
     }
 
     public function reduce(callable $fn, mixed $initial): mixed
@@ -53,7 +48,7 @@ class ViewCollection
 
     public function filter(callable $fn): static
     {
-        return self::create(array_filter($this->items, $fn, ARRAY_FILTER_USE_BOTH));
+        return new static(array_filter($this->items, $fn, ARRAY_FILTER_USE_BOTH));
     }
 
     public function first(): mixed

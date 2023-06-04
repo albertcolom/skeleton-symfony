@@ -14,7 +14,7 @@ final class MessengerIdStampMiddleware implements MiddlewareInterface
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
         if (null === $envelope->last(MessengerIdStamp::class)) {
-            $envelope = $envelope->with(MessengerIdStamp::create());
+            $envelope = $envelope->with(MessengerIdStamp::random());
         }
 
         return $stack->next()->handle($envelope, $stack);

@@ -27,13 +27,8 @@ final class Foo extends AggregateRoot
     ) {
         $this->bars = BarCollection::createEmpty();
         $this->recordEvent(
-            FooWasCreated::create($id->value, $name, $createdAt->format('Y-m-d H:i:s'))
+            new FooWasCreated($id->value, $name, $createdAt->format('Y-m-d H:i:s'))
         );
-    }
-
-    public static function create(FooId $id, string $name, DateTimeImmutable $createdAt): self
-    {
-        return new self($id, $name, $createdAt);
     }
 
     public function name(): string
@@ -55,21 +50,21 @@ final class Foo extends AggregateRoot
     {
         $this->bars->add($bar);
 
-        $this->recordEvent(BarWasAdded::create($this->id->value, $bar->id->value, $bar->name));
+        $this->recordEvent(new BarWasAdded($this->id->value, $bar->id->value, $bar->name));
     }
 
     public function update(string $name): self
     {
         $this->name = $name;
 
-        $this->recordEvent(FooWasUpdated::create($this->id->value, $this->name()));
+        $this->recordEvent(new FooWasUpdated($this->id->value, $this->name()));
 
         return $this;
     }
 
     public function remove(): void
     {
-        $this->recordEvent(FooWasRemoved::create($this->id->value));
+        $this->recordEvent(new FooWasRemoved($this->id->value));
     }
 
     public function equals(self $other): bool

@@ -27,7 +27,7 @@ final class DoctrineFooRepository extends ServiceEntityRepository implements Foo
             return FooCollection::createEmpty();
         }
 
-        return FooCollection::create($foos);
+        return new FooCollection($foos);
     }
 
     public function findById(FooId $fooId): ?Foo

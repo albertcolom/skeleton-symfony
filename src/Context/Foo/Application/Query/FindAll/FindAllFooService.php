@@ -16,7 +16,7 @@ class FindAllFooService
     public function execute(?QueryParams $queryParams = null): FindAllFooQueryResponse
     {
         return FindAllFooQueryResponse::fromFooCollection(
-            $this->fooViewRepository->findAll($queryParams ?? QueryParams::create())
+            $this->fooViewRepository->findAll($queryParams ?? new QueryParams())
         );
     }
 }

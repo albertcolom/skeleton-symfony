@@ -147,7 +147,7 @@ SQL;
         return FooCollection::fromMap(
             $fooData,
             static function (array $data): Foo {
-                return Foo::create(
+                return new Foo(
                     FooId::fromBinary($data['foo_id']),
                     $data['foo_name'],
                     new DateTimeImmutable($data['foo_created_at'])
@@ -170,7 +170,7 @@ SQL;
         $fooCollection->each(static function (int $key, Foo $foo) use ($groupBarByFooId) {
             if (array_key_exists($foo->id->value, $groupBarByFooId)) {
                 array_walk($groupBarByFooId[$foo->id->value], static function (array $bar) use ($foo) {
-                    $foo->addBar(Bar::create($foo, BarId::fromBinary($bar['bar_id']), $bar['bar_name']));
+                    $foo->addBar(new Bar($foo, BarId::fromBinary($bar['bar_id']), $bar['bar_name']));
                 });
             }
             return $foo;
