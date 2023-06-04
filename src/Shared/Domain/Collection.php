@@ -19,6 +19,11 @@ class Collection extends ArrayCollection
         return new static([]);
     }
 
+    public static function fromMap(array $items, Closure $func): static
+    {
+        return new static(array_map($func, $items));
+    }
+
     public function each(Closure $fn): void
     {
         $this->forAll($fn);

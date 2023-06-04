@@ -84,10 +84,11 @@ final class ElasticSearchFooViewRepository implements FooViewRepository
 
     private function hydrateAll(array $data): FooCollection
     {
-        return FooCollection::create(
-            array_map(function (array $data): Foo {
+        return FooCollection::fromMap(
+            $data['hits']['hits'],
+            function (array $data): Foo {
                 return $this->hydrate($data);
-            }, $data['hits']['hits'])
+            }
         );
     }
 }

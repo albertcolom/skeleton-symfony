@@ -144,14 +144,15 @@ SQL;
 
     private function hydrateFooCollection(array $fooData): FooCollection
     {
-        return FooCollection::create(
-            array_map(static function (array $data): Foo {
+        return FooCollection::fromMap(
+            $fooData,
+            static function (array $data): Foo {
                 return Foo::create(
                     FooId::fromBinary($data['foo_id']),
                     $data['foo_name'],
                     new DateTimeImmutable($data['foo_created_at'])
                 );
-            }, $fooData)
+            }
         );
     }
 
