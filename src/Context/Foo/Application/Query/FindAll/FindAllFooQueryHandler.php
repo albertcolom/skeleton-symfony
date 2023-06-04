@@ -15,6 +15,8 @@ final class FindAllFooQueryHandler implements QueryHandler
 
     public function __invoke(FindAllFooQuery $query): FindAllFooQueryResponse
     {
-        return $this->findAllFooService->execute(QueryParams::fromArray($query->params));
+        return FindAllFooQueryResponse::fromFooViewCollection(
+            $this->findAllFooService->execute(QueryParams::fromArray($query->params))
+        );
     }
 }

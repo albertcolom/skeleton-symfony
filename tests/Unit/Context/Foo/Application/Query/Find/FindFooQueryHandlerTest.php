@@ -48,7 +48,7 @@ class FindFooQueryHandlerTest extends TestCase
             ->expects(self::once())
             ->method('execute')
             ->with(FooIdStub::default())
-            ->willReturn(FindFooQueryResponse::fromFooView($fooView));
+            ->willReturn($fooView);
     }
 
     private function whenTheCommandHandlerIsInvoked(): void

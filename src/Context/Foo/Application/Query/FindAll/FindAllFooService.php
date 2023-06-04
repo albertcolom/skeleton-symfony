@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Context\Foo\Application\Query\FindAll;
 
 use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\View\FooViewCollection;
 use App\Shared\Domain\Read\QueryParams\QueryParams;
 
 class FindAllFooService
@@ -13,10 +14,8 @@ class FindAllFooService
     {
     }
 
-    public function execute(?QueryParams $queryParams = null): FindAllFooQueryResponse
+    public function execute(?QueryParams $queryParams = null): FooViewCollection
     {
-        return FindAllFooQueryResponse::fromFooViewCollection(
-            $this->fooViewRepository->findAll($queryParams ?? new QueryParams())
-        );
+        return $this->fooViewRepository->findAll($queryParams ?? new QueryParams());
     }
 }

@@ -15,6 +15,8 @@ final class FindFooQueryHandler implements QueryHandler
 
     public function __invoke(FindFooQuery $query): FindFooQueryResponse
     {
-        return $this->findFooQueryService->execute(FooId::fromString($query->id));
+        return FindFooQueryResponse::fromFooView(
+            $this->findFooQueryService->execute(FooId::fromString($query->id))
+        );
     }
 }

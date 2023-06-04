@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Context\Foo\Application\Query\FindAll;
 
-use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryResponse;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooService;
 use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\FooViewCollection;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdStub;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarStub;
 use App\Tests\Shared\Stubs\Foo\Read\FooViewCollectionMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 class FindAllFooServiceTest extends TestCase
 {
     private FooViewRepository|MockObject $fooViewRepository;
-    private FindAllFooQueryResponse|null $response;
+    private FooViewCollection|null $response;
 
     protected function setUp(): void
     {
@@ -92,12 +89,12 @@ class FindAllFooServiceTest extends TestCase
             ],
         ];
 
-        self::assertSame($expected, $this->response->result());
+        self::assertSame($expected, $this->response->toArray());
     }
 
     private function thenGetExpectedEmptyResponse(): void
     {
-        self::assertEmpty($this->response->result());
+        self::assertEmpty($this->response->toArray());
     }
 
     private function whenExecuteTheService(): void

@@ -10,11 +10,12 @@ use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryResponse;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooService;
 use App\Context\Foo\Domain\FooCollection;
 use App\Tests\Shared\Stubs\Foo\Read\FooViewCollectionMother;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FindAllFooQueryHandlerTest extends TestCase
 {
-    private FindAllFooService $findAllFooService;
+    private FindAllFooService|MockObject $findAllFooService;
     private FindAllFooQuery $query;
     private FindAllFooQueryResponse|null $response;
 
@@ -37,7 +38,7 @@ class FindAllFooQueryHandlerTest extends TestCase
         $this->findAllFooService
             ->expects(self::once())
             ->method('execute')
-            ->willReturn(FindAllFooQueryResponse::fromFooViewCollection(FooViewCollectionMother::create()));
+            ->willReturn(FooViewCollectionMother::create());
     }
 
     private function whenTheCommandHandlerIsInvoked(): void

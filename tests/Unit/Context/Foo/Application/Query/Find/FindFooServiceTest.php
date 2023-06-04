@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Context\Foo\Application\Query\Find;
 
-use App\Context\Foo\Application\Query\Find\FindFooQueryResponse;
 use App\Context\Foo\Application\Query\Find\FindFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
@@ -19,7 +18,7 @@ class FindFooServiceTest extends TestCase
 {
     private FooViewRepository|MockObject $fooViewRepository;
     private FooId|null $fooId;
-    private FindFooQueryResponse|null $response;
+    private FooView|null $response;
 
     protected function setUp(): void
     {
@@ -95,7 +94,7 @@ class FindFooServiceTest extends TestCase
             'created_at' => $fooView->createdAt,
         ];
 
-        self::assertSame($expected, $this->response->result());
+        self::assertSame($expected, $this->response->toArray());
     }
 
     private function thenGetExpectedResponseWithBarCollection(FooView $fooView): void
@@ -116,6 +115,6 @@ class FindFooServiceTest extends TestCase
             'created_at' => $fooView->createdAt,
         ];
 
-        self::assertSame($expected, $this->response->result());
+        self::assertSame($expected, $this->response->toArray());
     }
 }
