@@ -15,30 +15,29 @@ Feature:
           {
             "id": "1ca06159-6f66-45c6-aa80-1cf5141f66d6",
             "name": "Some Foo name 2",
-            "created_at":"2019-01-19 11:11:11",
             "bar": [
               {
                 "id": "06b433af-5699-4cf2-8fb0-29cca9e694c3",
                 "name": "Some Bar name 3"
               }
-            ]
+            ],
+            "created_at":"2019-01-19 11:11:11"
           },
           {
             "id": "6b7dde86-52c3-45d2-a623-f6bc6f142e29",
             "name": "Some Foo name 5",
-            "created_at":"2022-01-22 11:11:11",
-            "bar": []
+            "bar": [],
+            "created_at":"2022-01-22 11:11:11"
           },
           {
             "id": "782416f0-5d50-4478-821a-48e5d1f0391d",
             "name": "Some Foo name 3",
-            "created_at":"2020-01-20 11:11:11",
-            "bar": []
+            "bar": [],
+            "created_at":"2020-01-20 11:11:11"
           },
           {
             "id": "7f590fc8-1298-4fb7-927e-a38ae50bc705",
             "name": "Some Foo name 1",
-            "created_at":"2018-01-18 11:11:11",
             "bar": [
               {
                 "id": "d7b651e9-3bc9-4062-a60b-9882fca29b7f",
@@ -48,18 +47,19 @@ Feature:
                 "id": "e4b8fdc9-ded0-4c2f-8c3c-f047e3636655",
                 "name": "Some Bar name 1"
               }
-            ]
+            ],
+            "created_at":"2018-01-18 11:11:11"
           },
           {
             "id": "a557c2ab-b48b-4a02-acda-570d3de4b154",
             "name": "Some Foo name 4",
-            "created_at":"2021-01-21 11:11:11",
             "bar": [
               {
                 "id": "5fef1065-8fe3-4e29-8712-5eb89fdbc0a0",
                 "name": "Some Bar name 4"
               }
-            ]
+            ],
+            "created_at":"2021-01-21 11:11:11"
           }
         ]
         """
@@ -78,14 +78,14 @@ Feature:
             {
                 "id": "6b7dde86-52c3-45d2-a623-f6bc6f142e29",
                 "name": "Some Foo name 5",
-                "created_at":"2022-01-22 11:11:11",
-                "bar": []
+                "bar": [],
+                "created_at":"2022-01-22 11:11:11"
             },
             {
                 "id": "782416f0-5d50-4478-821a-48e5d1f0391d",
                 "name": "Some Foo name 3",
-                "created_at":"2020-01-20 11:11:11",
-                "bar": []
+                "bar": [],
+                "created_at":"2020-01-20 11:11:11"
             }
         ]
         """

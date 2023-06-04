@@ -9,6 +9,7 @@ use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryHandler;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryResponse;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooService;
 use App\Context\Foo\Domain\FooCollection;
+use App\Tests\Shared\Stubs\Foo\Read\FooViewCollectionMother;
 use PHPUnit\Framework\TestCase;
 
 class FindAllFooQueryHandlerTest extends TestCase
@@ -36,7 +37,7 @@ class FindAllFooQueryHandlerTest extends TestCase
         $this->findAllFooService
             ->expects(self::once())
             ->method('execute')
-            ->willReturn(FindAllFooQueryResponse::fromFooCollection(FooCollection::createEmpty()));
+            ->willReturn(FindAllFooQueryResponse::fromFooViewCollection(FooViewCollectionMother::create()));
     }
 
     private function whenTheCommandHandlerIsInvoked(): void

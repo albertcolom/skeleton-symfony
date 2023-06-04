@@ -14,7 +14,6 @@ Feature:
         {
           "id": "7f590fc8-1298-4fb7-927e-a38ae50bc705",
           "name": "Some Foo name 1",
-          "created_at":"2018-01-18 11:11:11",
           "bar": [
             {
               "id": "d7b651e9-3bc9-4062-a60b-9882fca29b7f",
@@ -24,7 +23,8 @@ Feature:
               "id": "e4b8fdc9-ded0-4c2f-8c3c-f047e3636655",
               "name": "Some Bar name 1"
             }
-          ]
+          ],
+          "created_at":"2018-01-18 11:11:11"
         }
         """
         And the response code should be 200

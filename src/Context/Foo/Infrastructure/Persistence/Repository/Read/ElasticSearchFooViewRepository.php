@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Infrastructure\Persistence\Repository\Read;
 
-use App\Context\Foo\Domain\Bar\Bar;
-use App\Context\Foo\Domain\Bar\ValueObject\BarId;
-use App\Context\Foo\Domain\Foo;
-use App\Context\Foo\Domain\FooCollection;
-use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\View\BarView\BarView;
+use App\Context\Foo\Domain\Read\View\BarView\BarViewCollection;
+use App\Context\Foo\Domain\Read\View\FooView;
+use App\Context\Foo\Domain\Read\View\FooViewCollection;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Shared\Domain\Read\QueryParams\QueryParams;
-use DateTimeImmutable;
+use App\Shared\Domain\Read\QueryParams\QueryParams;;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 
@@ -21,7 +20,7 @@ final class ElasticSearchFooViewRepository implements FooViewRepository
     {
     }
 
-    public function findById(FooId $fooId): ?Foo
+    public function findById(FooId $fooId): ?FooView
     {
         $params = [
             'index' => $this->fooIndex,
@@ -40,7 +39,7 @@ final class ElasticSearchFooViewRepository implements FooViewRepository
         return $this->hydrate($resultSet->asArray());
     }
 
-    public function findAll(QueryParams $queryParams): FooCollection
+    public function findAll(QueryParams $queryParams): FooViewCollection
     {
         $params = [
             'index' => $this->fooIndex,
@@ -57,38 +56,34 @@ final class ElasticSearchFooViewRepository implements FooViewRepository
             if ($e->getCode() !== 404) {
                 throw $e;
             }
-            return FooCollection::createEmpty();
+            return FooViewCollection::createEmpty();
         }
 
         if (0 === $resultSet['hits']['total']['value']) {
-            return FooCollection::createEmpty();
+            return FooViewCollection::createEmpty();
         }
 
         return $this->hydrateAll($resultSet->asArray());
     }
 
-    private function hydrate(array $data): Foo
+    private function hydrate(array $data): FooView
     {
-        $foo = new Foo(
-            FooId::fromString($data['_id']),
-            $data['_source']['name'],
-            new DateTimeImmutable($data['_source']['created_at'])
+        return new FooView(
+            $data['_id'] ?? '',
+            $data['_source']['name'] ?? '',
+            BarViewCollection::fromMap(
+                $data['_source']['bar'] ?? [],
+                fn(array $data): BarView => new BarView($data['id'] ?? '', $data['name'] ?? '')
+            ),
+            $data['_source']['created_at'] ?? ''
         );
-
-        array_walk($data['_source']['bar'], static function (array $bar) use ($foo) {
-            $foo->addBar(new Bar($foo, BarId::fromString($bar['id']), $bar['name']));
-        });
-
-        return $foo;
     }
 
-    private function hydrateAll(array $data): FooCollection
+    private function hydrateAll(array $data): FooViewCollection
     {
-        return FooCollection::fromMap(
-            $data['hits']['hits'],
-            function (array $data): Foo {
-                return $this->hydrate($data);
-            }
+        return FooViewCollection::fromMap(
+            $data['hits']['hits'] ?? [],
+            fn(array $data): FooView => $this->hydrate($data)
         );
     }
 }

@@ -6,7 +6,7 @@ namespace App\Shared\Domain\Read;
 
 class ViewCollection
 {
-    public function __construct(private array $items)
+    public function __construct(private array $elements)
     {
     }
 
@@ -22,23 +22,23 @@ class ViewCollection
 
     public function reduce(callable $fn, mixed $initial): mixed
     {
-        return array_reduce($this->items, $fn, $initial);
+        return array_reduce($this->elements, $fn, $initial);
     }
 
     public function map(callable $fn): array
     {
-        return array_map($fn, $this->items);
+        return array_map($fn, $this->elements);
     }
 
     public function each(callable $fn): void
     {
-        array_walk($this->items, $fn);
+        array_walk($this->elements, $fn);
     }
 
     public function some(callable $fn): bool
     {
-        foreach ($this->items as $index => $element) {
-            if ($fn($element, $index, $this->items)) {
+        foreach ($this->elements as $index => $element) {
+            if ($fn($element, $index, $this->elements)) {
                 return true;
             }
         }
@@ -48,36 +48,41 @@ class ViewCollection
 
     public function filter(callable $fn): static
     {
-        return new static(array_filter($this->items, $fn, ARRAY_FILTER_USE_BOTH));
+        return new static(array_filter($this->elements, $fn, ARRAY_FILTER_USE_BOTH));
     }
 
     public function first(): mixed
     {
-        return reset($this->items);
+        return reset($this->elements);
     }
 
     public function last(): mixed
     {
-        return end($this->items);
+        return end($this->elements);
     }
 
     public function count(): int
     {
-        return count($this->items);
+        return count($this->elements);
     }
 
     public function isEmpty(): bool
     {
-        return empty($this->items);
+        return empty($this->elements);
     }
 
-    public function add(mixed $item): void
+    public function add(mixed $element): void
     {
-        $this->items[] = $item;
+        $this->elements[] = $element;
+    }
+
+    public function getValues(): array
+    {
+        return array_values($this->elements);
     }
 
     public function items(): array
     {
-        return $this->items;
+        return $this->elements;
     }
 }

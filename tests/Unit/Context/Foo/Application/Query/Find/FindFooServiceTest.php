@@ -7,17 +7,17 @@ namespace App\Tests\Unit\Context\Foo\Application\Query\Find;
 use App\Context\Foo\Application\Query\Find\FindFooQueryResponse;
 use App\Context\Foo\Application\Query\Find\FindFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\View\FooView;
 use App\Context\Foo\Domain\ValueObject\FooId;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdStub;
-use App\Tests\Shared\Context\Foo\Domain\Bar\BarStub;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
-use App\Tests\Shared\Context\Foo\Domain\FooStub;
+use App\Tests\Shared\Stubs\Foo\Read\FooViewMother;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FindFooServiceTest extends TestCase
 {
-    private FooViewRepository $fooViewRepository;
+    private FooViewRepository|MockObject $fooViewRepository;
     private FooId|null $fooId;
     private FindFooQueryResponse|null $response;
 
@@ -38,18 +38,22 @@ class FindFooServiceTest extends TestCase
 
     public function testItShouldGetExpectedResultWhenFooExists(): void
     {
+        $fooView = FooViewMother::randomWithoutBars();
+
         $this->givenDataToFindFoo();
-        $this->givenExistingFoo();
+        $this->givenExistingFooView($fooView);
         $this->whenExecuteTheService();
-        $this->thenGetExpectedResponseWithEmptyBarCollection();
+        $this->thenGetExpectedResponseWithEmptyBarCollection($fooView);
     }
 
     public function testItShouldGetExpectedResultWithBarCollectionWhenFooExists(): void
     {
+        $fooView = FooViewMother::random();
+
         $this->givenDataToFindFoo();
-        $this->givenExistingFooWithBar();
+        $this->givenExistingFooView($fooView);
         $this->whenExecuteTheService();
-        $this->thenGetExpectedResponseWithBarCollection();
+        $this->thenGetExpectedResponseWithBarCollection($fooView);
     }
 
     private function givenDataToFindFoo(): void
@@ -62,18 +66,9 @@ class FindFooServiceTest extends TestCase
         $this->fooViewRepository->expects(self::once())->method('findById')->willReturn(null);
     }
 
-    private function givenExistingFoo(): void
+    private function givenExistingFooView(FooView $fooView): void
     {
-        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn(FooStub::default());
-    }
-
-    private function givenExistingFooWithBar(): void
-    {
-        $foo = FooStub::default();
-        $foo->addBar(BarStub::default());
-        $foo->addBar(BarStub::default());
-
-        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn($foo);
+        $this->fooViewRepository->expects(self::once())->method('findById')->willReturn($fooView);
     }
 
     private function thenThrowFooNotFoundExceptionException(): void
@@ -88,34 +83,34 @@ class FindFooServiceTest extends TestCase
         $this->response = $sut->execute($this->fooId);
     }
 
-    private function thenGetExpectedResponseWithEmptyBarCollection(): void
+    private function thenGetExpectedResponseWithEmptyBarCollection(FooView $fooView): void
     {
         $expected = [
-            'id' => FooIdStub::DEFAULT_FOO_ID,
-            'name' => FooStub::DEFAULT_FOO_NAME,
-            'created_at' => FooStub::DEFAULT_CREATED_AT,
+            'id' => $fooView->id,
+            'name' => $fooView->name,
             'bar' => [],
+            'created_at' => $fooView->createdAt,
         ];
 
         self::assertSame($expected, $this->response->result());
     }
 
-    private function thenGetExpectedResponseWithBarCollection(): void
+    private function thenGetExpectedResponseWithBarCollection(FooView $fooView): void
     {
         $expected = [
-            'id' => FooIdStub::DEFAULT_FOO_ID,
-            'name' => FooStub::DEFAULT_FOO_NAME,
-            'created_at' => FooStub::DEFAULT_CREATED_AT,
+            'id' => $fooView->id,
+            'name' => $fooView->name,
             'bar' => [
                 [
-                    'id' => BarIdStub::DEFAULT_BAR_ID,
-                    'name' => BarStub::DEFAULT_BAR_NAME,
+                    'id' => $fooView->barsView->first()->id,
+                    'name' => $fooView->barsView->first()->name,
                 ],
                 [
-                    'id' => BarIdStub::DEFAULT_BAR_ID,
-                    'name' => BarStub::DEFAULT_BAR_NAME,
+                    'id' => $fooView->barsView->last()->id,
+                    'name' => $fooView->barsView->last()->name,
                 ],
             ],
+            'created_at' => $fooView->createdAt,
         ];
 
         self::assertSame($expected, $this->response->result());

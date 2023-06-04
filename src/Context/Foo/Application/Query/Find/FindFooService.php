@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Context\Foo\Application\Query\Find;
 
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
 
 class FindFooService
@@ -22,6 +22,6 @@ class FindFooService
             throw FooNotFoundException::fromFooId($fooId->value);
         }
 
-        return FindFooQueryResponse::fromFoo($foo);
+        return FindFooQueryResponse::fromFooView($foo);
     }
 }

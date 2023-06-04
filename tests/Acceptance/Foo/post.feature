@@ -31,7 +31,7 @@ Feature:
           "metadata":
             {
               "id":"UUID",
-              "name":"app.context.foo.domain.event.foo_was_created"
+              "name":"app.context.foo.domain.write.event.foo_was_created"
             }
         }
       ]

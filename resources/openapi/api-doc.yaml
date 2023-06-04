@@ -53,7 +53,6 @@ components:
         {
           "id": "1ca06159-6f66-45c6-aa80-1cf5141f66d6",
           "name": "Some Foo name 1",
-          "created_at": "2022-01-19 11:04:45",
           "bar": [
             {
               "id": "06b433af-5699-4cf2-8fb0-29cca9e694c3",
@@ -63,13 +62,14 @@ components:
               "id": "5fef1065-8fe3-4e29-8712-5eb89fdbc0a0",
               "name": "Some Bar name 2"
             }
-          ]
+          ],
+          "created_at": "2022-01-19 11:04:45",
         },
         {
           "id": "6b7dde86-52c3-45d2-a623-f6bc6f142e29",
           "name": "Some Foo name 2",
-          "created_at": "2021-03-15 15:23:01",
-          "bar": [ ]
+          "bar": [ ],
+          "created_at": "2021-03-15 15:23:01"
         }
       ]
     Foo:
@@ -79,12 +79,12 @@ components:
           $ref: '#/components/schemas/id'
         name:
           $ref: '#/components/schemas/name'
-        created_at:
-          $ref: '#/components/schemas/date-time'
         bar:
           type: array
           items:
             $ref: '#/components/schemas/Bar'
+        created_at:
+          $ref: '#/components/schemas/date-time'
       required:
         - id
         - name
@@ -94,13 +94,13 @@ components:
         {
         "id": "9cc900eb-663a-4292-876d-5a77eeefade9",
         "name": "Some foo name",
-        "created_at": "2022-01-19 11:04:45",
         "bar": [
             {
               "id": "e9ed0451-5ea0-4ba8-90f5-f194e4244fa6",
               "name": "Some bar name"
             }
-          ]
+          ],
+        "created_at": "2022-01-19 11:04:45"
         }
     Bar:
       type: object

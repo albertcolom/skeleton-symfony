@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain;
+namespace App\Shared\Domain\Read;
 
 use Webmozart\Assert\Assert;
 
-abstract class TypedCollection extends Collection
+abstract class ViewTypedCollection extends ViewCollection
 {
     public function __construct(array $elements = [])
     {

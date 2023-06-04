@@ -6,8 +6,8 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Delete;
 
 use App\Context\Foo\Application\Command\Delete\DeleteFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Repository\FooRepository;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
 use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;

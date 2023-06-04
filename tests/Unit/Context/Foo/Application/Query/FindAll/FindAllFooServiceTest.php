@@ -6,17 +6,17 @@ namespace App\Tests\Unit\Context\Foo\Application\Query\FindAll;
 
 use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryResponse;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooService;
-use App\Context\Foo\Domain\FooCollection;
-use App\Context\Foo\Domain\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
+use App\Context\Foo\Domain\Read\View\FooViewCollection;
 use App\Tests\Shared\Context\Foo\Domain\Bar\BarIdStub;
 use App\Tests\Shared\Context\Foo\Domain\Bar\BarStub;
-use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
-use App\Tests\Shared\Context\Foo\Domain\FooStub;
+use App\Tests\Shared\Stubs\Foo\Read\FooViewCollectionMother;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FindAllFooServiceTest extends TestCase
 {
-    private FooViewRepository $fooViewRepository;
+    private FooViewRepository|MockObject $fooViewRepository;
     private FindAllFooQueryResponse|null $response;
 
     protected function setUp(): void
@@ -27,9 +27,11 @@ class FindAllFooServiceTest extends TestCase
 
     public function testItShouldGetExpectedResultWhenFound(): void
     {
-        $this->givenFooCollection();
+        $fooViewCollection = FooViewCollectionMother::random();
+
+        $this->givenFooViewCollection($fooViewCollection);
         $this->whenExecuteTheService();
-        $this->thenGetExpectedResponseWithEmptyBarCollection();
+        $this->thenGetExpectedResponseWithEmptyBarCollection($fooViewCollection);
     }
 
     public function testItShouldGetExpectedResultWhenNotFound(): void
@@ -39,15 +41,12 @@ class FindAllFooServiceTest extends TestCase
         $this->thenGetExpectedEmptyResponse();
     }
 
-    private function givenFooCollection(): void
+    private function givenFooViewCollection(FooViewCollection $fooViewCollection): void
     {
-        $foo = FooStub::default();
-        $foo->addBar(BarStub::default());
-
         $this->fooViewRepository
             ->expects(self::once())
             ->method('findAll')
-            ->willReturn(new FooCollection([$foo, FooStub::default()]));
+            ->willReturn($fooViewCollection);
     }
 
     private function givenEmptyFooCollection(): void
@@ -55,28 +54,41 @@ class FindAllFooServiceTest extends TestCase
         $this->fooViewRepository
             ->expects(self::once())
             ->method('findAll')
-            ->willReturn(FooCollection::createEmpty());
+            ->willReturn(FooViewCollectionMother::create());
     }
 
-    private function thenGetExpectedResponseWithEmptyBarCollection(): void
+    private function thenGetExpectedResponseWithEmptyBarCollection(FooViewCollection $fooViewCollection): void
     {
         $expected = [
             [
-                'id' => FooIdStub::DEFAULT_FOO_ID,
-                'name' => FooStub::DEFAULT_FOO_NAME,
-                'created_at' => FooStub::DEFAULT_CREATED_AT,
+                'id' => $fooViewCollection->first()->id,
+                'name' => $fooViewCollection->first()->name,
                 'bar' => [
                     [
-                        'id' => BarIdStub::DEFAULT_BAR_ID,
-                        'name' => BarStub::DEFAULT_BAR_NAME,
-                    ]
+                        'id' => $fooViewCollection->first()->barsView->first()->id,
+                        'name' => $fooViewCollection->first()->barsView->first()->name,
+                    ],
+                    [
+                        'id' => $fooViewCollection->first()->barsView->last()->id,
+                        'name' => $fooViewCollection->first()->barsView->last()->name,
+                    ],
                 ],
+                'created_at' => $fooViewCollection->first()->createdAt,
             ],
             [
-                'id' => FooIdStub::DEFAULT_FOO_ID,
-                'name' => FooStub::DEFAULT_FOO_NAME,
-                'created_at' => FooStub::DEFAULT_CREATED_AT,
-                'bar' => [],
+                'id' => $fooViewCollection->last()->id,
+                'name' => $fooViewCollection->last()->name,
+                'bar' => [
+                    [
+                        'id' => $fooViewCollection->last()->barsView->first()->id,
+                        'name' => $fooViewCollection->last()->barsView->first()->name,
+                    ],
+                    [
+                        'id' => $fooViewCollection->last()->barsView->last()->id,
+                        'name' => $fooViewCollection->last()->barsView->last()->name,
+                    ],
+                ],
+                'created_at' => $fooViewCollection->last()->createdAt,
             ],
         ];
 

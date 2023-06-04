@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Application\Query\Find;
 
-use App\Context\Foo\Domain\Bar\Bar;
-use App\Context\Foo\Domain\Foo;
+use App\Context\Foo\Domain\Read\View\BarView\BarViewCollection;
+use App\Context\Foo\Domain\Read\View\FooView;
 use App\Shared\Application\Bus\Query\Response;
 
 final class FindFooQueryResponse implements Response
@@ -13,27 +13,14 @@ final class FindFooQueryResponse implements Response
     public function __construct(
         private readonly string $id,
         private readonly string $name,
-        private readonly string $created_at,
-        private readonly array $bars
+        private readonly BarViewCollection $barsView,
+        private readonly string $created_at
     ) {
     }
 
-    public static function fromFoo(Foo $foo): self
+    public static function fromFooView(FooView $fooView): self
     {
-        return new self(
-            $foo->id->value,
-            $foo->name(),
-            $foo->createdAt()->format('Y-m-d H:i:s'),
-            array_map(
-                static function (Bar $bar) {
-                    return [
-                        'id' => $bar->id->value,
-                        'name' => $bar->name
-                    ];
-                },
-                $foo->bars()->toArray()
-            )
-        );
+        return new self($fooView->id, $fooView->name, $fooView->barsView, $fooView->createdAt);
     }
 
     public function result(): array
@@ -41,8 +28,8 @@ final class FindFooQueryResponse implements Response
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'bar' => $this->barsView->toArray(),
             'created_at' => $this->created_at,
-            'bar' => $this->bars,
         ];
     }
 }

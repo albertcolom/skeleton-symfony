@@ -6,8 +6,8 @@ namespace App\Context\Foo\Application\Listener;
 
 use App\Context\Foo\Application\Service\CacheFooRemover;
 use App\Context\Foo\Application\Service\FooIndexUpdater;
-use App\Context\Foo\Domain\Event\FooWasUpdated;
 use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Event\FooWasUpdated;
 use App\Shared\Application\Bus\Event\EventListener;
 
 final class OnFooWasUpdated implements EventListener

@@ -6,8 +6,8 @@ namespace App\Context\Foo\Infrastructure\Persistence\Repository\Write;
 
 use App\Context\Foo\Domain\Foo;
 use App\Context\Foo\Domain\FooCollection;
-use App\Context\Foo\Domain\Repository\Write\FooRepository;
 use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Repository\FooRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

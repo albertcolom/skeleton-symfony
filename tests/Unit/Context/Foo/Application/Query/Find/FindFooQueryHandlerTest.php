@@ -8,13 +8,15 @@ use App\Context\Foo\Application\Query\Find\FindFooQuery;
 use App\Context\Foo\Application\Query\Find\FindFooQueryHandler;
 use App\Context\Foo\Application\Query\Find\FindFooQueryResponse;
 use App\Context\Foo\Application\Query\Find\FindFooService;
+use App\Context\Foo\Domain\Read\View\FooView;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
-use App\Tests\Shared\Context\Foo\Domain\FooStub;
+use App\Tests\Shared\Stubs\Foo\Read\FooViewMother;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class FindFooQueryHandlerTest extends TestCase
 {
-    private FindFooService $findFooService;
+    private FindFooService|MockObject $findFooService;
     private FindFooQuery|null $query;
     private FindFooQueryResponse|null $response;
 
@@ -27,10 +29,12 @@ class FindFooQueryHandlerTest extends TestCase
 
     public function testItShouldGetExpectedResult(): void
     {
+        $fooView = FooViewMother::randomWithoutBars();
+
         $this->givenFindFooByIdQuery();
-        $this->givenAnExistingFoo();
+        $this->givenAnExistingFoo($fooView);
         $this->whenTheCommandHandlerIsInvoked();
-        $this->thenGetExpectedResponseWithBarCollection();
+        $this->thenGetExpectedResponseWithBarCollection($fooView);
     }
 
     private function givenFindFooByIdQuery(): void
@@ -38,13 +42,13 @@ class FindFooQueryHandlerTest extends TestCase
         $this->query = new FindFooQuery(FooIdStub::DEFAULT_FOO_ID);
     }
 
-    private function givenAnExistingFoo(): void
+    private function givenAnExistingFoo(FooView $fooView): void
     {
         $this->findFooService
             ->expects(self::once())
             ->method('execute')
             ->with(FooIdStub::default())
-            ->willReturn(FindFooQueryResponse::fromFoo(FooStub::default()));
+            ->willReturn(FindFooQueryResponse::fromFooView($fooView));
     }
 
     private function whenTheCommandHandlerIsInvoked(): void
@@ -53,13 +57,13 @@ class FindFooQueryHandlerTest extends TestCase
         $this->response = $sut->__invoke($this->query);
     }
 
-    private function thenGetExpectedResponseWithBarCollection(): void
+    private function thenGetExpectedResponseWithBarCollection(FooView $fooView): void
     {
         $expected = [
-            'id' => FooIdStub::DEFAULT_FOO_ID,
-            'name' => FooStub::DEFAULT_FOO_NAME,
-            'created_at' => FooStub::DEFAULT_CREATED_AT,
+            'id' => $fooView->id,
+            'name' => $fooView->name,
             'bar' => [],
+            'created_at' => $fooView->createdAt,
         ];
 
         self::assertSame($expected, $this->response->result());
