@@ -16,7 +16,7 @@ final class DoctrinePublishDomainEventsOnFlushListener
 
     public function onFlush(OnFlushEventArgs $eventArgs): void
     {
-        $unitOfWork = $eventArgs->getEntityManager()->getUnitOfWork();
+        $unitOfWork = $eventArgs->getObjectManager()->getUnitOfWork();
 
         foreach ($unitOfWork->getScheduledEntityInsertions() as $entity) {
             $this->publishDomainEvent($entity);
