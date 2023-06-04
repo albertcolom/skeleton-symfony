@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\UI\Command;
 
 use App\Context\Foo\Application\Service\FooIndexUpdater;
-use App\Context\Foo\Domain\Foo;
+use App\Context\Foo\Domain\Write\Foo;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;

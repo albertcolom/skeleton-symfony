@@ -8,7 +8,7 @@ use App\Context\Foo\Application\Query\Find\FindFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\FooView;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
 use App\Tests\Shared\Stubs\Foo\Read\FooViewMother;
 use PHPUnit\Framework\MockObject\MockObject;

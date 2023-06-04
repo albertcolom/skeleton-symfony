@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Shared\Context\Foo\Domain\Bar;
 
-use App\Context\Foo\Domain\Bar\ValueObject\BarId;
+use App\Context\Foo\Domain\Write\Bar\ValueObject\BarId;
 
 class BarIdStub
 {

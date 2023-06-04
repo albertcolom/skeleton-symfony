@@ -10,7 +10,7 @@ use App\Context\Foo\Domain\Read\View\BarView\BarView;
 use App\Context\Foo\Domain\Read\View\BarView\BarViewCollection;
 use App\Context\Foo\Domain\Read\View\FooView;
 use App\Context\Foo\Domain\Read\View\FooViewCollection;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Domain\Read\QueryParams\QueryParams;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;

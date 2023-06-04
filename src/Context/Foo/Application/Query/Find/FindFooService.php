@@ -6,7 +6,7 @@ namespace App\Context\Foo\Application\Query\Find;
 
 use App\Context\Foo\Domain\Read\Repository\Read\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\FooView;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 
 class FindFooService
 {

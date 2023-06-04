@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Application\Command\Create;
 
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Application\Bus\Command\CommandHandler;
 
 final class CreateFooCommandHandler implements CommandHandler

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Foo\Domain;
+namespace App\Context\Foo\Domain\Write;
 
-use App\Shared\Domain\TypedCollection;
+use App\Shared\Domain\Write\TypedCollection;
 
 final class FooCollection extends TypedCollection
 {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Infrastructure\Persistence\Repository\Read;
 
-use App\Context\Foo\Domain\Bar\Bar;
-use App\Context\Foo\Domain\Bar\ValueObject\BarId;
-use App\Context\Foo\Domain\Foo;
-use App\Context\Foo\Domain\FooCollection;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Bar\Bar;
+use App\Context\Foo\Domain\Write\Bar\ValueObject\BarId;
+use App\Context\Foo\Domain\Write\Foo;
+use App\Context\Foo\Domain\Write\FooCollection;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Domain\Read\QueryParams\QueryParams;
 use DateTimeImmutable;
 use Doctrine\DBAL\Connection;

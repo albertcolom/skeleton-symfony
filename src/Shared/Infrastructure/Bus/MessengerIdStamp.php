@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus;
 
-use App\Shared\Domain\ValueObject\Uuid;
+use App\Shared\Domain\Write\ValueObject\Uuid;
 use Symfony\Component\Messenger\Stamp\StampInterface;
 
 final class MessengerIdStamp implements StampInterface

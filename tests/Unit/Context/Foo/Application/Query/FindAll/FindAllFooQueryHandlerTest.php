@@ -8,7 +8,6 @@ use App\Context\Foo\Application\Query\FindAll\FindAllFooQuery;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryHandler;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooQueryResponse;
 use App\Context\Foo\Application\Query\FindAll\FindAllFooService;
-use App\Context\Foo\Domain\FooCollection;
 use App\Tests\Shared\Stubs\Foo\Read\FooViewCollectionMother;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

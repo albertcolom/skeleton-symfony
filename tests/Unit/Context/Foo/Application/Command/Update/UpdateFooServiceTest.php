@@ -6,8 +6,8 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Update;
 
 use App\Context\Foo\Application\Command\Update\UpdateFooService;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\ValueObject\FooId;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
 use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Foo\Domain;
+namespace App\Context\Foo\Domain\Write;
 
-use App\Context\Foo\Domain\Bar\Bar;
-use App\Context\Foo\Domain\Bar\BarCollection;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Bar\Bar;
+use App\Context\Foo\Domain\Write\Bar\BarCollection;
 use App\Context\Foo\Domain\Write\Event\BarWasAdded;
 use App\Context\Foo\Domain\Write\Event\FooWasCreated;
 use App\Context\Foo\Domain\Write\Event\FooWasRemoved;
 use App\Context\Foo\Domain\Write\Event\FooWasUpdated;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Domain\Write\Aggregate\AggregateRoot;
 use DateTime;
 use DateTimeImmutable;

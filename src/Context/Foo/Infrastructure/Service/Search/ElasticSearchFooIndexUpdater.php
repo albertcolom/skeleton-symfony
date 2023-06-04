@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Context\Foo\Infrastructure\Service\Search;
 
 use App\Context\Foo\Application\Service\FooIndexUpdater;
-use App\Context\Foo\Domain\Bar\Bar;
+use App\Context\Foo\Domain\Write\Bar\Bar;
 use App\Context\Foo\Domain\Exception\FooNotFoundException;
-use App\Context\Foo\Domain\Foo;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Foo;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Elastic\Elasticsearch\Client;

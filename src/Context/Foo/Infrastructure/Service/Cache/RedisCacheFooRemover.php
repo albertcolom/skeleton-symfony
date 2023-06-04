@@ -4,7 +4,7 @@ namespace App\Context\Foo\Infrastructure\Service\Cache;
 
 use App\Context\Foo\Application\Query\Find\FindFooQuery;
 use App\Context\Foo\Application\Service\CacheFooRemover;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Infrastructure\Service\CacheKeyCreator;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\RedisAdapter;

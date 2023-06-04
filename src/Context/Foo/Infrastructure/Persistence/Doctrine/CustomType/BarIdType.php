@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Infrastructure\Persistence\Doctrine\CustomType;
 
-use App\Context\Foo\Domain\Bar\ValueObject\BarId;
+use App\Context\Foo\Domain\Write\Bar\ValueObject\BarId;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 

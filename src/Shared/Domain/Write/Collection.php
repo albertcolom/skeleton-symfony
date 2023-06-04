@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain;
+namespace App\Shared\Domain\Write;
 
 use Closure;
 use Doctrine\Common\Collections\ArrayCollection;

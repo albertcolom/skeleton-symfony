@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Context\Foo\Application\Command\Create;
 
 use App\Context\Foo\Domain\Exception\FooAlreadyExistException;
-use App\Context\Foo\Domain\Foo;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Foo;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use DateTimeImmutable;
 
 class CreateFooService

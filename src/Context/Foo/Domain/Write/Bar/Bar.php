@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Foo\Domain\Bar;
+namespace App\Context\Foo\Domain\Write\Bar;
 
-use App\Context\Foo\Domain\Bar\ValueObject\BarId;
-use App\Context\Foo\Domain\Foo;
+use App\Context\Foo\Domain\Write\Bar\ValueObject\BarId;
+use App\Context\Foo\Domain\Write\Foo;
 
 final class Bar
 {

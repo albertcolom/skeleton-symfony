@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Shared\Context\Foo\Domain\Bar;
 
-use App\Context\Foo\Domain\Bar\Bar;
-use App\Context\Foo\Domain\Bar\ValueObject\BarId;
-use App\Context\Foo\Domain\Foo;
+use App\Context\Foo\Domain\Write\Bar\Bar;
+use App\Context\Foo\Domain\Write\Bar\ValueObject\BarId;
+use App\Context\Foo\Domain\Write\Foo;
 use App\Tests\Shared\Context\Foo\Domain\FooStub;
 
 class BarStub

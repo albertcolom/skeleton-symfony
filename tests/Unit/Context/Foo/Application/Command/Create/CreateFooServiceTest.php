@@ -6,9 +6,9 @@ namespace App\Tests\Unit\Context\Foo\Application\Command\Create;
 
 use App\Context\Foo\Application\Command\Create\CreateFooService;
 use App\Context\Foo\Domain\Exception\FooAlreadyExistException;
-use App\Context\Foo\Domain\Foo;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Foo;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Tests\Shared\Context\Foo\Domain\FooIdStub;
 use App\Tests\Shared\Context\Foo\Domain\FooStub;
 use PHPUnit\Framework\TestCase;

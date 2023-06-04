@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Context\Foo\Infrastructure\Persistence\Repository\Write;
 
-use App\Context\Foo\Domain\Foo;
-use App\Context\Foo\Domain\FooCollection;
-use App\Context\Foo\Domain\ValueObject\FooId;
+use App\Context\Foo\Domain\Write\Foo;
+use App\Context\Foo\Domain\Write\FooCollection;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
+use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

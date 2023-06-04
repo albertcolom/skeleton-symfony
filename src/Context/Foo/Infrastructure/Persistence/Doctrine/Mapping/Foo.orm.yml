@@ -1,4 +1,4 @@
-App\Context\Foo\Domain\Foo:
+App\Context\Foo\Domain\Write\Foo:
   type: entity
   repositoryClass: App\Context\Foo\Infrastructure\Persistence\Repository\DoctrineFooRepository
   table: foo
@@ -15,6 +15,6 @@ App\Context\Foo\Domain\Foo:
 
   oneToMany:
     bars:
-      targetEntity: App\Context\Foo\Domain\Bar\Bar
+      targetEntity: App\Context\Foo\Domain\Write\Bar\Bar
       cascade: ['all']
       mappedBy: foo

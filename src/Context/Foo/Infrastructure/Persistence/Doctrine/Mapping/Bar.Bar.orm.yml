@@ -1,4 +1,4 @@
-App\Context\Foo\Domain\Bar\Bar:
+App\Context\Foo\Domain\Write\Bar\Bar:
   type: entity
   repositoryClass: App\Context\Foo\Infrastructure\Persistence\Repository\DoctrineFooRepository
   table: bar
@@ -13,7 +13,7 @@ App\Context\Foo\Domain\Bar\Bar:
 
   manyToOne:
     foo:
-      targetEntity: App\Context\Foo\Domain\Foo
+      targetEntity: App\Context\Foo\Domain\Write\Foo
       inversedBy: bars
       joinColumn:
         name: foo_id
