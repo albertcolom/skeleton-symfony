@@ -3,14 +3,15 @@ monolog:
     handlers:
         main:
             type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            path: "php://stdout"
             level: info
+            formatter: monolog.formatter.json
             #channels: ["!event"]
-        domain_event:
-            type: stream
-            path: "%kernel.logs_dir%/domain_event_%kernel.environment%.log"
-            level: info
-            channels: ["event"]
+        #domain_event:
+        #    type: stream
+        #    path: "%kernel.logs_dir%/domain_event_%kernel.environment%.log"
+        #   level: info
+        #   channels: ["event"]
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
