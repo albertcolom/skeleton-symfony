@@ -1,9 +1,15 @@
-FROM php:8.2-fpm-alpine
+ARG ALPINE_PHP_FPM_VERSION
+ARG COMPOSER_VERSION
 
-ENV PHP_IDE_CONFIG 'serverName=DockerApp'
+FROM composer:${COMPOSER_VERSION} as composer
+FROM php:${ALPINE_PHP_FPM_VERSION}-fpm-alpine
 
 RUN apk --update upgrade \
-    && apk add --no-cache autoconf automake make gcc g++ tzdata vim rabbitmq-c-dev linux-headers
+    && apk add --no-cache \
+    ${PHPIZE_DEPS} \
+    tzdata \
+    rabbitmq-c-dev \
+    linux-headers
 
 RUN docker-php-ext-install \
         bcmath \
@@ -26,4 +32,4 @@ RUN docker-php-ext-enable \
 
 COPY xdebug.ini /usr/local/etc/php/conf.d/
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
