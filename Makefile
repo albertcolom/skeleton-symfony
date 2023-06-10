@@ -31,6 +31,9 @@ status: ## Show containers status
 stop: ## Stop containers
 	@docker-compose stop
 
+.PHONY: restart
+restart: stop up ## Restart containers
+
 .PHONY: console
 console: ## Symfony console, Optional parameter "command". Example: make console command=debug:autowiring
 	@docker-compose exec php-fpm env XDEBUG_MODE=off bin/console ${command}
