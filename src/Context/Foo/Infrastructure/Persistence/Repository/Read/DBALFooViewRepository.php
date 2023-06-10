@@ -37,7 +37,7 @@ WHERE
 SQL;
 
         $stmt = $this->connection->prepare($query);
-        $stmt->bindValue('id', $fooId->optimizedId());
+        $stmt->bindValue('id', $fooId->value);
         $resultSet = $stmt->executeQuery()->fetchAllAssociative();
 
         if (empty($resultSet)) {
@@ -93,7 +93,7 @@ SQL;
 
         $binValues = [];
         $fooCollection->each(static function (int $key, Foo $foo) use (&$binValues) {
-            $binValues[sprintf(':foo_id_%s', $key)] = $foo->id->optimizedId();
+            $binValues[sprintf(':foo_id_%s', $key)] = $foo->id->value;
             return $foo;
         });
 
@@ -128,14 +128,14 @@ SQL;
     {
         $firstElement = reset($data);
         $foo = new Foo(
-            FooId::fromBinary($firstElement['foo_id']),
+            FooId::fromString($firstElement['foo_id']),
             $firstElement['foo_name'],
             new DateTimeImmutable($firstElement['foo_created_at'])
         );
 
         array_walk($data, static function (array $items) use ($foo) {
             if (!is_null($items['bar_id'])) {
-                $foo->addBar(new Bar($foo, BarId::fromBinary($items['bar_id']), $items['bar_name']));
+                $foo->addBar(new Bar($foo, BarId::fromString($items['bar_id']), $items['bar_name']));
             }
         });
 
@@ -148,7 +148,7 @@ SQL;
             $fooData,
             static function (array $data): Foo {
                 return new Foo(
-                    FooId::fromBinary($data['foo_id']),
+                    FooId::fromString($data['foo_id']),
                     $data['foo_name'],
                     new DateTimeImmutable($data['foo_created_at'])
                 );
@@ -163,14 +163,14 @@ SQL;
         }
 
         $groupBarByFooId = array_reduce($barData, static function (array $group, array $item) {
-            $group[FooId::fromBinary($item['foo_id'])->value][] = $item;
+            $group[FooId::fromString($item['foo_id'])->value][] = $item;
             return $group;
         }, []);
 
         $fooCollection->each(static function (int $key, Foo $foo) use ($groupBarByFooId) {
             if (array_key_exists($foo->id->value, $groupBarByFooId)) {
                 array_walk($groupBarByFooId[$foo->id->value], static function (array $bar) use ($foo) {
-                    $foo->addBar(new Bar($foo, BarId::fromBinary($bar['bar_id']), $bar['bar_name']));
+                    $foo->addBar(new Bar($foo, BarId::fromString($bar['bar_id']), $bar['bar_name']));
                 });
             }
             return $foo;

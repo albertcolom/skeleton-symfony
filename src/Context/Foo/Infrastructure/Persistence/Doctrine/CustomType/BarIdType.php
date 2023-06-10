@@ -12,7 +12,7 @@ final class BarIdType extends Type
 {
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
-        return $platform->getBinaryTypeDeclarationSQL(['length' => 16, 'fixed' => true]);
+        return $platform->getGuidTypeDeclarationSQL([]);
     }
 
     public function getName(): string
@@ -20,17 +20,8 @@ final class BarIdType extends Type
         return 'foo.bar_id';
     }
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
-    {
-        if ($value instanceof BarId) {
-            return $value->optimizedId();
-        }
-
-        return null;
-    }
-
     public function convertToPHPValue($value, AbstractPlatform $platform): BarId
     {
-        return BarId::fromBinary($value);
+        return BarId::fromString($value);
     }
 }

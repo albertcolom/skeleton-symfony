@@ -43,18 +43,17 @@ services:
     networks:
       - docker-network
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql_container
+  mariadb:
+    image: mariadb:11.0
+    container_name: mariadb_container
     ports:
       - "3306:3306"
     environment:
       - MYSQL_DATABASE=app
       - MYSQL_ROOT_PASSWORD=root
       - TZ=Europe/Berlin
-    command: --default-authentication-plugin=mysql_native_password
     volumes:
-      - ./var/volume/mysql:/var/lib/mysql
+      - ./var/volume/mariadb:/var/lib/mariadb
     networks:
       - docker-network
 
