@@ -3,15 +3,15 @@
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Docker compose:
-- php:8.2-fpm-alpine
-- nginx:alpine3.17-slim
-- mysql:8.0
-- rabbitmq:3.11-management-alpine
-- redis:7.0-alpine
-- swaggerapi/swagger-ui:v4.0.0-rc.1
-- docker.elastic.co/elasticsearch/elasticsearch:8.8.0
-- docker.elastic.co/logstash/logstash:8.8.0
-- docker.elastic.co/kibana/kibana:8.8.0
+- `php:8.2-fpm-alpine` with `composer:latest`
+- `nginx:alpine3.17-slim`
+- `mariadb:11.0`
+- `rabbitmq:3.11-management-alpine`
+- `redis:7.0-alpine`
+- `swaggerapi/swagger-ui:v4.0.0-rc.1`
+- `fluent/fluent-bit:2.1`
+- `docker.elastic.co/elasticsearch/elasticsearch:8.8.0`
+- `docker.elastic.co/kibana/kibana:8.8.0`
 
 ## The Environment:
 - **API:** http://localhost:8000
@@ -19,7 +19,7 @@
 - **ElasticSearch:** http://localhost:9200
 - **Kibana:** http://localhost:5601
 - **RabbidMQ:** http://localhost:15672 user: `guest` password: `guest`
-- **MySQL:** host: `localhost` port: `3306` user: `root` password: `root`
+- **MariaDB:** host: `localhost` port: `3306` user: `root` password: `root`
 - **Redis:** host: `localhost` port: `6379`
 
 ## Workflow
@@ -44,6 +44,7 @@ rebuild-container    Rebuild containers
 rebuild-db           Rebuild Mysql. Optional parameter "env", default "dev". Example: make rebuild-db env=test
 rebuild-es           Rebuild ElasticSearch data. Optional parameter "env", default "dev". Example: make rebuild-db env=test
 redis-flush          Flush redis
+restart              Restart containers
 shell                Interactive shell inside docker
 status               Show containers status
 stop                 Stop containers
