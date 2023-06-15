@@ -119,8 +119,7 @@ services:
       FLUENT_ELASTICSEARCH_PORT: 9200
       ENV: dev
     volumes:
-      - ./resources/infrastructure/docker/fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-      - ./resources/infrastructure/docker/fluent-bit/parsers.conf:/fluent-bit/etc/parsers.conf
+      - ./resources/infrastructure/docker/fluent-bit/:/fluent-bit/etc/
     depends_on:
       - elasticsearch
     networks:
