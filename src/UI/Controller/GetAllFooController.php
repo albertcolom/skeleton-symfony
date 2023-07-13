@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class GetAllFooController
+final readonly class GetAllFooController
 {
     public function __construct(
-        private readonly CacheQueryBus $cacheQueryBus,
-        private readonly RequestValidator $requestValidator
+        private CacheQueryBus    $cacheQueryBus,
+        private RequestValidator $requestValidator
     ) {
     }
 

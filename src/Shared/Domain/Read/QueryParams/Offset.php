@@ -6,7 +6,7 @@ namespace App\Shared\Domain\Read\QueryParams;
 
 use Webmozart\Assert\Assert;
 
-readonly final class Offset
+final readonly class Offset
 {
     private const DEFAULT_VALUE = 0;
 

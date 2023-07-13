@@ -11,11 +11,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class DeleteFooController
+final readonly class DeleteFooController
 {
     public function __construct(
-        private readonly CommandBus $commandBus,
-        private readonly RequestValidator $requestValidator
+        private CommandBus $commandBus,
+        private RequestValidator $requestValidator
     ) {
     }
 

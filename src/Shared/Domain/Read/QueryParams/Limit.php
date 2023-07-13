@@ -6,7 +6,7 @@ namespace App\Shared\Domain\Read\QueryParams;
 
 use Webmozart\Assert\Assert;
 
-readonly final class Limit
+final readonly class Limit
 {
     private const DEFAULT_VALUE = -1;
 

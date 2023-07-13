@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-final class PutFooController
+final readonly class PutFooController
 {
     public function __construct(
-        private readonly CommandBus $commandBus,
-        private readonly RequestValidator $requestValidator,
-        private readonly UrlGeneratorInterface $urlGenerator
+        private CommandBus $commandBus,
+        private RequestValidator $requestValidator,
+        private UrlGeneratorInterface $urlGenerator
     ) {
     }
 
