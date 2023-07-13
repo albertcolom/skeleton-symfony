@@ -62,6 +62,17 @@ purge-queues: ## Purge rabbitmq queues
 	@docker-compose exec rabbitmq rabbitmqctl reset
 	@docker-compose exec rabbitmq rabbitmqctl start_app
 
+.PHONY: purge-topic
+purge-topic: ## Delete messages topic
+	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages --if-exists
+	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages --if-not-exists
+
+.PHONY: purge-test-topi
+purge-test-topic: ## Delete messages test topic
+	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages_test --if-exists
+	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages_test --if-not-exists
+
+
 .PHONY: redis-flush
 redis-flush: ## Flush redis
 	@docker-compose exec redis redis-cli FLUSHALL

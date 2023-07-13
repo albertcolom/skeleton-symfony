@@ -4,7 +4,7 @@ Feature:
   I want to test that Foo can be created
 
   Scenario: It can create a Foo
-    Given the queue associated to transport ampqp is empty
+    Given the queue associated to transport kafka is empty
     When A POST request is sent to "/v1/foo" with JSON body:
       """
        {
@@ -17,7 +17,7 @@ Feature:
     And the response should be empty
     And the response code should be 202
     And the response should be a documented and validated with OpenApi schema POST "/v1/foo"
-    And the transport ampqp producer has messages below:
+    And the transport kafka producer has messages below:
       """
       [
         {

@@ -10,8 +10,8 @@ framework:
             # sync: 'sync://'
             ampqp:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                #serializer: App\Shared\Infrastructure\Bus\Serializer\MessengerMessageSerializer
-                #serializer: messenger.transport.symfony_serializer
+            kafka:
+                dsn: '%env(MESSENGER_KAFKA_TRANSPORT_DSN)%'
 
         default_bus: sync.command.bus
         buses:
@@ -30,6 +30,7 @@ framework:
                     - App\Shared\Infrastructure\Bus\Middleware\MessengerIdStampMiddleware
                     - App\Shared\Infrastructure\Bus\Middleware\MessengerEventLogMiddleware
         routing:
-            'App\Shared\Domain\Write\Event\DomainEvent': ampqp
+            #'App\Shared\Domain\Write\Event\DomainEvent': ampqp
+            'App\Shared\Domain\Write\Event\DomainEvent': kafka
         serializer:
             default_serializer: App\Shared\Infrastructure\Bus\Serializer\MessengerMessageSerializer

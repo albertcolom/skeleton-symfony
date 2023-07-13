@@ -5,12 +5,12 @@ Feature:
 
   Scenario: It can delete a Foo
     Given I load fixtures for groups "foo,bar"
-    And the queue associated to transport ampqp is empty
+    And the queue associated to transport kafka is empty
     When A DELETE request is sent to "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
     Then the response should be empty
     And the response code should be 202
     And the response should be a documented and validated with OpenApi schema DELETE "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
-    And the transport ampqp producer has messages below:
+    And the transport kafka producer has messages below:
       """
       [
         {

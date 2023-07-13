@@ -5,7 +5,7 @@ Feature:
 
   Scenario: It can update a Foo when Foo exists
     Given I load fixtures for groups "foo,bar"
-    And the queue associated to transport ampqp is empty
+    And the queue associated to transport kafka is empty
     When A PUT request is sent to "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705" with JSON body:
       """
        {
@@ -16,7 +16,7 @@ Feature:
     And the response should be empty
     And the response code should be 202
     And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/7f590fc8-1298-4fb7-927e-a38ae50bc705"
-    And the transport ampqp producer has messages below:
+    And the transport kafka producer has messages below:
       """
       [
         {
@@ -36,7 +36,7 @@ Feature:
       """
 
   Scenario: It can create a Foo when Foo not exists
-    Given the queue associated to transport ampqp is empty
+    Given the queue associated to transport kafka is empty
     When A PUT request is sent to "/v1/foo/09042e35-592e-4057-9e03-597e234eea53" with JSON body:
       """
        {
@@ -48,7 +48,7 @@ Feature:
     And the response should be empty
     And the response code should be 202
     And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/09042e35-592e-4057-9e03-597e234eea53"
-    And the transport ampqp producer has messages below:
+    And the transport kafka producer has messages below:
       """
       [
         {

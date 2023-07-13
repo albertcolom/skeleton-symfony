@@ -1,0 +1,11 @@
+enqueue:
+    default:
+        transport:
+            dsn: "rdkafka://"
+            global:
+                group.id: 'app'
+                metadata.broker.list: "%env(KAFKA_BROKER_LIST)%"
+            topic:
+                auto.offset.reset: beginning
+            commit_async: true
+        client: ~

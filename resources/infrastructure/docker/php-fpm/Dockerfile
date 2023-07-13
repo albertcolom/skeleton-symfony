@@ -9,6 +9,7 @@ RUN apk --update upgrade \
     ${PHPIZE_DEPS} \
     tzdata \
     rabbitmq-c-dev \
+    librdkafka-dev \
     linux-headers
 
 RUN docker-php-ext-install \
@@ -20,6 +21,7 @@ RUN docker-php-ext-install \
 
 RUN pecl install \
         amqp \
+        rdkafka \
         redis \
         xdebug
 
@@ -28,7 +30,8 @@ RUN docker-php-ext-enable \
         xdebug \
         redis \
         xdebug \
-        amqp
+        amqp \
+        rdkafka
 
 COPY xdebug.ini /usr/local/etc/php/conf.d/
 

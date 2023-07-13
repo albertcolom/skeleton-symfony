@@ -8,7 +8,7 @@ use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use PHPUnit\Framework\Assert;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Messenger\Bridge\Amqp\Transport\AmqpTransport;
+use Symfony\Component\Messenger\Transport\TransportInterface;
 
 final class MessengerContext extends KernelTestCase implements Context
 {
@@ -21,7 +21,7 @@ final class MessengerContext extends KernelTestCase implements Context
     {
         $this->purgeTransport($name);
 
-        Assert::assertEquals(0, $this->getTransport($name)->getMessageCount());
+        Assert::assertEmpty($this->getTransport($name)->get());
     }
 
     /**
@@ -42,10 +42,6 @@ final class MessengerContext extends KernelTestCase implements Context
         $messages = [];
         $transport = $this->getTransport($name);
 
-        while ($transport->getMessageCount() === 0) {
-            echo 'Waiting message';
-        }
-
         foreach ($transport->get() as $envelop) {
             $transport->ack($envelop);
             $messages[] = $envelop->getMessage();
@@ -58,18 +54,16 @@ final class MessengerContext extends KernelTestCase implements Context
     {
         $transport = $this->getTransport($name);
 
-        foreach ($transport->get() as $envelop) {
-            $transport->reject($envelop);
-        }
-
-        if ($transport->getMessageCount() !== 0) {
-            $this->purgeTransport($name);
+        while (!empty($message = $transport->get())) {
+            foreach ($message as $envelop) {
+                $transport->reject($envelop);
+            }
         }
     }
 
-    private function getTransport(string $name): AmqpTransport
+    private function getTransport(string $name): TransportInterface
     {
-        /* @var AmqpTransport $transport */
+        /* @var TransportInterface $transport */
         $transport = self::getContainer()->get(sprintf('messenger.transport.%s', $name));
 
         return $transport;
