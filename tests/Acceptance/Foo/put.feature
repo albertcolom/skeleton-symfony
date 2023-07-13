@@ -24,11 +24,11 @@ Feature:
             {
               "foo_id":"7f590fc8-1298-4fb7-927e-a38ae50bc705",
               "name":"New foo name",
-              "occurred_on":"DATETIME"
+              "occurred_on":"@datetime@"
             },
           "metadata":
             {
-              "id":"UUID",
+              "id":"@uuid@",
               "name":"app.context.foo.domain.write.event.foo_was_updated"
             }
         }
@@ -56,12 +56,12 @@ Feature:
             {
               "foo_id":"09042e35-592e-4057-9e03-597e234eea53",
               "name":"New foo name",
-              "created_at": "DATETIME",
-              "occurred_on":"DATETIME"
+              "created_at": "@datetime@",
+              "occurred_on":"@datetime@"
             },
           "metadata":
             {
-              "id":"UUID",
+              "id":"@uuid@",
               "name":"app.context.foo.domain.write.event.foo_was_created"
             }
         }

@@ -6,13 +6,21 @@ namespace App\Tests\Shared\Behat\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
+use Coduo\PHPMatcher\PHPMatcher;
 use PHPUnit\Framework\Assert;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Messenger\Transport\TransportInterface;
 
 final class MessengerContext extends KernelTestCase implements Context
 {
-    private const WILDCARDS = ['DATETIME', 'UUID'];
+    private PHPMatcher $matcher;
+
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        $this->matcher = new PHPMatcher();
+        parent::__construct($name, $data, $dataName);
+    }
 
     /**
      * @When the queue associated to transport :name is empty
@@ -29,12 +37,12 @@ final class MessengerContext extends KernelTestCase implements Context
      */
     public function theTransportProducerHasMessagesBelow(string $name, PyStringNode $body): void
     {
-        [$expected, $response] = $this->replaceWildcards(
-            $this->getJsonFromString($body->getRaw()),
-            $this->getJsonFromString($this->getMessagesFromTransport($name))
-        );
+        $actual =  $this->sanitizeJson($this->getMessagesFromTransport($name));
+        $expected =$this->sanitizeJson($body->getRaw());
 
-        Assert::assertEquals($expected, $response);
+        if (!$this->matcher->match($actual, $expected)) {
+            throw new RuntimeException($this->matcher->error());
+        }
     }
 
     private function getMessagesFromTransport(string $name): string
@@ -69,29 +77,11 @@ final class MessengerContext extends KernelTestCase implements Context
         return $transport;
     }
 
-    private function getJsonFromString(string $content): string
+    private function sanitizeJson(string $content): string
     {
         return json_encode(
             json_decode($content, true, 512, JSON_THROW_ON_ERROR),
             JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
         );
-    }
-
-    private function replaceWildcards(string $expected, string $response): array
-    {
-        $expected = json_decode($expected, true, 512, JSON_THROW_ON_ERROR);
-        $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
-
-        foreach (self::WILDCARDS as $wildcard) {
-            foreach ($expected as $key => $values) {
-                foreach ($values as $valueKey => $value) {
-                    foreach (array_keys($value, $wildcard) as $found) {
-                        $response[$key][$valueKey][$found] = $wildcard;
-                    }
-                }
-            }
-        }
-
-        return [json_encode($expected), json_encode($response)];
     }
 }

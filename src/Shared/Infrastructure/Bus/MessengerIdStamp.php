@@ -15,7 +15,7 @@ final class MessengerIdStamp implements StampInterface
 
     public static function random(): self
     {
-        return new self(str_replace('-', '', Uuid::random()->value));
+        return new self(Uuid::random()->value);
     }
 
     public function value(): string

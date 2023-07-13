@@ -86,6 +86,7 @@
     },
     "require-dev": {
         "behat/behat": "^3.13",
+        "coduo/php-matcher": "^6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "fakerphp/faker": "^1.22",
         "friends-of-behat/symfony-extension": "^2.4",

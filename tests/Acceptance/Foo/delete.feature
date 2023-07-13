@@ -17,11 +17,11 @@ Feature:
           "payload":
             {
               "foo_id":"7f590fc8-1298-4fb7-927e-a38ae50bc705",
-              "occurred_on":"DATETIME"
+              "occurred_on":"@datetime@"
             },
           "metadata":
             {
-              "id":"UUID",
+              "id":"@uuid@",
               "name":"app.context.foo.domain.write.event.foo_was_removed"
             }
         }

@@ -7,19 +7,24 @@ namespace App\Tests\Shared\Behat\Context;
 use App\Shared\Infrastructure\Response\ResponseValidator;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
+use Coduo\PHPMatcher\PHPMatcher;
 use PHPUnit\Framework\Assert;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 final class ApiContext implements Context
 {
-    private const WILDCARDS = ['DATETIME', 'UUID'];
     private Response $response;
+    private PHPMatcher $matcher;
 
-    public function __construct(private KernelInterface $kernel, private ResponseValidator $responseValidator)
-    {
+    public function __construct(
+        private readonly KernelInterface $kernel,
+        private readonly ResponseValidator $responseValidator
+    ) {
         $this->response = new Response();
+        $this->matcher = new PHPMatcher();
     }
 
     /**
@@ -43,7 +48,7 @@ final class ApiContext implements Context
                 [],
                 [],
                 ['HTTP_ACCEPT' => 'application/json', 'CONTENT_TYPE' => 'application/json'],
-                $this->getJsonFromString($body)
+                $this->sanitizeJson($body)
             )
         );
     }
@@ -77,12 +82,12 @@ final class ApiContext implements Context
      */
     public function theJsonShouldBeEqualTo(PyStringNode $content): void
     {
-        [$expected, $response] = $this->replaceWildcards(
-            $this->getJsonFromString($content->getRaw()),
-            $this->getJsonFromString($this->response->getContent())
-        );
+        $actual =  $this->sanitizeJson($this->response->getContent());
+        $expected =$this->sanitizeJson($content->getRaw());
 
-        Assert::assertEquals($expected, $response);
+        if (!$this->matcher->match($actual, $expected)) {
+            throw new RuntimeException($this->matcher->error());
+        }
     }
 
     /**
@@ -90,7 +95,7 @@ final class ApiContext implements Context
      */
     public function theJsonShouldBeEmpty(): void
     {
-        Assert::assertEmpty(json_decode($this->getJsonFromString($this->response->getContent())));
+        Assert::assertEmpty(json_decode($this->sanitizeJson($this->response->getContent())));
     }
 
     /**
@@ -101,25 +106,11 @@ final class ApiContext implements Context
         $this->responseValidator->validate($uri, $method, $this->response);
     }
 
-    private function getJsonFromString(string $content): string
+    private function sanitizeJson(string $content): string
     {
         return json_encode(
             json_decode($content, true, 512, JSON_THROW_ON_ERROR),
             JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
         );
-    }
-
-    private function replaceWildcards(string $expected, string $response): array
-    {
-        $expected = json_decode($expected, true, 512, JSON_THROW_ON_ERROR);
-        $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
-
-        foreach (self::WILDCARDS as $wildcard) {
-            foreach (array_keys($expected, $wildcard) as $found) {
-                $response[$found] = $wildcard;
-            }
-        }
-
-        return [json_encode($expected), json_encode($response)];
     }
 }

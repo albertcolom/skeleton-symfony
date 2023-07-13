@@ -25,12 +25,12 @@ Feature:
             {
               "foo_id":"9cc900eb-663a-4292-876d-5a77eeefade9",
               "name":"Some foo name",
-              "created_at": "DATETIME",
-              "occurred_on":"DATETIME"
+              "created_at": "@datetime@",
+              "occurred_on":"@datetime@"
             },
           "metadata":
             {
-              "id":"UUID",
+              "id":"@uuid@",
               "name":"app.context.foo.domain.write.event.foo_was_created"
             }
         }
