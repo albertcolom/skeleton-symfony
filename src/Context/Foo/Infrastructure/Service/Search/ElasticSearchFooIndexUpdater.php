@@ -14,12 +14,12 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Elastic\Elasticsearch\Client;
 
-class ElasticSearchFooIndexUpdater implements FooIndexUpdater
+readonly class ElasticSearchFooIndexUpdater implements FooIndexUpdater
 {
     public function __construct(
-        private readonly FooRepository $fooRepository,
-        private readonly Client $client,
-        private readonly string $fooIndex
+        private FooRepository $fooRepository,
+        private Client $client,
+        private string $fooIndex
     ) {
     }
 

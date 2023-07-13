@@ -7,9 +7,9 @@ namespace App\Context\Foo\Application\Command\Delete;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Application\Bus\Command\CommandHandler;
 
-final class DeleteFooCommandHandler implements CommandHandler
+final readonly class DeleteFooCommandHandler implements CommandHandler
 {
-    public function __construct(private readonly DeleteFooService $deleteFooService)
+    public function __construct(private DeleteFooService $deleteFooService)
     {
     }
 

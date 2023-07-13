@@ -7,13 +7,13 @@ namespace App\Context\Foo\Domain\Read\View;
 use App\Context\Foo\Domain\Read\View\BarView\BarViewCollection;
 use App\Shared\Domain\Read\View\View;
 
-class FooView implements View
+readonly class FooView implements View
 {
     public function __construct(
-        public readonly string $id,
-        public readonly string $name,
-        public readonly BarViewCollection $barsView,
-        public readonly string $createdAt
+        public string $id,
+        public string $name,
+        public BarViewCollection $barsView,
+        public string $createdAt
     ) {
     }
 

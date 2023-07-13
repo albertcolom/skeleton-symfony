@@ -7,9 +7,9 @@ namespace App\Context\Foo\Application\Query\FindAll;
 use App\Context\Foo\Domain\Read\View\FooViewCollection;
 use App\Shared\Application\Bus\Query\Response;
 
-final class FindAllFooQueryResponse implements Response
+final readonly class FindAllFooQueryResponse implements Response
 {
-    public function __construct(private readonly FooViewCollection $fooViewCollection)
+    public function __construct(private FooViewCollection $fooViewCollection)
     {
     }
 

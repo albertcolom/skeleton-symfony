@@ -7,9 +7,9 @@ namespace App\Context\Foo\Application\Command\Create;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Application\Bus\Command\CommandHandler;
 
-final class CreateFooCommandHandler implements CommandHandler
+final readonly class CreateFooCommandHandler implements CommandHandler
 {
-    public function __construct(private readonly CreateFooService $createFooService)
+    public function __construct(private CreateFooService $createFooService)
     {
     }
 

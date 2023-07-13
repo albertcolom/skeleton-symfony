@@ -10,11 +10,11 @@ use App\Context\Foo\Domain\Write\Event\FooWasRemoved;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Application\Bus\Event\EventListener;
 
-final class OnFooWasRemoved implements EventListener
+final readonly class OnFooWasRemoved implements EventListener
 {
     public function __construct(
-        private readonly FooIndexRemover $fooIndexRemover,
-        private readonly CacheFooRemover $cacheFooRemover
+        private FooIndexRemover $fooIndexRemover,
+        private CacheFooRemover $cacheFooRemover
     ) {
     }
 

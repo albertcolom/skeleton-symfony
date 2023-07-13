@@ -6,9 +6,9 @@ namespace App\Context\Foo\Application\Query\FindAll;
 
 use App\Shared\Application\Bus\Query\Query;
 
-final class FindAllFooQuery implements Query
+final readonly class FindAllFooQuery implements Query
 {
-    public function __construct(public readonly array $params)
+    public function __construct(public array $params)
     {
     }
 }

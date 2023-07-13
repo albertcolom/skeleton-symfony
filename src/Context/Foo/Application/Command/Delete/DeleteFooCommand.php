@@ -6,9 +6,9 @@ namespace App\Context\Foo\Application\Command\Delete;
 
 use App\Shared\Application\Bus\Command\Command;
 
-class DeleteFooCommand implements Command
+final readonly class DeleteFooCommand implements Command
 {
-    public function __construct(public readonly string $id)
+    public function __construct(public string $id)
     {
     }
 }

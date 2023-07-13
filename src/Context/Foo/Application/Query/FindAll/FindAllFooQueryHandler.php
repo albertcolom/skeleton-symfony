@@ -7,9 +7,9 @@ namespace App\Context\Foo\Application\Query\FindAll;
 use App\Shared\Application\Bus\Query\QueryHandler;
 use App\Shared\Domain\Read\QueryParams\QueryParams;
 
-final class FindAllFooQueryHandler implements QueryHandler
+final readonly class FindAllFooQueryHandler implements QueryHandler
 {
-    public function __construct(private readonly FindAllFooService $findAllFooService)
+    public function __construct(private FindAllFooService $findAllFooService)
     {
     }
 

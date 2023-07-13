@@ -15,9 +15,9 @@ use App\Shared\Domain\Read\QueryParams\QueryParams;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 
-final class ElasticSearchFooViewRepository implements FooViewRepository
+final readonly class ElasticSearchFooViewRepository implements FooViewRepository
 {
-    public function __construct(private readonly Client $client, private readonly string $fooIndex)
+    public function __construct(private Client $client, private string $fooIndex)
     {
     }
 

@@ -7,12 +7,12 @@ namespace App\Context\Foo\Domain\Write\Bar;
 use App\Context\Foo\Domain\Write\Bar\ValueObject\BarId;
 use App\Context\Foo\Domain\Write\Foo;
 
-final class Bar
+final readonly class Bar
 {
     public function __construct(
-        public readonly Foo $foo,
-        public readonly BarId $id,
-        public readonly string $name
+        public Foo    $foo,
+        public BarId  $id,
+        public string $name
     ) {
     }
 

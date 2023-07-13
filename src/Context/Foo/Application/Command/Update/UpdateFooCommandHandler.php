@@ -7,9 +7,9 @@ namespace App\Context\Foo\Application\Command\Update;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Application\Bus\Command\CommandHandler;
 
-final class UpdateFooCommandHandler implements CommandHandler
+final readonly class UpdateFooCommandHandler implements CommandHandler
 {
-    public function __construct(private readonly UpdateFooService $updateFooService)
+    public function __construct(private UpdateFooService $updateFooService)
     {
     }
 

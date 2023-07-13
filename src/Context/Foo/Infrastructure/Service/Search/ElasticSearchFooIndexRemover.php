@@ -9,9 +9,9 @@ use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 
-final class ElasticSearchFooIndexRemover implements FooIndexRemover
+final readonly class ElasticSearchFooIndexRemover implements FooIndexRemover
 {
-    public function __construct(private readonly Client $client, private readonly string $fooIndex)
+    public function __construct(private Client $client, private string $fooIndex)
     {
     }
 

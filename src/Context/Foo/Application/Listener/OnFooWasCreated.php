@@ -10,11 +10,11 @@ use App\Context\Foo\Domain\Write\Event\FooWasCreated;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Application\Bus\Event\EventListener;
 
-final class OnFooWasCreated implements EventListener
+final readonly class OnFooWasCreated implements EventListener
 {
     public function __construct(
-        private readonly FooIndexUpdater $fooIndexUpdater,
-        private readonly CacheFooRemover $cacheFooRemover
+        private FooIndexUpdater $fooIndexUpdater,
+        private CacheFooRemover $cacheFooRemover
     ) {
     }
 

@@ -8,13 +8,13 @@ use App\Context\Foo\Domain\Read\View\BarView\BarViewCollection;
 use App\Context\Foo\Domain\Read\View\FooView;
 use App\Shared\Application\Bus\Query\Response;
 
-final class FindFooQueryResponse implements Response
+final readonly class FindFooQueryResponse implements Response
 {
     public function __construct(
-        private readonly string $id,
-        private readonly string $name,
-        private readonly BarViewCollection $barsView,
-        private readonly string $created_at
+        private string $id,
+        private string $name,
+        private BarViewCollection $barsView,
+        private string $created_at
     ) {
     }
 

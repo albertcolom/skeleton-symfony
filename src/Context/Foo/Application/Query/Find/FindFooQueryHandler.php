@@ -7,9 +7,9 @@ namespace App\Context\Foo\Application\Query\Find;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Application\Bus\Query\QueryHandler;
 
-final class FindFooQueryHandler implements QueryHandler
+final readonly class FindFooQueryHandler implements QueryHandler
 {
-    public function __construct(private readonly FindFooService $findFooQueryService)
+    public function __construct(private FindFooService $findFooQueryService)
     {
     }
 

@@ -6,9 +6,9 @@ namespace App\Context\Foo\Domain\Read\View\BarView;
 
 use App\Shared\Domain\Read\View\View;
 
-class BarView implements View
+readonly class BarView implements View
 {
-    public function __construct(public readonly string $id, public readonly string $name)
+    public function __construct(public string $id, public string $name)
     {
     }
 
