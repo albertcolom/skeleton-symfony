@@ -11,11 +11,11 @@ use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Messenger\Stamp\ReceivedStamp;
 
-final class MessengerEventLogMiddleware implements MiddlewareInterface
+final readonly class MessengerEventLogMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly LoggerInterface $eventLogger,
-        private readonly MessengerMessageSerializer $messengerMessageSerializer
+        private LoggerInterface $eventLogger,
+        private MessengerMessageSerializer $messengerMessageSerializer
     ) {
     }
 

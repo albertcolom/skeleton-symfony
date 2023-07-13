@@ -8,9 +8,9 @@ use Ramsey\Uuid\Uuid as RamseyUuid;
 use Stringable;
 use Webmozart\Assert\Assert;
 
-class Uuid implements Stringable
+readonly class Uuid implements Stringable
 {
-    public function __construct(public readonly string $value)
+    public function __construct(public string $value)
     {
         Assert::uuid($value);
     }

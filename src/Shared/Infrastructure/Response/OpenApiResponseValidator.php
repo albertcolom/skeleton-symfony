@@ -10,11 +10,11 @@ use League\OpenAPIValidation\PSR7\ValidatorBuilder;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 
-final class OpenApiResponseValidator implements ResponseValidator
+final readonly class OpenApiResponseValidator implements ResponseValidator
 {
     private \League\OpenAPIValidation\PSR7\ResponseValidator $responseValidator;
 
-    public function __construct(private readonly ResponseAdapter $responseAdapter, string $openapiPath)
+    public function __construct(private ResponseAdapter $responseAdapter, string $openapiPath)
     {
         $this->responseValidator = (new ValidatorBuilder())
             ->fromYamlFile($openapiPath)

@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Throwable;
 
-final class HttpJsonResponseExceptionListener implements EventSubscriberInterface
+final readonly class HttpJsonResponseExceptionListener implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(): array
     {

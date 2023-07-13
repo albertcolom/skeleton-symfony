@@ -7,9 +7,9 @@ namespace App\Shared\Infrastructure\Bus;
 use App\Shared\Domain\Write\ValueObject\Uuid;
 use Symfony\Component\Messenger\Stamp\StampInterface;
 
-final class MessengerIdStamp implements StampInterface
+final readonly class MessengerIdStamp implements StampInterface
 {
-    public function __construct(private readonly string $id)
+    public function __construct(private string $id)
     {
     }
 

@@ -10,9 +10,9 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 
-final class MessengerEventBus implements EventBus
+final readonly class MessengerEventBus implements EventBus
 {
-    public function __construct(private readonly MessageBusInterface $messageBus)
+    public function __construct(private MessageBusInterface $messageBus)
     {
     }
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\Read;
 
-class ViewCollection
+abstract class ViewCollection
 {
     public function __construct(private array $elements)
     {

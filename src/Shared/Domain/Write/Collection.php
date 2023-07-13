@@ -7,7 +7,7 @@ namespace App\Shared\Domain\Write;
 use Closure;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Collection extends ArrayCollection
+abstract class Collection extends ArrayCollection
 {
     public static function createEmpty(): static
     {

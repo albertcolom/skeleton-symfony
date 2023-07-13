@@ -6,11 +6,11 @@ namespace App\Shared\Domain\Read\QueryParams;
 
 use Webmozart\Assert\Assert;
 
-final class Limit
+readonly final class Limit
 {
     private const DEFAULT_VALUE = -1;
 
-    public function __construct(public readonly int $value = self::DEFAULT_VALUE)
+    public function __construct(public int $value = self::DEFAULT_VALUE)
     {
         $this->guard();
     }

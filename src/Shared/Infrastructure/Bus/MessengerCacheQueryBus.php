@@ -13,12 +13,12 @@ use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-final class MessengerCacheQueryBus implements CacheQueryBus
+final readonly class MessengerCacheQueryBus implements CacheQueryBus
 {
     public function __construct(
-        private readonly MessageBusInterface $messageBus,
-        private readonly CacheItemPoolInterface $cache,
-        private readonly CacheKeyCreator $cacheKeyCreator
+        private MessageBusInterface $messageBus,
+        private CacheItemPoolInterface $cache,
+        private CacheKeyCreator $cacheKeyCreator
     ) {
     }
 
