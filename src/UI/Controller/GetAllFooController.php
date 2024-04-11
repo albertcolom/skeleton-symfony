@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 final readonly class GetAllFooController
 {
     public function __construct(
-        private CacheQueryBus    $cacheQueryBus,
+        private CacheQueryBus $cacheQueryBus,
         private RequestValidator $requestValidator
     ) {
     }
