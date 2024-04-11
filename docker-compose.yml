@@ -42,7 +42,7 @@ services:
       - docker-network
 
   mariadb:
-    image: mariadb:11.0
+    image: mariadb:11.3
     container_name: mariadb_container
     ports:
       - "3306:3306"
@@ -51,12 +51,12 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - TZ=Europe/Berlin
     volumes:
-      - ./var/volume/mariadb:/var/lib/mariadb
+      - mariadbdata:/var/lib/mysql
     networks:
       - docker-network
 
   swagger_ui:
-    image: swaggerapi/swagger-ui:v4.0.0-rc.1
+    image: swaggerapi/swagger-ui:v5.15.1
     container_name: swagger-ui_container
     ports:
       - "8001:8080"
@@ -76,7 +76,7 @@ services:
       - docker-network
 
   zookeeper:
-    image: zookeeper:3.8.1
+    image: zookeeper:3.9.2
     container_name: zookeeper_container
     ports:
       - "2181:2181"
@@ -103,7 +103,7 @@ services:
       - docker-network
 
   redis:
-    image: redis:7.0-alpine
+    image: redis:7.2.4-alpine
     container_name: redis_container
     ports:
       - "6379:6379"
@@ -111,13 +111,13 @@ services:
       - docker-network
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.8.0
+    image: elasticsearch:8.9.1
     container_name: elasticsearch_container
     ports:
       - "9200:9200"
       - "9300:9300"
     volumes:
-      - ./var/volume/elasticsearch:/usr/share/elasticsearch/data
+      - esdata01:/usr/share/elasticsearch/data
     environment:
       - node.name=es01
       - discovery.seed_hosts=es01
@@ -134,7 +134,7 @@ services:
       - docker-network
 
   fluent-bit:
-    image: fluent/fluent-bit:2.1
+    image: fluent/fluent-bit:3.0.1
     container_name: fluent-bit_container
     ports:
       - "24224:24224"
@@ -151,7 +151,7 @@ services:
       - docker-network
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:8.8.0
+    image: kibana:8.9.1
     container_name: kibana_container
     ports:
       - "5601:5601"
@@ -162,6 +162,12 @@ services:
       - elasticsearch
     networks:
       - docker-network
+
+volumes:
+  mariadbdata:
+    driver: local
+  esdata01:
+    driver: local
 
 networks:
   docker-network:
