@@ -10,8 +10,8 @@ use App\Context\Foo\Domain\Write\Foo;
 final readonly class Bar
 {
     public function __construct(
-        public Foo    $foo,
-        public BarId  $id,
+        public Foo $foo,
+        public BarId $id,
         public string $name
     ) {
     }
