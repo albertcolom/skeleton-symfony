@@ -31,3 +31,6 @@ jobs:
 
       - name: 🐽 CodeSniffer
         run: ./vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
+
+      - name: 🔍 PHPStan
+        run: ./vendor/bin/phpstan analyse -c phpstan.neon
