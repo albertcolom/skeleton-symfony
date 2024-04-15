@@ -9,10 +9,11 @@ jobs:
       - name: 🚜 Checkout
         uses: actions/checkout@v4
 
-      - name: ⚙️Setup PHP
+      - name: ⚙️ Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+          extensions: bcmath opcache pdo
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v4
@@ -20,11 +21,8 @@ jobs:
           path: ./vendor
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: 🧬 Composer Init
-        uses: php-actions/composer@v6
-        with:
-          php_version: "8.2"
-          php_extensions: opcache amqp rdkafka redis
+      - name: ⛑️ Composer
+        run: composer install
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit
