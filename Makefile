@@ -72,14 +72,13 @@ purge-test-topic: ## Delete messages test topic
 	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages_test --if-exists
 	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages_test --if-not-exists
 
-
 .PHONY: redis-flush
 redis-flush: ## Flush redis
 	@docker-compose exec redis redis-cli FLUSHALL
 
 .PHONY: consume-events
 consume-events: ## Consume events from rabbitmq
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console messenger:consume ampqp
+	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console messenger:consume kafka
 
 .PHONY: phpstan
 phpstan: ## Run phpstan level 6
