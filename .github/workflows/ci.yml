@@ -25,7 +25,7 @@ jobs:
         run: composer install -n --no-scripts  --prefer-dist --ignore-platform-reqs
 
       - name: ⛑️ PHPUnit
-        run: ./vendor/bin/phpunit
+        run: ./vendor/bin/phpunit --coverage-text
 
       - name: 🌍 Doctrine Schema Validator
         run: ./bin/console doctrine:schema:validate --skip-sync
