@@ -20,3 +20,6 @@ jobs:
         with:
           php_version: "8.2"
           php_extensions: opcache amqp rdkafka redis
+
+      - name: ⛑️ PHPUnit
+        run: ./vendor/bin/phpunit
