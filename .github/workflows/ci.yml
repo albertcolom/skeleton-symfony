@@ -3,7 +3,8 @@ name: CI
 on: [ push, pull_request ]
 
 jobs:
-  build:
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
     steps:
       - name: 🚜 Checkout
@@ -27,6 +28,9 @@ jobs:
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit
+
+      - name: 🌍 Doctrine Schema Validator
+        run: ./bin/console doctrine:schema:validate --skip-sync
 
       - name: 🐽 CodeSniffer
         run: ./vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
