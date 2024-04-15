@@ -26,44 +26,46 @@ jobs:
 
   php-unit:
     name: PHPUnit
-    needs: build
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: 🚜 Checkout
         uses: actions/checkout@v4
-
-      - name: ⚙️ Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v4
         with:
           path: ./vendor
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          fail-on-cache-miss: true
+
+      - name: ⚙️ Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit --coverage-text
 
   static-analysis:
     name: Static Analysis
-    needs: build
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: 🚜 Checkout
         uses: actions/checkout@v4
-
-      - name: ⚙️ Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v4
         with:
           path: ./vendor
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+          fail-on-cache-miss: true
+
+      - name: ⚙️ Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
 
       - name: 🌍 Doctrine Schema Validator
         run: ./bin/console doctrine:schema:validate --skip-sync
