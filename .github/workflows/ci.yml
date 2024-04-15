@@ -11,12 +11,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: 📦 Cache Composer dependencies
+        id: cache
         uses: actions/cache@v4
         with:
           path: ./vendor
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: 🧩 Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: php-actions/composer@v6
         with:
           php_version: '8.2'
