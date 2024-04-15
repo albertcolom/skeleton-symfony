@@ -30,4 +30,4 @@ jobs:
         run: ./vendor/bin/phpunit
 
       - name: 🐽 CodeSniffer
-        run: .vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
+        run: ./vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
