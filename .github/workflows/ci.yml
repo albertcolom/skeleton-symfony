@@ -13,8 +13,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: bcmath opcache amqp rdkafka redis
-          coverage: none
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v3
@@ -22,8 +20,11 @@ jobs:
           path: ./vendor
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: Run composer install
-        run: composer install
+      - name: 🚜 Composer Init
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.2"
+          php_extensions: opcache amqp rdkafka redis
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit
