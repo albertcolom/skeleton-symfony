@@ -14,8 +14,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          extensions: rdkafka
-          tools: composer
 
       - name: 📦 Cache Composer dependencies
         uses: actions/cache@v4
@@ -24,7 +22,7 @@ jobs:
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: ⛑️ Composer
-        run: composer install
+        run: composer install --ignore-platform-reqs
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit
