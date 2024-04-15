@@ -3,27 +3,20 @@ name: CI
 on: [ push, pull_request ]
 
 jobs:
-  tests:
-    name: Tests
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: 🚜 Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: 🐳 Build
-        run: docker-compose -f docker-compose-ci.yml up --build --detach
+      - name: 📦 Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ./vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: 📦 Install dependencies
-        run: docker-compose run php-fpm composer install --prefer-dist --no-suggest --no-interaction
-
-      - name: ⛑️ PHPUnit
-        run: docker-compose run php-fpm php vendor/bin/phpunit
-
-      - name: 🌍 Doctrine Schema Validator
-        run: docker-compose run php-fpm php bin/console doctrine:schema:validate --skip-sync
-
-      - name: 🐽 CodeSniffer
-        run: docker-compose run php-fpm php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
-
-      - name: 🔍 PHPStan
-        run: docker-compose run php-fpm php -d memory_limit=4G vendor/bin/phpstan analyse -c phpstan.neon
+      - name: 🚜 Composer Init
+        uses: php-actions/composer@v6
+        with:
+          php_version: "8.2"
+          php_extensions: opcache amqp rdkafka redis
