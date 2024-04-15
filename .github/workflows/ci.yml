@@ -35,6 +35,12 @@ jobs:
         with:
           php-version: '8.2'
 
+      - name: 📦 Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ./vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
+
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit --coverage-text
 
@@ -50,6 +56,12 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+
+      - name: 📦 Cache Composer dependencies
+        uses: actions/cache@v4
+        with:
+          path: ./vendor
+          key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: 🌍 Doctrine Schema Validator
         run: ./bin/console doctrine:schema:validate --skip-sync
