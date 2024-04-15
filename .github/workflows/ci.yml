@@ -9,18 +9,18 @@ jobs:
       - name: 🚜 Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PHP
+      - name: ⚙️Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
       - name: 📦 Cache Composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ./vendor
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
-      - name: 🚜 Composer Init
+      - name: 🧬 Composer Init
         uses: php-actions/composer@v6
         with:
           php_version: "8.2"
@@ -28,3 +28,6 @@ jobs:
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit
+
+      - name: 🐽 CodeSniffer
+        run: .vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
