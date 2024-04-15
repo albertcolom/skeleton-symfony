@@ -22,7 +22,7 @@ jobs:
           key: composer-${{ runner.os }}-${{ hashFiles('**/composer.lock') }}
 
       - name: ⛑️ Composer
-        run: composer install --ignore-platform-reqs
+        run: composer install -n --no-scripts  --prefer-dist --ignore-platform-reqs
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit
