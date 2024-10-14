@@ -17,96 +17,96 @@ build: stop rebuild-container composer-install rebuild-db purge-queues redis-flu
 
 .PHONY: up
 up: ## Start containers
-	@docker-compose up -d
+	@docker compose up -d
 
 .PHONY: rebuild-container
 rebuild-container: ## Rebuild containers
-	@docker-compose up --build --force-recreate --no-deps -d
+	@docker compose up --build --force-recreate --no-deps -d
 
 .PHONY: status
 status: ## Show containers status
-	@docker-compose ps
+	@docker compose ps
 
 .PHONY: stop
 stop: ## Stop containers
-	@docker-compose stop
+	@docker compose stop
 
 .PHONY: restart
 restart: stop up ## Restart containers
 
 .PHONY: console
 console: ## Symfony console, Optional parameter "command". Example: make console command=debug:autowiring
-	@docker-compose exec php-fpm env XDEBUG_MODE=off bin/console ${command}
+	@docker compose exec php-fpm env XDEBUG_MODE=off bin/console ${command}
 
 .PHONY: cc
 cc: ## Clear the cache. Optional parameter "env", default "dev". Example: make cc env=prod
-	@docker-compose exec php-fpm rm -rf var/cache/${ENVIRONMENT}/*
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console cache:warmup -e "${ENVIRONMENT}" --quiet
-	@docker-compose exec redis redis-cli FLUSHALL
+	@docker compose exec php-fpm rm -rf var/cache/${ENVIRONMENT}/*
+	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console cache:warmup -e "${ENVIRONMENT}" --quiet
+	@docker compose exec redis redis-cli FLUSHALL
 
 .PHONY: shell
 shell: ## Interactive shell inside docker
-	@docker-compose exec php-fpm sh
+	@docker compose exec php-fpm sh
 
 .PHONY: composer-install
 composer-install: ## Composer install
-	@docker-compose exec php-fpm env XDEBUG_MODE=off composer install
+	@docker compose exec php-fpm env XDEBUG_MODE=off composer install
 
 .PHONY: composer-update
 composer-update: ## Composer update
-	@docker-compose exec php-fpm env XDEBUG_MODE=off composer update
+	@docker compose exec php-fpm env XDEBUG_MODE=off composer update
 
 .PHONY: purge-queues
 purge-queues: ## Purge rabbitmq queues
-	@docker-compose exec rabbitmq rabbitmqctl stop_app
-	@docker-compose exec rabbitmq rabbitmqctl reset
-	@docker-compose exec rabbitmq rabbitmqctl start_app
+	@docker compose exec rabbitmq rabbitmqctl stop_app
+	@docker compose exec rabbitmq rabbitmqctl reset
+	@docker compose exec rabbitmq rabbitmqctl start_app
 
 .PHONY: purge-topic
 purge-topic: ## Delete messages topic
-	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages --if-exists
-	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages --if-not-exists
+	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages --if-exists
+	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages --if-not-exists
 
 .PHONY: purge-test-topi
 purge-test-topic: ## Delete messages test topic
-	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages_test --if-exists
-	@docker-compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages_test --if-not-exists
+	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages_test --if-exists
+	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages_test --if-not-exists
 
 .PHONY: redis-flush
 redis-flush: ## Flush redis
-	@docker-compose exec redis redis-cli FLUSHALL
+	@docker compose exec redis redis-cli FLUSHALL
 
 .PHONY: consume-events
 consume-events: ## Consume events from rabbitmq
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console messenger:consume kafka
+	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console messenger:consume kafka
 
 .PHONY: phpstan
 phpstan: ## Run phpstan level 6
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php -d memory_limit=4G vendor/bin/phpstan analyse -c phpstan.neon
+	@docker compose exec php-fpm env XDEBUG_MODE=off php -d memory_limit=4G vendor/bin/phpstan analyse -c phpstan.neon
 
 .PHONY: phpcs
 phpcs: ## Run phpcs PSR12
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
+	@docker compose exec php-fpm env XDEBUG_MODE=off php vendor/bin/phpcs --report=code --colors --extensions=php --standard=PSR12 -p src
 
 .PHONY: test-unit
 test-unit: ## Run unit testing
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php vendor/bin/phpunit
+	@docker compose exec php-fpm env XDEBUG_MODE=off php vendor/bin/phpunit
 
 .PHONY: test-acceptance
 test-acceptance: ## Run unit testing
-	@docker-compose exec php-fpm env XDEBUG_MODE=off TEST_TOKEN=_`date +%d%m%y%H%M%S`_`echo $$RANDOM` php vendor/bin/behat
+	@docker compose exec php-fpm env XDEBUG_MODE=off TEST_TOKEN=_`date +%d%m%y%H%M%S`_`echo $$RANDOM` php vendor/bin/behat
 
 .PHONY: event-log
 event-log: ## Tail event log. Optional parameter "env", default "dev". Example: make event-log env=prod
-	@docker-compose exec php-fpm tail -f var/log/domain_event_"${ENVIRONMENT}".log
+	@docker compose exec php-fpm tail -f var/log/domain_event_"${ENVIRONMENT}".log
 
 .PHONY: rebuild-db
 rebuild-db: ## Rebuild Mysql. Optional parameter "env", default "dev". Example: make rebuild-db env=test
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:database:drop -f --if-exists
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:database:create
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:migrations:migrate -n
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:fixtures:load -n
+	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:database:drop -f --if-exists
+	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:database:create
+	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:migrations:migrate -n
+	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" doctrine:fixtures:load -n
 
 .PHONY: rebuild-es
 rebuild-es: ## Rebuild ElasticSearch data. Optional parameter "env", default "dev". Example: make rebuild-db env=test
-	@docker-compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" foo:search:full-import-data --force
+	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console -e "${ENVIRONMENT}" foo:search:full-import-data --force
