@@ -10,9 +10,9 @@ use App\Context\Foo\Domain\Write\Repository\FooRepository;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use DateTimeImmutable;
 
-class CreateFooService
+readonly class CreateFooService
 {
-    public function __construct(private readonly FooRepository $fooRepository)
+    public function __construct(private FooRepository $fooRepository)
     {
     }
 

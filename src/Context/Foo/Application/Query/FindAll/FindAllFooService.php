@@ -8,9 +8,9 @@ use App\Context\Foo\Domain\Read\Repository\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\FooViewCollection;
 use App\Shared\Domain\Read\QueryParams\QueryParams;
 
-class FindAllFooService
+readonly class FindAllFooService
 {
-    public function __construct(private readonly FooViewRepository $fooViewRepository)
+    public function __construct(private FooViewRepository $fooViewRepository)
     {
     }
 

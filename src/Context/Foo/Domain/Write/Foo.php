@@ -12,8 +12,8 @@ use App\Context\Foo\Domain\Write\Event\FooWasRemoved;
 use App\Context\Foo\Domain\Write\Event\FooWasUpdated;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use App\Shared\Domain\Write\Aggregate\AggregateRoot;
-use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 
 final class Foo extends AggregateRoot
@@ -23,7 +23,7 @@ final class Foo extends AggregateRoot
     public function __construct(
         public readonly FooId $id,
         private string $name,
-        private DateTimeImmutable $createdAt
+        private readonly DateTimeImmutable $createdAt
     ) {
         $this->bars = BarCollection::createEmpty();
         $this->recordEvent(
@@ -71,6 +71,7 @@ final class Foo extends AggregateRoot
     {
         return $this->id->equals($other->id)
             && $this->name() === $other->name()
-            && $this->createdAt()->format(DateTime::ATOM) === $other->createdAt()->format(DateTime::ATOM);
+            && $this->createdAt()->format(DateTimeInterface::ATOM) === $other->createdAt()
+                ->format(DateTimeInterface::ATOM);
     }
 }
