@@ -55,6 +55,7 @@ Feature:
         """
     And the response code should be 400
     And the response should be a documented and validated with OpenApi schema POST "/v1/foo"
+    And the transport kafka producer is empty
 
   Scenario: It can't create a Foo when Foo already exists
     Given I load fixtures for groups "foo"
@@ -76,3 +77,4 @@ Feature:
         """
     And the response code should be 409
     And the response should be a documented and validated with OpenApi schema POST "/v1/foo"
+    And the transport kafka producer is empty

@@ -41,6 +41,7 @@ Feature:
         """
     And the response code should be 400
     And the response should be a documented and validated with OpenApi schema DELETE "/v1/foo/111111"
+    And the transport kafka producer is empty
 
   Scenario: It can't delete a missing Foo
     When A DELETE request is sent to "/v1/foo/0b14e425-5f80-4c29-a3ab-49f5f15ca57d"
@@ -55,3 +56,4 @@ Feature:
         """
     And the response code should be 404
     And the response should be a documented and validated with OpenApi schema DELETE "/v1/foo/0b14e425-5f80-4c29-a3ab-49f5f15ca57d"
+    And the transport kafka producer is empty

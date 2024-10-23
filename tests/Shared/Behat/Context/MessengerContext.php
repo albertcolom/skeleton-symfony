@@ -45,6 +45,14 @@ final class MessengerContext extends KernelTestCase implements Context
         }
     }
 
+    /**
+     * @Then the transport :name producer is empty
+     */
+    public function theTransportProducerIsEmpty(string $name): void
+    {
+        Assert::assertEmpty(json_decode($this->getMessagesFromTransport($name)));
+    }
+
     private function getMessagesFromTransport(string $name): string
     {
         $messages = [];

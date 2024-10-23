@@ -86,3 +86,4 @@ Feature:
         """
     And the response code should be 400
     And the response should be a documented and validated with OpenApi schema PUT "/v1/foo/d9a15203-77a3-4a2c-8b1c-0d9074937a78"
+    And the transport kafka producer is empty
