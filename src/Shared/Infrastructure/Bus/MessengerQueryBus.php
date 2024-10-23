@@ -24,7 +24,7 @@ final readonly class MessengerQueryBus implements QueryBus
             /** @var HandledStamp $handledStamps */
             $handledStamps = $envelope->last(HandledStamp::class);
         } catch (HandlerFailedException $exception) {
-            throw current($exception->getNestedExceptions());
+            throw current($exception->getWrappedExceptions());
         }
 
         return $handledStamps->getResult();

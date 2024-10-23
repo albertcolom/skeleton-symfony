@@ -35,7 +35,7 @@ final readonly class MessengerCacheQueryBus implements CacheQueryBus
             /** @var HandledStamp $handledStamps */
             $handledStamps = $envelope->last(HandledStamp::class);
         } catch (HandlerFailedException $exception) {
-            throw current($exception->getNestedExceptions());
+            throw current($exception->getWrappedExceptions());
         }
 
         $result = $handledStamps->getResult();

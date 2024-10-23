@@ -20,7 +20,7 @@ final readonly class MessengerCommandBus implements CommandBus
         try {
             $this->messageBus->dispatch($command);
         } catch (HandlerFailedException $exception) {
-            throw current($exception->getNestedExceptions());
+            throw current($exception->getWrappedExceptions());
         }
     }
 }

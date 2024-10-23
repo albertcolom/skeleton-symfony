@@ -51,7 +51,7 @@ readonly class ElasticSearchFooIndexUpdater implements FooIndexUpdater
                     },
                     $foo->bars()->toArray()
                 ),
-                '@timestamp' => (new DateTimeImmutable())->format(DateTimeInterface::ISO8601)
+                '@timestamp' => (new DateTimeImmutable())->format(DateTimeInterface::ATOM)
             ]
         ];
     }

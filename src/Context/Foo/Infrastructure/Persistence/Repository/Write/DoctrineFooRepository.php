@@ -42,7 +42,7 @@ final class DoctrineFooRepository extends ServiceEntityRepository implements Foo
 
     public function remove(FooId $fooId): void
     {
-        $foo = $this->_em->getPartialReference(Foo::class, $fooId);
+        $foo = $this->_em->getReference(Foo::class, $fooId);
 
         $this->_em->remove($foo);
     }
