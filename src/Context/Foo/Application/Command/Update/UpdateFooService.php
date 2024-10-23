@@ -8,9 +8,9 @@ use App\Context\Foo\Domain\Exception\FooNotFoundException;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 
-readonly class UpdateFooService
+class UpdateFooService
 {
-    public function __construct(private FooRepository $fooRepository)
+    public function __construct(private readonly FooRepository $fooRepository)
     {
     }
 

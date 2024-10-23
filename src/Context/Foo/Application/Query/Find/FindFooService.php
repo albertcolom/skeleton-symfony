@@ -8,9 +8,9 @@ use App\Context\Foo\Domain\Read\Repository\FooViewRepository;
 use App\Context\Foo\Domain\Read\View\FooView;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 
-readonly class FindFooService
+class FindFooService
 {
-    public function __construct(private FooViewRepository $fooViewRepository)
+    public function __construct(private readonly FooViewRepository $fooViewRepository)
     {
     }
 
