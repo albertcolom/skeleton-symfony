@@ -77,7 +77,7 @@ redis-flush: ## Flush redis
 	@docker compose exec redis redis-cli FLUSHALL
 
 .PHONY: consume-events
-consume-events: ## Consume events from rabbitmq
+consume-events: ## Consume events from kafka
 	@docker compose exec php-fpm env XDEBUG_MODE=off php bin/console messenger:consume kafka
 
 .PHONY: phpstan

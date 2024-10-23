@@ -3,15 +3,17 @@
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Docker compose:
-- `php:8.2-fpm-alpine` with `composer:latest`
-- `nginx:alpine3.17-slim`
-- `mariadb:11.0`
-- `rabbitmq:3.11-management-alpine`
-- `redis:7.0-alpine`
-- `swaggerapi/swagger-ui:v4.0.0-rc.1`
-- `fluent/fluent-bit:2.1`
-- `docker.elastic.co/elasticsearch/elasticsearch:8.8.0`
-- `docker.elastic.co/kibana/kibana:8.8.0`
+- `php:8.3-fpm-alpine` with `composer:latest`
+- `nginx:alpine3.20-slim`
+- `mariadb:11.5.2`
+- `rabbitmq:4.0.2-management-alpine`
+- `redis:7.4.1-alpine`
+- `swaggerapi/swagger-ui:v5.17.14`
+- `fluent/fluent-bit:3.1`
+- `docker.elastic.co/elasticsearch/elasticsearch:8.15.2`
+- `docker.elastic.co/kibana/kibana:8.15.2`
+- `wurstmeister/kafka:2.13-2.8.1`
+- `zookeeper:3.9.2`
 
 ## The Environment:
 - **API:** http://localhost:8000
@@ -21,6 +23,7 @@
 - **RabbidMQ:** http://localhost:15672 user: `guest` password: `guest`
 - **MariaDB:** host: `localhost` port: `3306` user: `root` password: `root`
 - **Redis:** host: `localhost` port: `6379`
+- **Kafka** host: `localhost` port: `9092`
 
 ## Workflow
 ![Workflow](https://i.imgur.com/xxKP36u.jpeg)
@@ -34,12 +37,14 @@ cc                   Clear the cache. Optional parameter "env", default "dev". E
 composer-install     Composer install
 composer-update      Composer update
 console              Symfony console, Optional parameter "command". Example: make console command=debug:autowiring
-consume-events       Consume events from rabbitmq
+consume-events       Consume events from kafka
 event-log            Tail event log. Optional parameter "env", default "dev". Example: make event-log env=prod
 help                 Show help
 phpcs                Run phpcs PSR12
 phpstan              Run phpstan level 6
 purge-queues         Purge rabbitmq queues
+purge-test-topic     Delete messages test topic
+purge-topic          Delete messages topic
 rebuild-container    Rebuild containers
 rebuild-db           Rebuild Mysql. Optional parameter "env", default "dev". Example: make rebuild-db env=test
 rebuild-es           Rebuild ElasticSearch data. Optional parameter "env", default "dev". Example: make rebuild-db env=test
