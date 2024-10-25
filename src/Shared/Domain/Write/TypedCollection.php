@@ -6,6 +6,11 @@ namespace App\Shared\Domain\Write;
 
 use Webmozart\Assert\Assert;
 
+/**
+ * @template TKey of array-key
+ * @template T
+ * @template-extends Collection<TKey, T>
+ */
 abstract class TypedCollection extends Collection
 {
     public function __construct(array $elements = [])

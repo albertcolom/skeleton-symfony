@@ -7,6 +7,11 @@ namespace App\Shared\Domain\Write;
 use Closure;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * @template TKey of array-key
+ * @template T
+ * @template-extends ArrayCollection<TKey, T>
+ */
 abstract class Collection extends ArrayCollection
 {
     public static function createEmpty(): static

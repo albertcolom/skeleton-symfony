@@ -9,8 +9,10 @@ use App\Context\Foo\Domain\Write\FooCollection;
 use App\Context\Foo\Domain\Write\Repository\FooRepository;
 use App\Context\Foo\Domain\Write\ValueObject\FooId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
+/** @extends ServiceEntityRepository<Foo> */
 final class DoctrineFooRepository extends ServiceEntityRepository implements FooRepository
 {
     public function __construct(ManagerRegistry $registry)

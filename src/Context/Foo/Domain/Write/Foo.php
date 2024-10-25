@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Collection;
 
 final class Foo extends AggregateRoot
 {
+    /** @var Collection<int, Bar> */
     private Collection $bars;
 
     public function __construct(
@@ -41,6 +42,7 @@ final class Foo extends AggregateRoot
         return $this->createdAt;
     }
 
+    /** @return Collection<int, Bar> */
     public function bars(): Collection
     {
         return $this->bars;
