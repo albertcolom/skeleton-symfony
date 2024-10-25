@@ -13,7 +13,7 @@ help: Makefile ## Show help
 	@echo ""
 
 .PHONY: build
-build: stop rebuild-container composer-install rebuild-db purge-queues redis-flush rebuild-es  ## Build/Rebuild project
+build: stop rebuild-container composer-install rebuild-db purge-queues redis-flush rebuild-es purge-topic purge-test-topic  ## Build/Rebuild project
 
 .PHONY: up
 up: ## Start containers
@@ -67,7 +67,7 @@ purge-topic: ## Delete messages topic
 	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages --if-exists
 	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages --if-not-exists
 
-.PHONY: purge-test-topi
+.PHONY: purge-test-topic
 purge-test-topic: ## Delete messages test topic
 	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --delete --topic messages_test --if-exists
 	@docker compose exec kafka kafka-topics.sh --bootstrap-server kafka:9092 --create --topic messages_test --if-not-exists
