@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Shared\Domain\Read;
 
+/** @phpstan-consistent-constructor */
 abstract class ViewCollection
 {
     /** @param array<mixed> $elements */

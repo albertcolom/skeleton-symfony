@@ -8,6 +8,7 @@ use Ramsey\Uuid\Uuid as RamseyUuid;
 use Stringable;
 use Webmozart\Assert\Assert;
 
+/** @phpstan-consistent-constructor */
 readonly class Uuid implements Stringable
 {
     public function __construct(public string $value)
