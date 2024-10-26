@@ -21,7 +21,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         uses: php-actions/composer@v6
         with:
-          php_version: '8.2'
+          php_version: '8.3'
           args: '--no-scripts  --prefer-dist --ignore-platform-reqs'
 
   php-unit:
@@ -42,7 +42,7 @@ jobs:
       - name: ⚙️ Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
 
       - name: ⛑️ PHPUnit
         run: ./vendor/bin/phpunit --coverage-text
@@ -65,7 +65,7 @@ jobs:
       - name: ⚙️ Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
 
       - name: 🌍 Doctrine Schema Validator
         run: ./bin/console doctrine:schema:validate --skip-sync
