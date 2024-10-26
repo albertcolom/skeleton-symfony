@@ -67,6 +67,7 @@ final readonly class ElasticSearchFooViewRepository implements FooViewRepository
         return $this->hydrateAll($resultSet->asArray());
     }
 
+    /** @param array<string, mixed> $data */
     private function hydrate(array $data): FooView
     {
         return new FooView(
@@ -80,6 +81,7 @@ final readonly class ElasticSearchFooViewRepository implements FooViewRepository
         );
     }
 
+    /** @param array<string, mixed> $data */
     private function hydrateAll(array $data): FooViewCollection
     {
         return FooViewCollection::fromMap(

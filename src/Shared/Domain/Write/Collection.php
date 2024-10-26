@@ -19,6 +19,7 @@ abstract class Collection extends ArrayCollection
         return new static([]);
     }
 
+    /** @param array<mixed> $items */
     public static function fromMap(array $items, Closure $func): static
     {
         return new static(array_map($func, $items));

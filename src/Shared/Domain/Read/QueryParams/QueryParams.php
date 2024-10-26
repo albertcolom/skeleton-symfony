@@ -17,6 +17,7 @@ class QueryParams
         $this->limit = new Limit();
     }
 
+    /** @param array<string, int> $params */
     public static function fromArray(array $params): self
     {
         return (new self())
@@ -56,6 +57,7 @@ class QueryParams
         return $this;
     }
 
+    /** @return array<string, int> */
     public function toArray(): array
     {
         return [

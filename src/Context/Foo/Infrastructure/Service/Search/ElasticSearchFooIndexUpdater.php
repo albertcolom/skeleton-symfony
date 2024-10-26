@@ -34,6 +34,7 @@ readonly class ElasticSearchFooIndexUpdater implements FooIndexUpdater
         $this->client->index($this->prepareParams($foo));
     }
 
+    /** @return array<string, mixed> */
     private function prepareParams(Foo $foo): array
     {
         return [

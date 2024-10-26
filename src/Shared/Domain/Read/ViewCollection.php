@@ -6,6 +6,7 @@ namespace App\Shared\Domain\Read;
 
 abstract class ViewCollection
 {
+    /** @param array<mixed> $elements */
     public function __construct(private array $elements)
     {
     }
@@ -15,6 +16,7 @@ abstract class ViewCollection
         return new static([]);
     }
 
+    /** @param array<mixed> $items */
     public static function fromMap(array $items, callable $fn): static
     {
         return new static(array_map($fn, $items));
@@ -25,6 +27,7 @@ abstract class ViewCollection
         return array_reduce($this->elements, $fn, $initial);
     }
 
+    /** @return array<mixed> */
     public function map(callable $fn): array
     {
         return array_map($fn, $this->elements);
@@ -76,11 +79,13 @@ abstract class ViewCollection
         $this->elements[] = $element;
     }
 
+    /** @return array<mixed> */
     public function getValues(): array
     {
         return array_values($this->elements);
     }
 
+    /** @return array<mixed> */
     public function items(): array
     {
         return $this->elements;

@@ -35,6 +35,7 @@ class MessengerMessageSerializer implements SerializerInterface
         );
     }
 
+    /** @param array<string, mixed> $encodedEnvelope */
     public function decode(array $encodedEnvelope): Envelope
     {
         $headers = $encodedEnvelope['headers'];
@@ -51,6 +52,7 @@ class MessengerMessageSerializer implements SerializerInterface
         return new Envelope($message, $stamps);
     }
 
+    /** @return array<string, mixed> */
     public function encode(Envelope $envelope): array
     {
         $message = $envelope->getMessage();

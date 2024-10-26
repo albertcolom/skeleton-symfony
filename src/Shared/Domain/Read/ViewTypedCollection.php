@@ -8,6 +8,7 @@ use Webmozart\Assert\Assert;
 
 abstract class ViewTypedCollection extends ViewCollection
 {
+    /** @param array<mixed> $elements */
     public function __construct(array $elements = [])
     {
         Assert::allIsInstanceOf($elements, $this->type());

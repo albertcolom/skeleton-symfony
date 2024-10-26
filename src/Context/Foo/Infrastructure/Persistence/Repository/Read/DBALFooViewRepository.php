@@ -124,6 +124,7 @@ SQL;
         return $this->hydrateFooCollectionWithBar($fooCollection, $resultSet);
     }
 
+    /** @param array<int, array<string, mixed>> $data */
     private function hydrate(array $data): Foo
     {
         $firstElement = reset($data);
@@ -142,6 +143,7 @@ SQL;
         return $foo;
     }
 
+    /** @param array<int, array<string, mixed>> $fooData */
     private function hydrateFooCollection(array $fooData): FooCollection
     {
         return FooCollection::fromMap(
@@ -156,6 +158,7 @@ SQL;
         );
     }
 
+    /** @param array<int, array<string, mixed>> $barData */
     private function hydrateFooCollectionWithBar(FooCollection $fooCollection, array $barData): FooCollection
     {
         if (empty($barData)) {

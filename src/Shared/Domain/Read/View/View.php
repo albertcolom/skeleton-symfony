@@ -6,5 +6,6 @@ namespace App\Shared\Domain\Read\View;
 
 interface View
 {
+    /** @return array<mixed> */
     public function toArray(): array;
 }
