@@ -14,12 +14,14 @@
 - `docker.elastic.co/kibana/kibana:8.15.2`
 - `wurstmeister/kafka:2.13-2.8.1`
 - `zookeeper:3.9.2`
+- `provectuslabs/kafka-ui:v0.7.2`
 
 ## The Environment:
 - **API:** http://localhost:8000
 - **API Documentation:** http://localhost:8001
 - **ElasticSearch:** http://localhost:9200
 - **Kibana:** http://localhost:5601
+- **Kafka UI:** http://localhost:8090
 - **RabbidMQ:** http://localhost:15672 user: `guest` password: `guest`
 - **MariaDB:** host: `localhost` port: `3306` user: `root` password: `root`
 - **Redis:** host: `localhost` port: `6379`
