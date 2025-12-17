@@ -9,7 +9,6 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-redis": "*",
-        "doctrine/annotations": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.15",
         "elasticsearch/elasticsearch": "^8.8",
