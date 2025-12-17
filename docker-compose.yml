@@ -12,10 +12,11 @@ services:
     volumes:
       - .:/var/www
     working_dir: /var/www
+    depends_on:
+      - fluent-bit
     logging:
       driver: "fluentd"
       options:
-        fluentd-async-connect: 'true'
         tag: app
     networks:
       - docker-network
@@ -36,7 +37,6 @@ services:
     logging:
       driver: "fluentd"
       options:
-        fluentd-async-connect: 'true'
         tag: nginx
     networks:
       - docker-network
